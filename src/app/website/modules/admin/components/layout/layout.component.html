@@ -1,0 +1,32 @@
+<div class="flex h-screen">
+  <div class="contenedor">
+    <aside>
+      <div class="toggle">
+        <div class="logo">
+          <img src="images/logo.png">
+          <h2>Asmr<span class="danger">Prog</span></h2>
+        </div>
+        <div class="close" id="close-btn">
+          <span class="material-icons-sharp">
+            close
+          </span>
+        </div>
+      </div>
+
+      <div class="sidebar bg-gray-400">
+        <a [routerLink]="['dashboard']" routerLinkActive="class1 class2">
+          <h3>Dashboard</h3>
+        </a>
+        <a routerLink="users" routerLinkActive="active">
+          <h3>Usuarios</h3>
+        </a>
+        <a href="#">
+          <h3>Logout</h3>
+        </a>
+      </div>
+    </aside>
+    <main class="flex-grow h-screen">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
