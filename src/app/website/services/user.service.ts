@@ -26,6 +26,6 @@ export class UserService {
     if (types) {
       params += '&type=' + types;
     }
-    return this.http.get<userAdminModel>(`${this.API_URL}/`);
+    return this.http.get<userAdminModel[]>(`${this.API_URL}/api/v1/users`);
   }
 }

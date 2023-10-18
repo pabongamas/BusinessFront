@@ -1,1 +1,21 @@
-aca va la data
+<table class="w-full text-sm text-left text-gray-500 ">
+    <thead>
+        <tr class="text-xs text-gray-700 uppercase bg-gray-50 ">
+            <th  class="px-6 py-3 text-center">id</th>
+            <th  class="px-6 py-3 text-center">Email</th>
+            <th  class="px-6 py-3 text-center">Negocios</th>
+            <th  class="px-6 py-3 text-center">Roles</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of dataUser;">
+            <td class="py-4 px-6 text-center">{{data.id}}</td>
+            <td class="py-4 px-6 text-center">{{data.email}}</td>
+            <td class="py-4 px-6 text-center">{{data.business}}</td>
+            <td class="py-4 px-6 text-center">{{data.rolesData}}</td>
+        </tr>
+    </tbody>
+    
+
+       
+</table>
