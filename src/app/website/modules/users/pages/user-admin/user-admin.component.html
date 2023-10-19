@@ -1,32 +1,52 @@
-<div class="mt-6">
-    <table class="w-full text-sm text-left text-gray-500">
-        <thead>
-          <tr class="text-xs text-gray-700 uppercase bg-gray-50">
-            <th class="px-6 py-3 text-center">id</th>
-            <th class="px-6 py-3 text-center">Email</th>
-            <th class="px-6 py-3 text-center">Negocios</th>
-            <th class="px-6 py-3 text-center">Roles</th>
-            <th class="px-6 py-3 text-center">Administraci&oacute;n</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let data of dataUser">
-            <td class="py-4 px-6 text-center">{{ data.id }}</td>
-            <td class="py-4 px-6 text-center">{{ data.email }}</td>
-            <td class="py-4 px-6 text-center">{{ data.business }}</td>
-            <td class="py-4 px-6 text-center">{{ data.rolesData }}</td>
-            <td class="py-4 px-6 text-center">
-              <div class="flex items-center justify-center gap-5">
-                <button class="py-2 px-2 rounded bg-blue_green text-white">
-                  Editar
-                </button>
-                <button class="py-2 px-2 rounded bg-marian_blue text-white">
-                  Eliminar
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      
+<section class="">
+  <div class="p-10 pb-0">
+    <h1 class=" font-semibold text-xl">Administracion de usuarios</h1>
+    <div class="pt-2 grid grid-cols-2 ">
+      <div
+        class="border rounded-sm bg-white flex relative overflow-x-auto shadow-md sm:rounded-lg items-center pl-3">
+          <fa-icon title="Editar Usuario" class="text-grayFirst" [icon]="faMagnifyingGlass"></fa-icon>
+          <input type="text" class="w-full h-full outline-none pl-1 text-sm text-gray-500" placeholder="Ingresa tu busqueda">
+      </div>
+      <div class="justify-self-end">
+        <button (click)="openDialog(true,null)"
+          class="py-2 px-2 text-xs rounded bg-federal_blue hover:bg-federal_blue-300 transition-colors duration-300 text-white">
+          <fa-icon title="Editar Usuario" class="text-white" [icon]="faUserPlus"></fa-icon>
+          Nuevo
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="m-10 relative overflow-x-auto shadow-md sm:rounded-lg">
+  <table class="w-full text-sm text-left text-gray-500 table-auto rounded-lg border overflow-hidden">
+    <thead class="bg-grayFirst">
+      <tr class="text-xs text-federal_blue-100 uppercase">
+        <th class="px-6 py-3 text-center">id</th>
+        <th class="px-6 py-3 text-center">Email</th>
+        <th class="px-6 py-3 text-center">Negocios</th>
+        <th class="px-6 py-3 text-center">Roles</th>
+        <th class="px-6 py-3 text-center">Administraci&oacute;n</th>
+      </tr>
+    </thead>
+    <tbody class="bg-white">
+      <tr class="border-b border-grayFirst" *ngFor="let data of dataUser">
+        <td class="py-4 px-6 text-center">{{ data.id }}</td>
+        <td class="py-4 px-6 text-center">{{ data.email }}</td>
+        <td class="py-4 px-6 text-center">{{ data.business }}</td>
+        <td class="py-4 px-6 text-center">{{ data.rolesData }}</td>
+        <td class="py-4 px-6 text-center">
+          <div class="flex items-center justify-center  gap-2">
+            <button (click)="openDialog(false,data)"
+              class="py-2 px-2 rounded bg-blue_green hover:bg-blue_green-600 transition-colors duration-300 text-white">
+              <fa-icon title="Editar Usuario" class="text-white" [icon]="faPenToSquare"></fa-icon>
+            </button>
+            <button
+              class="py-2 px-2 rounded bg-marian_blue hover:bg-marian_blue-300 transition-colors duration-300 text-white">
+              <fa-icon title="Eliminar Usuario" class="text-white" [icon]="faEraser"></fa-icon>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

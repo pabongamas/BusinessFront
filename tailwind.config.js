@@ -5,9 +5,11 @@ module.exports = {
     extend: {
       gridTemplateColumns: {
         'layout': '12rem auto',
+        'adminUserButtons':'20rem auto'
       },
       colors: {
         grayFirst: "#F1F1FB",
+        mainApp:"#EFEFEF",
         federal_blue: {
           DEFAULT: "#03045e",
           100: "#010113",

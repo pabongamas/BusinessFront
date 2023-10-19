@@ -8,3 +8,6 @@ export interface userAdminModel {
   business:string;
   rolesData:string,
 }
+export interface actionUserAdmin{
+  action:boolean;
+}

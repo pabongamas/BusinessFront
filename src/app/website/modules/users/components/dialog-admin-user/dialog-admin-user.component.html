@@ -1,0 +1,26 @@
+<div class="p-6 bg-gray-100 relative rounded shadow">
+    <div>
+        <div *ngIf="action; else editUser">
+            <h1>Crear Nuevo Usuario</h1>
+        </div>
+        <ng-template #editUser>
+            <h1>Editar Usuario {{ dataUser.email }}</h1>
+        </ng-template>
+        <form [formGroup]="form" novalidate class="space-y-4" (ngSubmit)="actionForm(action)">
+            <div *ngIf="action; else editUserButton">
+                <button
+                    class="py-2 px-2 text-xs rounded bg-federal_blue hover:bg-federal_blue-300 transition-colors duration-300 text-white">
+                    <fa-icon title="Editar Usuario" class="text-white" [icon]="faUserPlus"></fa-icon>
+                    Crear
+                </button>
+            </div>
+            <ng-template #editUserButton>
+                <button
+                    class="py-2 px-2 text-xs rounded bg-federal_blue hover:bg-federal_blue-300 transition-colors duration-300 text-white">
+                    <fa-icon title="Editar Usuario" class="text-white" [icon]="faPenToSquare"></fa-icon>
+                    Editar
+                </button>
+            </ng-template>
+        </form>
+    </div>
+</div>
