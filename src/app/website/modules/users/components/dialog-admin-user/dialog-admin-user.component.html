@@ -1,26 +1,155 @@
 <div class="p-6 bg-gray-100 relative rounded shadow">
-    <div>
-        <div *ngIf="action; else editUser">
-            <h1>Crear Nuevo Usuario</h1>
-        </div>
-        <ng-template #editUser>
-            <h1>Editar Usuario {{ dataUser.email }}</h1>
-        </ng-template>
-        <form [formGroup]="form" novalidate class="space-y-4" (ngSubmit)="actionForm(action)">
-            <div *ngIf="action; else editUserButton">
-                <button
-                    class="py-2 px-2 text-xs rounded bg-federal_blue hover:bg-federal_blue-300 transition-colors duration-300 text-white">
-                    <fa-icon title="Editar Usuario" class="text-white" [icon]="faUserPlus"></fa-icon>
-                    Crear
-                </button>
-            </div>
-            <ng-template #editUserButton>
-                <button
-                    class="py-2 px-2 text-xs rounded bg-federal_blue hover:bg-federal_blue-300 transition-colors duration-300 text-white">
-                    <fa-icon title="Editar Usuario" class="text-white" [icon]="faPenToSquare"></fa-icon>
-                    Editar
-                </button>
-            </ng-template>
-        </form>
+  <div>
+    <div *ngIf="action; else editUser">
+      <h1 class="font-semibold text-base">Crear Nuevo Usuario</h1>
     </div>
+    <ng-template #editUser>
+      <h1>Editar Usuario {{ dataUser.email }}</h1>
+    </ng-template>
+    <form
+      [formGroup]="form"
+      novalidate
+      class="space-y-4"
+      (ngSubmit)="actionForm(action)"
+    >
+      <div class="pt-2">
+        <div class="relative z-0 w-full mb-3 group">
+          <input
+            #nameInput
+            type="email"
+            formControlName="email"
+            name="email_field"
+            id="email_field"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:border-federal_blue focus:outline-none focus:ring-0 focus:border-federal_blue peer"
+            placeholder=" "
+            required
+          />
+          <label
+            for="email_field"
+            class="pt-2 peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-federal_blue peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >Email</label
+          >
+        </div>
+        <div *ngIf="form.controls.email.touched && form.controls.email.invalid">
+          <p
+            *ngIf="form.controls.email.hasError('required')"
+            class="font-medium text-red-500 text-xs mt-1 mb-4 ml-1"
+          >
+            El Email es obligatorio
+          </p>
+          <p
+            *ngIf="form.controls.email.hasError('email')"
+            class="font-medium text-red-500 text-xs mt-1 mb-4 ml-1"
+          >
+            El email no tiene el formato correcto
+          </p>
+        </div>
+        <div class="relative z-0 w-full mb-3 group pt-2 flex">
+          <input
+            #nameInput
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="password"
+            name="password_field"
+            id="password_field"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:border-federal_blue focus:outline-none focus:ring-0 focus:border-federal_blue peer"
+            placeholder=" "
+            required
+          />
+          <button
+          type="button"
+          class="p-2 absolute right-2 text-federal_blue"
+          (click)="showPassword = !showPassword"
+        >
+          <fa-icon [icon]="showPassword ? faEye : faEyeSlash"></fa-icon>
+        </button>
+          <label
+            for="password_field"
+            class="pt-2 peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-federal_blue peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >Contraseña</label
+          >
+        </div>
+        <div
+          *ngIf="
+            form.controls.password.touched && form.controls.password.invalid
+          "
+        >
+          <p
+            *ngIf="form.controls.email.hasError('required')"
+            class="font-medium text-red-500 text-xs mt-1 mb-4 ml-1"
+          >
+            La Contraseña es obligatoria
+          </p>
+          <p
+            *ngIf="form.controls.password.hasError('minlength')"
+            class="font-medium text-red-500 text-xs mt-1 mb-4 ml-1"
+          >
+            La contraseña debe tener minimo 8 caracteres
+          </p>
+        </div>
+        <div class="relative z-0 w-full mb-3 group pt-2">
+          <input
+            #nameInput
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="confirmPassword"
+            name="passwordConfirm_field"
+            id="passwordConfirm_field"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:border-federal_blue focus:outline-none focus:ring-0 focus:border-federal_blue peer"
+            placeholder=" "
+            required
+          />
+          <label
+            for="passwordConfirm_field"
+            class="pt-2 peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-federal_blue peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >Confirmar Contraseña</label
+          >
+        </div>
+        <div
+          *ngIf="
+            form.controls.confirmPassword.touched &&
+            form.controls.confirmPassword.invalid
+          "
+        >
+          <p
+            *ngIf="form.controls.confirmPassword.hasError('required')"
+            class="font-medium text-red-500 text-xs mt-1 mb-4 ml-1"
+          >
+            La confirmacion de la contraseña es obligatoria
+          </p>
+         
+        </div>
+        <div *ngIf="form.controls.confirmPassword.touched">
+            <p
+              *ngIf="form.hasError('mismatch')"
+              class="font-medium text-red-500 text-xs mt-1 ml-1"
+            >
+              Las contraseñas no son iguales
+            </p>
+          </div>
+      </div>
+      <div *ngIf="action; else editUserButton">
+        <button
+          class="py-2 px-2 text-xs rounded bg-federal_blue hover:bg-federal_blue-300 transition-colors duration-300 text-white"
+        >
+          <fa-icon
+            title="Editar Usuario"
+            class="text-white"
+            [icon]="faUserPlus"
+          ></fa-icon>
+          Crear
+        </button>
+      </div>
+      <ng-template #editUserButton>
+        <button
+          class="py-2 px-2 text-xs rounded bg-federal_blue hover:bg-federal_blue-300 transition-colors duration-300 text-white"
+        >
+          <fa-icon
+            title="Editar Usuario"
+            class="text-white"
+            [icon]="faPenToSquare"
+          ></fa-icon>
+          Editar
+        </button>
+      </ng-template>
+    </form>
+  </div>
 </div>

@@ -7,8 +7,9 @@ import {
   FormBuilder, Validators, FormControl, FormGroup,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { CustomValidators } from '../../../../utils/validators';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faUserPlus, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faUserPlus, faPenToSquare,faEye,faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 interface OutputData {
   rta: boolean;
@@ -30,11 +31,18 @@ interface InputData {
 export class DialogAdminUserComponent {
   faUserPlus=faUserPlus;
   faPenToSquare=faPenToSquare;
+  faEye = faEye;
+  faEyeSlash = faEyeSlash;
   form = this.formBuilder.nonNullable.group({
     email: ['', [Validators.required]],
+    password: ['', [Validators.minLength(8), Validators.required]],
+    confirmPassword: ['', [Validators.required]], 
+  }, {
+    validators: [ CustomValidators.MatchValidator('password', 'confirmPassword') ]
   });
   action: actionUserAdmin;
   dataUser: userAdminModel;
+  showPassword = false;
   constructor(
     private formBuilder: FormBuilder,
     private dialogRef: DialogRef<OutputData>,

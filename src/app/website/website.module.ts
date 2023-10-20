@@ -5,6 +5,7 @@ import { NavComponent } from './components/nav/nav.component';
 import { DashboardComponent } from './modules/dashboard/pages/dashboard/dashboard.component';
 import { UserAdminComponent } from './modules/users/pages/user-admin/user-admin.component';
 import { DialogAdminUserComponent } from './modules/users/components/dialog-admin-user/dialog-admin-user.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 
 
@@ -12,12 +13,13 @@ import { DialogAdminUserComponent } from './modules/users/components/dialog-admi
   declarations: [
     LayoutComponent,
     NavComponent,
-    DashboardComponent,
-    UserAdminComponent,
-    DialogAdminUserComponent
+    // SpinnerComponent
   ],
   imports: [
     CommonModule
+  ],
+  exports:[
+    // SpinnerComponent
   ]
 })
 export class WebsiteModule { }

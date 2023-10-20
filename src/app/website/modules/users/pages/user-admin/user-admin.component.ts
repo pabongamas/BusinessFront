@@ -9,13 +9,14 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPenToSquare,faEraser,faUserPlus,faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons';
 import {DialogModule,Dialog} from '@angular/cdk/dialog';
 import { DialogAdminUserComponent } from '../../components/dialog-admin-user/dialog-admin-user.component';
+import { SpinnerComponent } from 'src/app/website/components/spinner/spinner.component';
 
 @Component({
   selector: 'app-user-admin',
   templateUrl: './user-admin.component.html',
   standalone: true,
   styleUrls: ['./user-admin.component.sass'],
-  imports: [CdkTableModule, NgFor,MatIconModule,FontAwesomeModule,DialogModule]
+  imports: [CdkTableModule, NgFor,MatIconModule,FontAwesomeModule,DialogModule,SpinnerComponent]
 })
 export class UserAdminComponent implements OnInit {
   faPenToSquare = faPenToSquare;
@@ -23,6 +24,7 @@ export class UserAdminComponent implements OnInit {
   faUserPlus=faUserPlus;
   faMagnifyingGlass=faMagnifyingGlass;
   dataUser: userAdminModel[] = [];
+  loading=false;
   private service = inject(UserService);
   constructor(
     private dialog: Dialog,
@@ -31,6 +33,7 @@ export class UserAdminComponent implements OnInit {
   }
   dataSource = new DataSourceUserAdmin();
   ngOnInit(): void {
+    this.loading=true;
     this.service.search('', []).subscribe((data) => {
       data.map((item) => {
         item.business = item.BusinessxUser.map((obj) => obj.name).join(',');
@@ -39,6 +42,7 @@ export class UserAdminComponent implements OnInit {
       });
       this.dataUser = data;
       this.dataSource.init(this.dataUser);
+      this.loading=false;
     });
   }
   openDialog(create:boolean,user:userAdminModel|null) {
