@@ -7,6 +7,7 @@ export interface userAdminModel {
   roles:rolesUser[];
   business:string;
   rolesData:string,
+  password:string,
 }
 export interface actionUserAdmin{
   action:boolean;

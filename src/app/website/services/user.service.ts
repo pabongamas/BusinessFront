@@ -28,4 +28,10 @@ export class UserService {
     }
     return this.http.get<userAdminModel[]>(`${this.API_URL}/api/v1/users`);
   }
+  create( email: string, password: string) {
+    return this.http.post(`${this.API_URL}/api/v1/users`, {
+      email,
+      password
+    });
+  }
 }

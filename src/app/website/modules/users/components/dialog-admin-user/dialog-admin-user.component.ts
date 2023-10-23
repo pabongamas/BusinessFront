@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject,inject } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
 import { actionUserAdmin } from '../../models/userAdmin.model';
@@ -10,6 +10,8 @@ import {
 import { CustomValidators } from '../../../../utils/validators';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faUserPlus, faPenToSquare,faEye,faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+
+import { UserService } from './../../../../services/user.service';
 
 interface OutputData {
   rta: boolean;
@@ -34,7 +36,7 @@ export class DialogAdminUserComponent {
   faEye = faEye;
   faEyeSlash = faEyeSlash;
   form = this.formBuilder.nonNullable.group({
-    email: ['', [Validators.required]],
+    email: ['', [Validators.required,Validators.email]],
     password: ['', [Validators.minLength(8), Validators.required]],
     confirmPassword: ['', [Validators.required]], 
   }, {
@@ -43,6 +45,7 @@ export class DialogAdminUserComponent {
   action: actionUserAdmin;
   dataUser: userAdminModel;
   showPassword = false;
+  private service = inject(UserService);
   constructor(
     private formBuilder: FormBuilder,
     private dialogRef: DialogRef<OutputData>,
@@ -51,7 +54,30 @@ export class DialogAdminUserComponent {
     this.action = data.action;
     this.dataUser = data.dataUser;
   }
+  
   actionForm(action: actionUserAdmin) {
+   
+   if(action){
+    if (this.form.valid) {
+      const { email, password } = this.form.getRawValue();
+      this.service.create(email,password)
+      .subscribe({
+        next: () => {
+          this.close();
+        },
+        error: () => {
+          // this.status = 'failed';
+        }
+      });
+    } else {
+      this.form.markAllAsTouched();
+    }
 
+   }else{
+    
+   }
+  }
+  close() {
+    this.dialogRef.close();
   }
 }
