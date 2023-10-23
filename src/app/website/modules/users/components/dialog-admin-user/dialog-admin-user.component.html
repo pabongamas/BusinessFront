@@ -44,7 +44,7 @@
             El email no tiene el formato correcto
           </p>
         </div>
-        <div class="relative z-0 w-full mb-3 group pt-2 flex">
+        <div class="relative z-0 w-full mb-3 group pt-2 flex" *ngIf="!isEditing">
           <input
             #nameInput
             [type]="showPassword ? 'text' : 'password'"
@@ -86,7 +86,7 @@
             La contraseña debe tener minimo 8 caracteres
           </p>
         </div>
-        <div class="relative z-0 w-full mb-3 group pt-2">
+        <div class="relative z-0 w-full mb-3 group pt-2" *ngIf="!isEditing">
           <input
             #nameInput
             [type]="showPassword ? 'text' : 'password'"
@@ -115,7 +115,7 @@
           >
             La confirmacion de la contraseña es obligatoria
           </p>
-         
+
         </div>
         <div *ngIf="form.controls.confirmPassword.touched">
             <p

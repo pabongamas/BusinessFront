@@ -34,6 +34,7 @@ export class DialogAdminUserComponent {
   faPenToSquare = faPenToSquare;
   faEye = faEye;
   faEyeSlash = faEyeSlash;
+  isEditing = false;
   form = this.formBuilder.nonNullable.group(
     {
       email: ['', [Validators.required, Validators.email]],
@@ -58,6 +59,18 @@ export class DialogAdminUserComponent {
   ) {
     this.action = data.action;
     this.dataUser = data.dataUser;
+    if (!this.action) {
+      this.isEditing = true;
+      this.form = this.formBuilder.nonNullable.group({
+        email: ['', [Validators.required, Validators.email]],
+        password: [''],
+        confirmPassword: [''],
+      });
+      this.form.patchValue({
+        email: data.dataUser.email,
+      });
+    } else {
+    }
   }
 
   actionForm(action: actionUserAdmin) {
@@ -81,7 +94,18 @@ export class DialogAdminUserComponent {
         this.form.markAllAsTouched();
       }
     } else {
-      this.loadingService.setLoading(true, 'Editando usuario ...');
+      if (this.form.valid) {
+        this.loadingService.setLoading(true, 'Editando usuario ...');
+        const { email } = this.form.getRawValue();
+        this.service.update(this.dataUser.id, email).subscribe({
+          next: () => {
+            this.close();
+            this.loadingService.setLoading(false, '');
+          },
+        });
+      } else {
+        this.form.markAllAsTouched();
+      }
     }
   }
   close() {

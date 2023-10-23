@@ -72,8 +72,10 @@ export class UserAdminComponent implements OnInit {
   }
   openDialog(create: boolean, user: userAdminModel | null) {
     const dialogRef = this.dialog.open(DialogAdminUserComponent, {
-      minWidth: '50%',
-      maxWidth: '50%',
+      width: '400px', // Ancho del dialog
+      height: '300px', // Alto del dialog
+      maxWidth: '90vw', // Máximo ancho en relación al viewport
+      maxHeight: '90vh', // Máximo alto en relación al viewport
       data: {
         action: create,
         dataUser: user,
