@@ -12,6 +12,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faUserPlus, faPenToSquare,faEye,faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 import { UserService } from './../../../../services/user.service';
+import { LoadingService } from './../../../../services/loading.service';
 
 interface OutputData {
   rta: boolean;
@@ -26,26 +27,30 @@ interface InputData {
   templateUrl: './dialog-admin-user.component.html',
   standalone: true,
   styleUrls: ['./dialog-admin-user.component.sass'],
-  imports: [NgIf, ReactiveFormsModule,FontAwesomeModule]
+  imports: [NgIf, ReactiveFormsModule, FontAwesomeModule],
 })
-
-
 export class DialogAdminUserComponent {
-  faUserPlus=faUserPlus;
-  faPenToSquare=faPenToSquare;
+  faUserPlus = faUserPlus;
+  faPenToSquare = faPenToSquare;
   faEye = faEye;
   faEyeSlash = faEyeSlash;
-  form = this.formBuilder.nonNullable.group({
-    email: ['', [Validators.required,Validators.email]],
-    password: ['', [Validators.minLength(8), Validators.required]],
-    confirmPassword: ['', [Validators.required]], 
-  }, {
-    validators: [ CustomValidators.MatchValidator('password', 'confirmPassword') ]
-  });
+  form = this.formBuilder.nonNullable.group(
+    {
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.minLength(8), Validators.required]],
+      confirmPassword: ['', [Validators.required]],
+    },
+    {
+      validators: [
+        CustomValidators.MatchValidator('password', 'confirmPassword'),
+      ],
+    }
+  );
   action: actionUserAdmin;
   dataUser: userAdminModel;
   showPassword = false;
   private service = inject(UserService);
+  private loadingService = inject(LoadingService);
   constructor(
     private formBuilder: FormBuilder,
     private dialogRef: DialogRef<OutputData>,
@@ -54,28 +59,30 @@ export class DialogAdminUserComponent {
     this.action = data.action;
     this.dataUser = data.dataUser;
   }
-  
-  actionForm(action: actionUserAdmin) {
-   
-   if(action){
-    if (this.form.valid) {
-      const { email, password } = this.form.getRawValue();
-      this.service.create(email,password)
-      .subscribe({
-        next: () => {
-          this.close();
-        },
-        error: () => {
-          // this.status = 'failed';
-        }
-      });
-    } else {
-      this.form.markAllAsTouched();
-    }
 
-   }else{
-    
-   }
+  actionForm(action: actionUserAdmin) {
+    if (action) {
+      if (this.form.valid) {
+        this.loadingService.setLoading(true, 'Creando usuario ...');
+        const { email, password } = this.form.getRawValue();
+        this.service.create(email, password).subscribe({
+          next: () => {
+            this.close();
+            this.loadingService.setLoading(false, '');
+          },
+          error: (error) => {
+            this.loadingService.setLoading(
+              true,
+              `Ha ocurrido un error ${error.message}...`
+            );
+          },
+        });
+      } else {
+        this.form.markAllAsTouched();
+      }
+    } else {
+      this.loadingService.setLoading(true, 'Editando usuario ...');
+    }
   }
   close() {
     this.dialogRef.close();

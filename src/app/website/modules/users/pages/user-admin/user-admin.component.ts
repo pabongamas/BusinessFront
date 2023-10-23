@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { userAdminModel } from './../../models/userAdmin.model';
 import { DataSourceUserAdmin } from './dataSourceUserAdmin';
 import { UserService } from './../../../../services/user.service';
+import { LoadingService } from './../../../../services/loading.service';
 import { NgFor } from '@angular/common';
 import { CdkTableModule } from '@angular/cdk/table';
 import { MatIconModule } from '@angular/material/icon';
@@ -39,10 +40,17 @@ export class UserAdminComponent implements OnInit {
   loading = false;
   textSpinner = '';
   private service = inject(UserService);
+  private LoadingService = inject(LoadingService);
   constructor(private dialog: Dialog) {}
   dataSource = new DataSourceUserAdmin();
   ngOnInit(): void {
     this.loading = true;
+    this.LoadingService.loading$.subscribe((loading) => {
+      this.loading = loading;
+    });
+    this.LoadingService.loadingMsj$.subscribe((msg) => {
+      this.textSpinner = msg;
+    });
     this.textSpinner = 'Cargando Información de usuarios';
     this.service.search('', []).subscribe({
       next: (data) => {
