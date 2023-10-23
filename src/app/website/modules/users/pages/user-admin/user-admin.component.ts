@@ -25,6 +25,7 @@ export class UserAdminComponent implements OnInit {
   faMagnifyingGlass=faMagnifyingGlass;
   dataUser: userAdminModel[] = [];
   loading=false;
+  textSpinner="";
   private service = inject(UserService);
   constructor(
     private dialog: Dialog,
@@ -34,6 +35,7 @@ export class UserAdminComponent implements OnInit {
   dataSource = new DataSourceUserAdmin();
   ngOnInit(): void {
     this.loading=true;
+    this.textSpinner="Cargando Información de usuarios";
     this.service.search('', []).subscribe((data) => {
       data.map((item) => {
         item.business = item.BusinessxUser.map((obj) => obj.name).join(',');
@@ -42,6 +44,11 @@ export class UserAdminComponent implements OnInit {
       });
       this.dataUser = data;
       this.dataSource.init(this.dataUser);
+      this.loading=false;
+      this.textSpinner="";
+    },
+    (error)=>{
+      this.textSpinner="";
       this.loading=false;
     });
   }
@@ -54,10 +61,5 @@ export class UserAdminComponent implements OnInit {
         dataUser:user
       },
     });
-    // dialogRef.closed.subscribe((output) => {
-    //   if (output) {
-    //     console.log(output);
-    //   }
-    // });
   }
 }

@@ -9,4 +9,5 @@ import { NgIf } from '@angular/common';
 })
 export class SpinnerComponent {
   @Input() loading = false;
+  @Input() text="";
 }
