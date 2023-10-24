@@ -16,11 +16,15 @@ import { environment } from './../../../environments/environment';
 export class UserService {
   private dataUser = new BehaviorSubject<userAdminModel[]>([]);
   public dataUser$ = this.dataUser.asObservable();
-  
+
   private fetchUser = new BehaviorSubject<boolean>(false);
   public fetchUser$ = this.fetchUser.asObservable();
 
-  setFetchUsers(find: boolean,) {
+  setdataUser(data: userAdminModel[]) {
+    this.dataUser.next(data);
+  }
+
+  setFetchUsers(find: boolean) {
     this.fetchUser.next(find);
   }
 
