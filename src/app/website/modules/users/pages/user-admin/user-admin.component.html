@@ -40,7 +40,7 @@
               class="py-2 px-2 rounded bg-blue_green hover:bg-blue_green-600 transition-colors duration-300 text-white">
               <fa-icon title="Editar Usuario" class="text-white" [icon]="faPenToSquare"></fa-icon>
             </button>
-            <button
+            <button (click)="deleteUser(data.id)"
               class="py-2 px-2 rounded bg-marian_blue hover:bg-marian_blue-300 transition-colors duration-300 text-white">
               <fa-icon title="Eliminar Usuario" class="text-white" [icon]="faEraser"></fa-icon>
             </button>

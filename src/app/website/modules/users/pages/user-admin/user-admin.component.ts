@@ -44,6 +44,7 @@ export class UserAdminComponent implements OnInit {
   constructor(private dialog: Dialog) {}
   dataSource = new DataSourceUserAdmin();
   ngOnInit(): void {
+  
     this.loading = true;
     this.LoadingService.loading$.subscribe((loading) => {
       this.loading = loading;
@@ -51,24 +52,13 @@ export class UserAdminComponent implements OnInit {
     this.LoadingService.loadingMsj$.subscribe((msg) => {
       this.textSpinner = msg;
     });
-    this.textSpinner = 'Cargando Información de usuarios';
-    this.service.search('', []).subscribe({
-      next: (data) => {
-        data.map((item) => {
-          item.business = item.BusinessxUser.map((obj) => obj.name).join(',');
-          item.rolesData = item.roles.map((obj) => obj.name).join(',');
-          return item;
-        });
-        this.dataUser = data;
-        this.dataSource.init(this.dataUser);
-        this.loading = false;
-        this.textSpinner = '';
-      },
-      error: (error) => {
-        this.textSpinner = '';
-        this.loading = false;
-      },
+    this.service.fetchUser$.subscribe((find)=>{
+      if(find){
+        this.fetchUsers();
+      }
     });
+    this.textSpinner = 'Cargando Información de usuarios';
+    this.fetchUsers();
   }
   openDialog(create: boolean, user: userAdminModel | null) {
     const dialogRef = this.dialog.open(DialogAdminUserComponent, {
@@ -81,5 +71,54 @@ export class UserAdminComponent implements OnInit {
         dataUser: user,
       },
     });
+  }
+  fetchUsers(){
+    this.LoadingService.setLoading(
+      true,
+      `Consultando usuarios`
+    );
+    this.service.search('', []).subscribe({
+      next: (data) => {
+        data.map((item) => {
+          item.business = item.BusinessxUser.map((obj) => obj.name).join(',');
+          item.rolesData = item.roles.map((obj) => obj.name).join(',');
+          return item;
+        });
+        this.dataUser = data;
+        this.dataSource.init(this.dataUser);
+        this.LoadingService.setLoading(
+          false,
+          ``
+        );
+      },
+      error: (error) => {
+        this.LoadingService.setLoading(
+          false,
+          ``
+        );
+      },
+    });
+  }
+  deleteUser(id:string){
+    this.LoadingService.setLoading(
+      true,
+      `Eliminando usuario`
+    );
+    this.service.delete(id)
+    .subscribe({
+      next:(data)=>{
+        this.LoadingService.setLoading(
+          false,
+          ``
+        );
+        this.service.setFetchUsers(true);
+      },
+      error:(error)=>{
+        this.LoadingService.setLoading(
+          false,
+          ``
+        );
+      }
+    })
   }
 }

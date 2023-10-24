@@ -82,11 +82,12 @@ export class DialogAdminUserComponent {
           next: () => {
             this.close();
             this.loadingService.setLoading(false, '');
+            this.service.setFetchUsers(true);
           },
           error: (error) => {
             this.loadingService.setLoading(
               true,
-              `Ha ocurrido un error ${error.message}...`
+              `Ha ocurrido un error: ${error.error.message}`
             );
           },
         });
@@ -101,6 +102,13 @@ export class DialogAdminUserComponent {
           next: () => {
             this.close();
             this.loadingService.setLoading(false, '');
+            this.service.setFetchUsers(true);
+          },
+          error: (error) => {
+            this.loadingService.setLoading(
+              true,
+              `Ha ocurrido un error: ${error.error.message}`
+            );
           },
         });
       } else {
