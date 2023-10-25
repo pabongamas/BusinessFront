@@ -15,23 +15,19 @@ export const routes: Routes = [
         path: 'dashboard',
         loadChildren: () =>
           import('./../dashboard/dashboard.routes').then((m) => m.routes),
-        title: 'App - Dashboard',
+        title: 'Dashboard',
       },
-      // {
-      //   path: 'products',
-      //   loadChildren: () => import('./../products/products.routes').then(m => m.routes),
-      //   title: 'App - Products'
-      // },
-      // {
-      //   path: 'categories',
-      //   loadChildren: () => import('./../categories/categories.routes').then(m => m.routes),
-      //   title: 'App - Categories'
-      // },
       {
         path: 'users',
         loadChildren: () =>
           import('./../users/users.routes').then((m) => m.routes),
-        title: 'App - Users',
+        title: 'Administracion de Usuarios',
+      },
+      {
+        path: 'rols',
+        loadChildren: () =>
+          import('./../rols/rols.routes').then((m) => m.routes),
+        title: 'Administracion de Roles',
       },
     ],
   },
