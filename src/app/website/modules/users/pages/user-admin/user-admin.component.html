@@ -9,10 +9,11 @@
       </div>
       <div class="justify-self-end">
         <button (click)="openDialog(true,null)"
-          class="py-2 px-2 text-xs rounded bg-federal_blue hover:bg-federal_blue-300 transition-colors duration-300 text-white">
+          class=" text-xs p-6px rounded bg-federal_blue hover:bg-federal_blue-300 transition-colors duration-300 text-white flex justify-center items-center p-1 gap-1">
           <fa-icon title="Editar Usuario" class="text-white" [icon]="faUserPlus"></fa-icon>
-          Nuevo
+          <span class="text-xs">Nuevo</span>
         </button>
+
       </div>
     </div>
   </div>
@@ -37,12 +38,14 @@
         <td class="py-4 px-6 text-center">
           <div class="flex items-center justify-center  gap-2">
             <button (click)="openDialog(false,data)"
-              class="py-2 px-2 rounded bg-blue_green hover:bg-blue_green-600 transition-colors duration-300 text-white">
+              class="text-xs p-6px rounded bg-blue_green hover:bg-blue_green-600 transition-colors duration-300 text-white flex justify-center items-center p-1 gap-1">
               <fa-icon title="Editar Usuario" class="text-white" [icon]="faPenToSquare"></fa-icon>
+              <span class="text-xs">Editar</span>
             </button>
             <button (click)="deleteUser(data.id)"
-              class="py-2 px-2 rounded bg-marian_blue hover:bg-marian_blue-300 transition-colors duration-300 text-white">
+              class="text-xs p-6px rounded bg-marian_blue hover:bg-marian_blue-300 transition-colors duration-300 text-white flex justify-center items-center p-1 gap-1">
               <fa-icon title="Eliminar Usuario" class="text-white" [icon]="faEraser"></fa-icon>
+              <span class="text-xs">Eliminar</span>
             </button>
           </div>
         </td>

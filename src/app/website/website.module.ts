@@ -7,12 +7,14 @@ import { UserAdminComponent } from './modules/users/pages/user-admin/user-admin.
 import { DialogAdminUserComponent } from './modules/users/components/dialog-admin-user/dialog-admin-user.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { RolAdminComponent } from './modules/rols/pages/rol-admin/rol-admin.component';
+import { DialogAdminRolComponent } from './modules/rols/components/dialog-admin-rol/dialog-admin-rol.component';
 
 @NgModule({
   declarations: [
     LayoutComponent,
     NavComponent,
     RolAdminComponent,
+    DialogAdminRolComponent,
     // SpinnerComponent
   ],
   imports: [CommonModule],

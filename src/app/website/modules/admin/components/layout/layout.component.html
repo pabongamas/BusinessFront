@@ -1,43 +1,70 @@
 <div class="flex h-screen">
-  <div class="grid w-full m-auto grid-cols-layout">
-    <aside class="bg-federal_blue relative ">
-      <div class="flex items-center justify-center p-4">
+  <div
+    class="grid w-full m-auto transition duration-700 ease-in-out duration-300 transtion transition-grid-template-columns "
+    [ngClass]="(collapsedSidebar) ? 'grid-cols-layoutCollapsed' : 'grid-cols-layout'">
+    <aside class="bg-federal_blue flex flex-col justify-start h-screen">
+      <div class="flex items-center justify-center h-12">
         <div class="logo">
-          <h2 class="text-white font-semibold text-xl">BusinessAdmin</h2>
+          <h2 class="text-white font-medium text-lg" [ngClass]="(collapsedSidebar) ? 'hidden' : ''">BusinessAdmin</h2>
         </div>
       </div>
-      <div class="sidebar bg-federal_blue flex flex-col">
-        <a
-          [routerLink]="['dashboard']"
-          class="transition-colors duration-500 flex items-center pl-7 p-3 text-federal_blue-900 flex items-center w-full p-2 text-base transition duration-75 group text-federal_blue-900 hover:bg-marian_blue hover:text-white"
-          routerLinkActive="bg-blue_green text-white"
-        >
-          <h3 class="font-medium text-sm">Dashboard</h3>
-        </a>
-        <a
-          routerLink="users"
-          class="transition-colors duration-500 flex items-center pl-7 p-3 text-federal_blue-900 flex items-center w-full p-2 text-base transition duration-75 group text-federal_blue-900 hover:bg-marian_blue hover:text-white"
-          routerLinkActive="bg-blue_green text-white"
-        >
-          <h3 class="font-medium text-sm">Usuarios</h3>
-        </a>
-        <a
-        routerLink="rols"
-        class="transition-colors duration-500 flex items-center pl-7 p-3 text-federal_blue-900 flex items-center w-full p-2 text-base transition duration-75 group text-federal_blue-900 hover:bg-marian_blue hover:text-white"
-        routerLinkActive="bg-blue_green text-white"
-      >
-        <h3 class="font-medium text-sm">Roles</h3>
-      </a>
-        <a
-          href="#"
-          class="transition-colors duration-500 absolute bottom-0 flex items-center pl-7 p-3 text-federal_blue-900 flex items-center w-full p-2 text-base transition duration-75 group text-federal_blue-900 hover:bg-marian_blue hover:text-white"
-          routerLinkActive="bg-blue_green text-white"
-          >
-          <h3 class="font-medium text-sm">Logout</h3>
-        </a>
+      <div class="sidebar bg-federal_blue flex flex-col justify-between h-screen">
+        <div>
+          <a [routerLink]="['dashboard']"
+            class="  transition-colors duration-500 flex items-center pl-3 p-3 text-federal_blue-900 flex items-center w-full p-2 text-base transition  group text-federal_blue-900 hover:bg-marian_blue hover:text-white"
+            routerLinkActive="bg-blue_green text-white border-white border-l-4">
+            <div class="flex gap-2">
+              <fa-icon [icon]="faChartLine"></fa-icon>
+              <h3 class="font-medium text-sm" [ngClass]="(collapsedSidebar) ? 'hidden' : ''">Dashboard</h3>
+            </div>
+          </a>
+          <a routerLink="users"
+            class="transition-colors duration-500 flex items-center pl-3 p-3 text-federal_blue-900 flex items-center w-full p-2 text-base transition  group text-federal_blue-900 hover:bg-marian_blue hover:text-white"
+            routerLinkActive="bg-blue_green text-white border-white border-l-4">
+            <div class="flex gap-2">
+              <fa-icon [icon]="faUsersGear"></fa-icon>
+              <h3 class="font-medium text-sm" [ngClass]="(collapsedSidebar) ? 'hidden' : ''">Usuarios</h3>
+            </div>
+          </a>
+          <a routerLink="rols"
+            class="transition-colors duration-500 flex items-center pl-3 p-3 text-federal_blue-900 flex items-center w-full p-2 text-base transition group text-federal_blue-900 hover:bg-marian_blue hover:text-white"
+            routerLinkActive="bg-blue_green text-white border-white border-l-4">
+            <div class="flex gap-2">
+              <fa-icon [icon]="faUsersLine"></fa-icon>
+              <h3 class="font-medium text-sm" [ngClass]="(collapsedSidebar) ? 'hidden' : ''">Roles</h3>
+            </div>
+          </a>
+        </div>
+        <div>
+          <a href="#"
+            class="transition-colors duration-500 flex items-center pl-3 p-3 text-federal_blue-900 flex items-center w-full p-2 text-base transition  group text-federal_blue-900 hover:bg-marian_blue hover:text-white"
+            routerLinkActive="bg-blue_green text-white border-white border-l-4">
+            <div class="flex gap-2">
+              <fa-icon [icon]="faRightFromBracket"></fa-icon>
+              <h3 class="font-medium text-sm" [ngClass]="(collapsedSidebar) ? 'hidden' : ''">Logout</h3>
+            </div>
+          </a>
+        </div>
       </div>
     </aside>
     <main class="flex-grow h-screen bg-mainApp">
+      <nav class="navbar navbar-static-top min-h-max h-12 bg-white relative flex text-center justify-center items-center"
+        role="navigation">
+        <div class="absolute flex justify-between items-center w-full">
+          <a class="pl-4 float-left cursor-pointer" (click)="toggleCollapsedBar()">
+            <fa-icon title="Menu action" class="text-federal_blue" [icon]="faBars"></fa-icon>
+          </a>
+          <div class="pr-4 float-right">
+            <ul>
+              <li>
+                <a class="cursor-pointer">
+                  <fa-icon title="Ver mi cuenta" class="text-federal_blue" [icon]="faUserGear"></fa-icon>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
       <router-outlet></router-outlet>
     </main>
   </div>

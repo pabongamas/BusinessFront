@@ -3,12 +3,15 @@ module.exports = {
   content: ["./src/**/*.{html,ts}"],
   theme: {
     extend: {
+      spacing: {
+        "6px": "6px",
+      },
       zIndex: {
         1500: "1500",
       },
       gridTemplateColumns: {
         layout: "12rem auto",
-        adminUserButtons: "20rem auto",
+        layoutCollapsed: "3rem auto",
       },
       colors: {
         grayFirst: "#F1F1FB",
