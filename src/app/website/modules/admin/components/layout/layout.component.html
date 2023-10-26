@@ -18,22 +18,55 @@
               <h3 class="font-medium text-sm" [ngClass]="(collapsedSidebar) ? 'hidden' : ''">Dashboard</h3>
             </div>
           </a>
-          <a routerLink="users"
-            class="transition-colors duration-500 flex items-center pl-3 p-3 text-federal_blue-900 flex items-center w-full p-2 text-base transition  group text-federal_blue-900 hover:bg-marian_blue hover:text-white"
-            routerLinkActive="bg-blue_green text-white border-white border-l-4">
-            <div class="flex gap-2">
-              <fa-icon [icon]="faUsersGear"></fa-icon>
-              <h3 class="font-medium text-sm" [ngClass]="(collapsedSidebar) ? 'hidden' : ''">Usuarios</h3>
-            </div>
-          </a>
-          <a routerLink="rols"
-            class="transition-colors duration-500 flex items-center pl-3 p-3 text-federal_blue-900 flex items-center w-full p-2 text-base transition group text-federal_blue-900 hover:bg-marian_blue hover:text-white"
-            routerLinkActive="bg-blue_green text-white border-white border-l-4">
-            <div class="flex gap-2">
-              <fa-icon [icon]="faUsersLine"></fa-icon>
-              <h3 class="font-medium text-sm" [ngClass]="(collapsedSidebar) ? 'hidden' : ''">Roles</h3>
-            </div>
-          </a>
+          <!-- <a routerLink="users"
+                                                              class="transition-colors duration-500 flex items-center pl-3 p-3 text-federal_blue-900 flex items-center w-full p-2 text-base transition  group text-federal_blue-900 hover:bg-marian_blue hover:text-white"
+                                                              routerLinkActive="bg-blue_green text-white border-white border-l-4">
+                                                              <div class="flex gap-2">
+                                                                <fa-icon [icon]="faUsersGear"></fa-icon>
+                                                                <h3 class="font-medium text-sm" [ngClass]="(collapsedSidebar) ? 'hidden' : ''">Usuarios</h3>
+                                                              </div>
+                                                            </a>
+                                                            <a routerLink="rols"
+                                                              class="transition-colors duration-500 flex items-center pl-3 p-3 text-federal_blue-900 flex items-center w-full p-2 text-base transition group text-federal_blue-900 hover:bg-marian_blue hover:text-white"
+                                                              routerLinkActive="bg-blue_green text-white border-white border-l-4">
+                                                              <div class="flex gap-2">
+                                                                <fa-icon [icon]="faUsersLine"></fa-icon>
+                                                                <h3 class="font-medium text-sm" [ngClass]="(collapsedSidebar) ? 'hidden' : ''">Roles</h3>
+                                                              </div>
+                                                            </a> -->
+          <cdk-accordion>
+            <cdk-accordion-item #accordionMenu="cdkAccordionItem">
+              <button
+                class="transition-colors duration-500 flex items-center pl-3 p-3 text-federal_blue-900 flex items-center w-full p-2 text-base transition  group text-federal_blue-900 hover:bg-marian_blue hover:text-white"
+                type="button" (click)="accordionMenu.toggle()">
+                <div class="flex gap-2">
+                  <fa-icon [icon]="faUsersGear"></fa-icon>
+                  <h3 class="font-medium text-sm" [ngClass]="(collapsedSidebar) ? 'hidden' : ''">Administracion</h3>
+                  <fa-icon [icon]="accordionMenu.expanded ||menuAdminOpen ? faAngleUp : faAngleDown"></fa-icon>
+                </div>
+              </button>
+              <div [ngClass]="(accordionMenu.expanded||menuAdminOpen ) ? '' : 'hidden'">
+                <ul class="w-full flex flex-col text-federal_blue-900 ">
+                  <a routerLink="users"
+                    class="transition-colors duration-500 flex items-center pl-3 p-3 text-federal_blue-900 flex items-center w-full p-2 text-base transition  group text-federal_blue-900 hover:bg-marian_blue hover:text-white"
+                    routerLinkActive="bg-blue_green text-white border-white border-l-4">
+                    <div class="flex gap-2">
+                      <fa-icon [icon]="faUsersGear"></fa-icon>
+                      <h3 class="font-medium text-sm" [ngClass]="(collapsedSidebar) ? 'hidden' : ''">Usuarios</h3>
+                    </div>
+                  </a>
+                  <a routerLink="rols"
+                    class="transition-colors duration-500 flex items-center pl-3 p-3 text-federal_blue-900 flex items-center w-full p-2 text-base transition group text-federal_blue-900 hover:bg-marian_blue hover:text-white"
+                    routerLinkActive="bg-blue_green text-white border-white border-l-4">
+                    <div class="flex gap-2">
+                      <fa-icon [icon]="faUsersLine"></fa-icon>
+                      <h3 class="font-medium text-sm" [ngClass]="(collapsedSidebar) ? 'hidden' : ''">Roles</h3>
+                    </div>
+                  </a>
+                </ul>
+                </div>
+                </cdk-accordion-item>
+                </cdk-accordion>
         </div>
         <div>
           <a href="#"
