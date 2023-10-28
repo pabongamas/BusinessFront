@@ -16,6 +16,8 @@ import {
 import { DialogModule, Dialog } from '@angular/cdk/dialog';
 import { DialogAdminRolComponent } from '../../components/dialog-admin-rol/dialog-admin-rol.component';
 import { SpinnerComponent } from 'src/app/website/components/spinner/spinner.component';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { debounceTime, of, switchMap } from 'rxjs';
 @Component({
   selector: 'app-rol-admin',
   standalone: true,
@@ -28,6 +30,7 @@ import { SpinnerComponent } from 'src/app/website/components/spinner/spinner.com
     FontAwesomeModule,
     DialogModule,
     SpinnerComponent,
+    ReactiveFormsModule,
   ],
 })
 export class RolAdminComponent {
@@ -42,6 +45,7 @@ export class RolAdminComponent {
   private LoadingService = inject(LoadingService);
   constructor(private dialog: Dialog) {}
   dataSource = new DataSourceRolAdmin();
+  inputSearch = new FormControl('', { nonNullable: true });
   ngOnInit(): void {
     this.service.dataRol$.subscribe((data) => {
       this.dataRol = data;
@@ -64,6 +68,29 @@ export class RolAdminComponent {
       }
     });
     this.textSpinner = 'Cargando Información de Roles';
+    this.inputSearch.valueChanges
+      .pipe(
+        debounceTime(300),
+        switchMap((value) => {
+          if (value) {
+            this.LoadingService.setLoading(true, `Realizando Busqueda ...`);
+            return this.service.searchRol(value);
+          } else {
+            this.LoadingService.setLoading(false, ``);
+            // Si el valor está vacío, retornar un observable vacío
+            this.service.setfechRols(true);
+            return of(null);
+          }
+        })
+      )
+      .subscribe((data) => {
+        if (data) {
+          this.LoadingService.setLoading(false, ``);
+          this.dataRol = data;
+          this.dataSource.init(this.dataRol);
+          this.service.setdataRol(this.dataRol);
+        }
+      });
   }
   fetchRoles() {
     this.LoadingService.setLoading(true, `Consultando Roles`);
@@ -93,15 +120,15 @@ export class RolAdminComponent {
   }
 
   deleteRol(id: string) {
-    // this.LoadingService.setLoading(true, `Eliminando usuario`);
-    // this.service.delete(id).subscribe({
-    //   next: (data) => {
-    //     this.LoadingService.setLoading(false, ``);
-    //     this.service.setFetchUsers(true);
-    //   },
-    //   error: (error) => {
-    //     this.LoadingService.setLoading(false, ``);
-    //   },
-    // });
+    this.LoadingService.setLoading(true, `Eliminando Rol`);
+    this.service.delete(id).subscribe({
+      next: (data) => {
+        this.LoadingService.setLoading(false, ``);
+        this.service.setfechRols(true);
+      },
+      error: (error) => {
+        this.LoadingService.setLoading(false, ``);
+      },
+    });
   }
 }

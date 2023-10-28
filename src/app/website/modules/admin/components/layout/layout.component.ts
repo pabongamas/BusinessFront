@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgClass } from '@angular/common';
 import {
   Router,
@@ -17,7 +17,11 @@ import {
   faAngleUp,
   faAngleDown,
 } from '@fortawesome/free-solid-svg-icons';
-import { CdkAccordionModule } from '@angular/cdk/accordion';
+import {
+  CdkAccordion,
+  CdkAccordionItem,
+  CdkAccordionModule,
+} from '@angular/cdk/accordion';
 
 @Component({
   selector: 'app-layout',
@@ -33,7 +37,7 @@ import { CdkAccordionModule } from '@angular/cdk/accordion';
     CdkAccordionModule,
   ],
 })
-export class LayoutComponent {
+export class LayoutComponent implements OnInit {
   currentPath: string = '';
   routesAdmin = ['/admin/rols', '/admin/users'];
   faBars = faBars;
@@ -48,16 +52,17 @@ export class LayoutComponent {
   menuAdminOpen = false;
   constructor(private router: Router) {
     this.currentPath = this.router.url;
-    this.routesAdmin.includes(this.currentPath)
-      ? (this.menuAdminOpen = true)
-      : '';
-    // if(this.routesAdmin.includes(this.currentPath)){
-
-    // }
+  }
+  ngOnInit(): void {
+    const adminAccordion: HTMLElement = document.getElementById(
+      'adminAccordion'
+    ) as HTMLElement;
+    if (this.routesAdmin.includes(this.currentPath)) {
+      adminAccordion.click();
+      this.menuAdminOpen = true;
+    }
   }
   toggleCollapsedBar() {
-    console.log('aca');
     this.collapsedSidebar = !this.collapsedSidebar;
-    console.log(this.collapsedSidebar);
   }
 }

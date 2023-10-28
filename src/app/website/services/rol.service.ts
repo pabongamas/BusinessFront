@@ -7,7 +7,11 @@ import {
   HttpStatusCode,
 } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-import { rolAdminModel } from '../modules/rols/models/rolAdmin.model';
+import {
+  rolAdminModel,
+  CreateAdminRolDTO,
+  UpdateRolDTO,
+} from '../modules/rols/models/rolAdmin.model';
 import { DataSourceUserAdmin } from './../modules/users/pages/user-admin/dataSourceUserAdmin';
 import { environment } from './../../../environments/environment';
 @Injectable({
@@ -38,5 +42,20 @@ export class RolService {
       params += '&type=' + types;
     }
     return this.http.get<rolAdminModel[]>(`${this.API_URL}/api/v1/roles`);
+  }
+  create(data: CreateAdminRolDTO) {
+    return this.http.post(`${this.API_URL}/api/v1/roles`, data);
+  }
+  update(id: string, data: UpdateRolDTO) {
+    return this.http.patch(`${this.API_URL}/api/v1/roles/${id}`, data);
+  }
+  delete(id: string) {
+    return this.http.delete(`${this.API_URL}/api/v1/roles/${id}`);
+  }
+  searchRol(data: string) {
+    var params = '?search=' + data;
+    return this.http.get<rolAdminModel[]>(
+      `${this.API_URL}/api/v1/roles/searchRol${params}`
+    );
   }
 }

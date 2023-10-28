@@ -53,4 +53,10 @@ export class UserService {
   delete(id: string) {
     return this.http.delete(`${this.API_URL}/api/v1/users/${id}`);
   }
+  searchUser(data: string) {
+    var params = '?search=' + data;
+    return this.http.get<userAdminModel[]>(
+      `${this.API_URL}/api/v1/users/searchUser${params}`
+    );
+  }
 }

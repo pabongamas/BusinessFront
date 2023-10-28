@@ -16,8 +16,8 @@ import {
 import { DialogModule, Dialog } from '@angular/cdk/dialog';
 import { DialogAdminUserComponent } from '../../components/dialog-admin-user/dialog-admin-user.component';
 import { SpinnerComponent } from 'src/app/website/components/spinner/spinner.component';
-
-
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { debounceTime, of, switchMap } from 'rxjs';
 @Component({
   selector: 'app-user-admin',
   templateUrl: './user-admin.component.html',
@@ -30,6 +30,7 @@ import { SpinnerComponent } from 'src/app/website/components/spinner/spinner.com
     FontAwesomeModule,
     DialogModule,
     SpinnerComponent,
+    ReactiveFormsModule,
   ],
 })
 export class UserAdminComponent implements OnInit {
@@ -44,6 +45,7 @@ export class UserAdminComponent implements OnInit {
   private LoadingService = inject(LoadingService);
   constructor(private dialog: Dialog) {}
   dataSource = new DataSourceUserAdmin();
+  inputSearch = new FormControl('', { nonNullable: true });
   ngOnInit(): void {
     this.service.dataUser$.subscribe((data) => {
       this.dataUser = data;
@@ -66,6 +68,35 @@ export class UserAdminComponent implements OnInit {
       }
     });
     this.textSpinner = 'Cargando Información de usuarios';
+    this.inputSearch.valueChanges
+      .pipe(
+        debounceTime(300),
+        switchMap((value) => {
+          if (value) {
+            this.LoadingService.setLoading(true, `Realizando Busqueda ...`);
+            return this.service.searchUser(value);
+          } else {
+            this.LoadingService.setLoading(false, ``);
+            // Si el valor está vacío, retornar un observable vacío
+            this.service.setFetchUsers(true);
+            return of(null);
+          }
+        })
+      )
+      .subscribe((data) => {
+        if (data) {
+          this.LoadingService.setLoading(false, ``);
+          console.log(data);
+          data.map((item) => {
+            item.business = item.BusinessxUser.map((obj) => obj.name).join(',');
+            item.rolesData = item.roles.map((obj) => obj.name).join(',');
+            return item;
+          });
+          this.dataUser = data;
+          this.dataSource.init(this.dataUser);
+          this.service.setdataUser(this.dataUser);
+        }
+      });
   }
   openDialog(create: boolean, user: userAdminModel | null) {
     const dialogRef = this.dialog.open(DialogAdminUserComponent, {

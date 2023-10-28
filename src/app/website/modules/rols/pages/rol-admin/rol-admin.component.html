@@ -4,15 +4,15 @@
     <div class="pt-2 grid grid-cols-2 ">
       <div class="border rounded-sm bg-white flex relative overflow-x-auto shadow-md sm:rounded-lg items-center pl-3">
         <fa-icon title="Editar Usuario" class="text-grayFirst" [icon]="faMagnifyingGlass"></fa-icon>
-        <input type="text" class="w-full h-full outline-none pl-1 text-sm text-gray-500"
+        <input [formControl]="inputSearch" type="text" class="w-full h-full outline-none pl-1 text-sm text-gray-500"
           placeholder="Ingresa tu busqueda">
       </div>
       <div class="justify-self-end">
         <button (click)="openDialog(true,null)"
-          class="py-2 px-2 text-xs rounded bg-federal_blue hover:bg-federal_blue-300 transition-colors duration-300 text-white">
-          <fa-icon title="Editar Usuario" class="text-white" [icon]="faUserPlus"></fa-icon>
-          Nuevo
-        </button>
+        class=" text-xs p-6px rounded bg-federal_blue hover:bg-federal_blue-300 transition-colors duration-300 text-white flex justify-center items-center p-1 gap-1">
+        <fa-icon title="Editar Rol" class="text-white" [icon]="faUserPlus"></fa-icon>
+        <span class="text-xs">Nuevo</span>
+      </button>
       </div>
     </div>
   </div>
@@ -33,12 +33,14 @@
         <td class="py-4 px-6 text-center">
           <div class="flex items-center justify-center  gap-2">
             <button (click)="openDialog(false,data)"
-              class="py-2 px-2 rounded bg-blue_green hover:bg-blue_green-600 transition-colors duration-300 text-white">
+              class="text-xs p-6px rounded bg-blue_green hover:bg-blue_green-600 transition-colors duration-300 text-white flex justify-center items-center p-1 gap-1">
               <fa-icon title="Editar Usuario" class="text-white" [icon]="faPenToSquare"></fa-icon>
+              <span class="text-xs">Editar</span>
             </button>
             <button (click)="deleteRol(data.id)"
-              class="py-2 px-2 rounded bg-marian_blue hover:bg-marian_blue-300 transition-colors duration-300 text-white">
+              class="text-xs p-6px rounded bg-marian_blue hover:bg-marian_blue-300 transition-colors duration-300 text-white flex justify-center items-center p-1 gap-1">
               <fa-icon title="Eliminar Usuario" class="text-white" [icon]="faEraser"></fa-icon>
+              <span class="text-xs">Eliminar</span>
             </button>
           </div>
         </td>

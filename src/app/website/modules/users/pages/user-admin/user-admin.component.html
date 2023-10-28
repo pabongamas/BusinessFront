@@ -5,7 +5,8 @@
       <div
         class="border rounded-sm bg-white flex relative overflow-x-auto shadow-md sm:rounded-lg items-center pl-3">
           <fa-icon title="Editar Usuario" class="text-grayFirst" [icon]="faMagnifyingGlass"></fa-icon>
-          <input type="text" class="w-full h-full outline-none pl-1 text-sm text-gray-500" placeholder="Ingresa tu busqueda">
+          <input [formControl]="inputSearch" type="text" class="w-full h-full outline-none pl-1 text-sm text-gray-500"
+            placeholder="Ingresa tu busqueda">
       </div>
       <div class="justify-self-end">
         <button (click)="openDialog(true,null)"
