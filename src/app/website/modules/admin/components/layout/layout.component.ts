@@ -15,7 +15,7 @@ import {
   faUsersLine,
   faRightFromBracket,
   faAngleUp,
-  faAngleDown,
+  faAngleDown,faUserTie,faShop
 } from '@fortawesome/free-solid-svg-icons';
 import {
   CdkAccordion,
@@ -39,9 +39,11 @@ import {
 })
 export class LayoutComponent implements OnInit {
   currentPath: string = '';
-  routesAdmin = ['/admin/rols', '/admin/users'];
+  routesAdmin = ['/admin/rols', '/admin/users','/admin/business'];
   faBars = faBars;
+  faShop=faShop;
   faUserGear = faUserGear;
+  faUserTie=faUserTie;
   faChartLine = faChartLine;
   faUsersGear = faUsersGear;
   faUsersLine = faUsersLine;

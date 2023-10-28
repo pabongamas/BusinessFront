@@ -8,6 +8,8 @@ import { DialogAdminUserComponent } from './modules/users/components/dialog-admi
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { RolAdminComponent } from './modules/rols/pages/rol-admin/rol-admin.component';
 import { DialogAdminRolComponent } from './modules/rols/components/dialog-admin-rol/dialog-admin-rol.component';
+import { BusinessAdminComponent } from './modules/business/pages/business-admin/business-admin.component';
+import { DialogAdminBusinessComponent } from './modules/business/components/dialog-admin-business/dialog-admin-business.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +17,8 @@ import { DialogAdminRolComponent } from './modules/rols/components/dialog-admin-
     NavComponent,
     RolAdminComponent,
     DialogAdminRolComponent,
+    BusinessAdminComponent,
+    DialogAdminBusinessComponent,
     // SpinnerComponent
   ],
   imports: [CommonModule],

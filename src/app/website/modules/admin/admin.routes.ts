@@ -29,6 +29,12 @@ export const routes: Routes = [
           import('./../rols/rols.routes').then((m) => m.routes),
         title: 'Administracion de Roles',
       },
+      {
+        path: 'business',
+        loadChildren: () =>
+          import('./../business/business.routes').then((m) => m.routes),
+        title: 'Administracion de Negocios',
+      },
     ],
   },
 ];
