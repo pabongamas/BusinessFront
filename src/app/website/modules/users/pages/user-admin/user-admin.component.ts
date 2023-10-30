@@ -3,7 +3,13 @@ import { userAdminModel } from './../../models/userAdmin.model';
 import { DataSourceUserAdmin } from './dataSourceUserAdmin';
 import { UserService } from './../../../../services/user.service';
 import { LoadingService } from './../../../../services/loading.service';
-import { NgFor } from '@angular/common';
+import {
+  NgFor,
+  NgIf,
+  NgSwitchCase,
+  NgSwitch,
+  NgSwitchDefault,
+} from '@angular/common';
 import { CdkTableModule } from '@angular/cdk/table';
 import { MatIconModule } from '@angular/material/icon';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -12,10 +18,15 @@ import {
   faEraser,
   faUserPlus,
   faMagnifyingGlass,
+  faUserShield,
+  faUserLarge,
+  faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { DialogModule, Dialog } from '@angular/cdk/dialog';
 import { DialogAdminUserComponent } from '../../components/dialog-admin-user/dialog-admin-user.component';
 import { SpinnerComponent } from 'src/app/website/components/spinner/spinner.component';
+import { ButtonComponent } from 'src/app/website/components/button/button.component';
+
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, of, switchMap } from 'rxjs';
 @Component({
@@ -26,17 +37,25 @@ import { debounceTime, of, switchMap } from 'rxjs';
   imports: [
     CdkTableModule,
     NgFor,
+    NgIf,
+    NgSwitchCase,
+    NgSwitch,
+    NgSwitchDefault,
     MatIconModule,
     FontAwesomeModule,
     DialogModule,
     SpinnerComponent,
+    ButtonComponent,
     ReactiveFormsModule,
   ],
 })
 export class UserAdminComponent implements OnInit {
   faPenToSquare = faPenToSquare;
   faEraser = faEraser;
+  faUser = faUser;
   faUserPlus = faUserPlus;
+  faUserShield = faUserShield;
+  faUserLarge = faUserLarge;
   faMagnifyingGlass = faMagnifyingGlass;
   dataUser: userAdminModel[] = [];
   loading = false;

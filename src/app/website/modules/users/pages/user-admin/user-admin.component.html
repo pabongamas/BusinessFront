@@ -2,11 +2,10 @@
   <div class="p-10 pb-0">
     <h1 class=" font-semibold text-xl">Administracion de usuarios</h1>
     <div class="pt-2 grid grid-cols-2 ">
-      <div
-        class="border rounded-sm bg-white flex relative overflow-x-auto shadow-md sm:rounded-lg items-center pl-3">
-          <fa-icon title="Editar Usuario" class="text-grayFirst" [icon]="faMagnifyingGlass"></fa-icon>
-          <input [formControl]="inputSearch" type="text" class="w-full h-full outline-none pl-1 text-sm text-gray-500"
-            placeholder="Ingresa tu busqueda">
+      <div class="border rounded-sm bg-white flex relative overflow-x-auto shadow-md sm:rounded-lg items-center pl-3">
+        <fa-icon title="Editar Usuario" class="text-grayFirst" [icon]="faMagnifyingGlass"></fa-icon>
+        <input [formControl]="inputSearch" type="text" class="w-full h-full outline-none pl-1 text-sm text-gray-500"
+          placeholder="Ingresa tu busqueda">
       </div>
       <div class="justify-self-end">
         <button (click)="openDialog(true,null)"
@@ -25,6 +24,7 @@
       <tr class="text-xs text-federal_blue-100 uppercase">
         <th class="px-6 py-3 text-center">id</th>
         <th class="px-6 py-3 text-center">Email</th>
+        <th class="px-6 py-3 text-center">Rol</th>
         <th class="px-6 py-3 text-center">Negocios</th>
         <th class="px-6 py-3 text-center">Roles</th>
         <th class="px-6 py-3 text-center">Administraci&oacute;n</th>
@@ -34,8 +34,38 @@
       <tr class="border-b border-grayFirst" *ngFor="let data of dataUser">
         <td class="py-4 px-6 text-center">{{ data.id }}</td>
         <td class="py-4 px-6 text-center">{{ data.email }}</td>
-        <td class="py-4 px-6 text-center">{{ data.business }}</td>
-        <td class="py-4 px-6 text-center">{{ data.rolesData }}</td>
+        <td class="py-4 px-6 text-center">
+          <div class=" flex flex-col gap-1" *ngIf="data.roles.length>0;else elseRoles">
+            <app-button [colorNoAction]="true"
+              classData=" text-xs p-6px rounded transition-colors duration-300 flex  text-left-1 gap-1" color="vivid_sky_blue"
+              *ngFor="let rol of data.roles">
+              <div class="flex gap-1">
+                <div [ngSwitch]="rol.id">
+                  <fa-icon *ngSwitchCase="'1'" [icon]="faUserShield"></fa-icon>
+                  <fa-icon *ngSwitchCase="'2'" [icon]="faUserPlus"></fa-icon>
+                  <fa-icon *ngSwitchCase="'3'" [icon]="faUserLarge"></fa-icon>
+                </div>
+                {{rol.name}}
+              </div>
+            </app-button>
+          </div>
+          <ng-template #elseRoles>
+            <div class="text-left">
+              Sin Roles asignados
+            </div>
+          </ng-template>
+        </td>
+        
+        <td class="py-4 px-6 text-center">
+          <app-button
+            classData="text-xs p-6px rounded transition-colors duration-300 flex justify-center items-center p-1 gap-1"
+            class="flex justify-center" color="vivid_sky_blue">Asignacion de Negocios</app-button>
+        </td>
+        <td class="py-4 px-6 text-center">
+          <app-button class="flex justify-center"
+            classData="text-xs p-6px rounded transition-colors duration-300 flex justify-center items-center p-1 gap-1"
+            color="vivid_sky_blue">Asignacion de Roles</app-button>
+        </td>
         <td class="py-4 px-6 text-center">
           <div class="flex items-center justify-center  gap-2">
             <button (click)="openDialog(false,data)"

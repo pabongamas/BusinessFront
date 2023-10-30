@@ -10,6 +10,7 @@ import { RolAdminComponent } from './modules/rols/pages/rol-admin/rol-admin.comp
 import { DialogAdminRolComponent } from './modules/rols/components/dialog-admin-rol/dialog-admin-rol.component';
 import { BusinessAdminComponent } from './modules/business/pages/business-admin/business-admin.component';
 import { DialogAdminBusinessComponent } from './modules/business/components/dialog-admin-business/dialog-admin-business.component';
+import { ButtonComponent } from './components/button/button.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { DialogAdminBusinessComponent } from './modules/business/components/dial
     DialogAdminRolComponent,
     BusinessAdminComponent,
     DialogAdminBusinessComponent,
+    ButtonComponent,
     // SpinnerComponent
   ],
   imports: [CommonModule],
