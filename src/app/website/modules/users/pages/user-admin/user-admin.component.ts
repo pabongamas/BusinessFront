@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { userAdminModel } from './../../models/userAdmin.model';
 import { DataSourceUserAdmin } from './dataSourceUserAdmin';
 import { UserService } from './../../../../services/user.service';
+import { RolService } from './../../../../services/rol.service';
 import { LoadingService } from './../../../../services/loading.service';
 import {
   NgFor,
@@ -24,11 +25,13 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { DialogModule, Dialog } from '@angular/cdk/dialog';
 import { DialogAdminUserComponent } from '../../components/dialog-admin-user/dialog-admin-user.component';
+import { DialogRolAsignationComponent } from '../../components/dialog-rol-asignation/dialog-rol-asignation.component';
 import { SpinnerComponent } from 'src/app/website/components/spinner/spinner.component';
 import { ButtonComponent } from 'src/app/website/components/button/button.component';
 
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, of, switchMap } from 'rxjs';
+import { rolAdminModel } from '../../../rols/models/rolAdmin.model';
 @Component({
   selector: 'app-user-admin',
   templateUrl: './user-admin.component.html',
@@ -60,7 +63,9 @@ export class UserAdminComponent implements OnInit {
   dataUser: userAdminModel[] = [];
   loading = false;
   textSpinner = '';
+  roles:rolAdminModel[]=[];
   private service = inject(UserService);
+  private rolService=inject(RolService);
   private LoadingService = inject(LoadingService);
   constructor(private dialog: Dialog) {}
   dataSource = new DataSourceUserAdmin();
@@ -157,6 +162,33 @@ export class UserAdminComponent implements OnInit {
       },
       error: (error) => {
         this.LoadingService.setLoading(false, ``);
+      },
+    });
+  }
+
+  showAsignationRol(dataUser:userAdminModel){
+    this.LoadingService.setLoading(true, `Consultando roles`);
+    this.rolService.search('',[])
+    .subscribe({
+      next:(data)=>{
+        this.roles=data;
+        this.LoadingService.setLoading(false, ``);
+        this.openDialogRolAsignation(data,dataUser);
+      },
+      error:(error)=>{
+        this.LoadingService.setLoading(false, ``);
+      } 
+    })
+  }
+  openDialogRolAsignation(data:rolAdminModel[],dataUser:userAdminModel){
+    const dialogRef = this.dialog.open(DialogRolAsignationComponent, {
+      width: '500x',
+      height: '300px',
+      maxWidth: '90vw', 
+      maxHeight: '90vh',
+      data: {
+        dataRols: data,
+        dataUser:dataUser
       },
     });
   }

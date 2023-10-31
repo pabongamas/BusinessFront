@@ -22,25 +22,25 @@
   <table class="w-full text-sm text-left text-gray-500 table-auto rounded-lg border overflow-hidden">
     <thead class="bg-grayFirst">
       <tr class="text-xs text-federal_blue-100 uppercase">
-        <th class="px-6 py-3 text-center">id</th>
-        <th class="px-6 py-3 text-center">Email</th>
-        <th class="px-6 py-3 text-center">Rol</th>
-        <th class="px-6 py-3 text-center">Negocios</th>
-        <th class="px-6 py-3 text-center">Roles</th>
-        <th class="px-6 py-3 text-center">Administraci&oacute;n</th>
+        <th class="px-4 py-2 text-center">id</th>
+        <th class="px-4 py-2 text-center">Email</th>
+        <th class="px-4 py-2 text-center">Rol</th>
+        <th class="px-4 py-2 text-center">Negocios</th>
+        <th class="px-4 py-2 text-center">Roles</th>
+        <th class="px-4 py-2 text-center">Administraci&oacute;n</th>
       </tr>
     </thead>
     <tbody class="bg-white">
       <tr class="border-b border-grayFirst" *ngFor="let data of dataUser">
-        <td class="py-4 px-6 text-center">{{ data.id }}</td>
-        <td class="py-4 px-6 text-center">{{ data.email }}</td>
-        <td class="py-4 px-6 text-center">
+        <td class="py-2 px-4 text-center">{{ data.id }}</td>
+        <td class="py-2 px-4 text-center">{{ data.email }}</td>
+        <td class="py-2 px-4 text-center">
           <div class=" flex flex-col gap-1" *ngIf="data.roles.length>0;else elseRoles">
             <app-button [colorNoAction]="true"
               classData=" text-xs p-6px rounded transition-colors duration-300 flex  text-left-1 gap-1" color="vivid_sky_blue"
               *ngFor="let rol of data.roles">
               <div class="flex gap-1">
-                <div [ngSwitch]="rol.id">
+                <div  [ngSwitch]="rol.id">
                   <fa-icon *ngSwitchCase="'1'" [icon]="faUserShield"></fa-icon>
                   <fa-icon *ngSwitchCase="'2'" [icon]="faUserPlus"></fa-icon>
                   <fa-icon *ngSwitchCase="'3'" [icon]="faUserLarge"></fa-icon>
@@ -56,17 +56,17 @@
           </ng-template>
         </td>
         
-        <td class="py-4 px-6 text-center">
+        <td class="py-2 px-4 text-center">
           <app-button
             classData="text-xs p-6px rounded transition-colors duration-300 flex justify-center items-center p-1 gap-1"
             class="flex justify-center" color="vivid_sky_blue">Asignacion de Negocios</app-button>
         </td>
-        <td class="py-4 px-6 text-center">
-          <app-button class="flex justify-center"
+        <td class="py-2 px-4 text-center">
+          <app-button (click)="showAsignationRol(data)" class="flex justify-center"
             classData="text-xs p-6px rounded transition-colors duration-300 flex justify-center items-center p-1 gap-1"
             color="vivid_sky_blue">Asignacion de Roles</app-button>
         </td>
-        <td class="py-4 px-6 text-center">
+        <td class="py-2 px-4 text-center">
           <div class="flex items-center justify-center  gap-2">
             <button (click)="openDialog(false,data)"
               class="text-xs p-6px rounded bg-blue_green hover:bg-blue_green-600 transition-colors duration-300 text-white flex justify-center items-center p-1 gap-1">
