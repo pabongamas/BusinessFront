@@ -1,6 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { NgClass } from '@angular/common';
-import { COLORS, Colors, COLORSNOACTION } from './../../models/colors.model';
+import {
+  COLORS,
+  Colors,
+  COLORSNOACTION,
+  COLORS_FOR_BUTTONS,
+} from './../../models/colors.model';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
   faPenToSquare,
@@ -26,6 +31,7 @@ export class ButtonComponent {
 
   mapColors = COLORS;
   mapColorsNoAction = COLORSNOACTION;
+  mapColorsButtons = COLORS_FOR_BUTTONS;
 
   constructor() {}
 
@@ -34,7 +40,7 @@ export class ButtonComponent {
     if (this.colorNoAction) {
       colors = this.mapColorsNoAction[this.color];
     } else {
-      colors = this.mapColors[this.color];
+      colors = this.mapColorsButtons[this.color];
     }
     if (colors) {
       return colors;

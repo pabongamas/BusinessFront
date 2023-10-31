@@ -25,13 +25,11 @@ interface InputData {
   standalone: true,
   templateUrl: './dialog-rol-asignation.component.html',
   styleUrls: ['./dialog-rol-asignation.component.sass'],
-  imports: [NgIf,NgFor,InputComponent],
+  imports: [NgIf, NgFor, InputComponent],
 })
-
-
 export class DialogRolAsignationComponent {
-  dataRols: rolAdminModel[]=[];
-  dataUser:userAdminModel;
+  dataRols: rolAdminModel[] = [];
+  dataUser: userAdminModel;
   private service = inject(UserService);
   private loadingService = inject(LoadingService);
   constructor(
@@ -39,10 +37,32 @@ export class DialogRolAsignationComponent {
     private dialogRef: DialogRef<OutputData>,
     @Inject(DIALOG_DATA) data: InputData
   ) {
-    this.dataUser=data.dataUser
+    this.dataUser = data.dataUser;
     this.dataRols = data.dataRols;
   }
-  hasRole(usuario: userAdminModel, rol: rolAdminModel): boolean {
-    return usuario.roles.some((userRol: any) => userRol.id === rol.id);
+  hasRole(user: userAdminModel, rol: rolAdminModel): boolean {
+    return user.roles.some((userRol: any) => userRol.id === rol.id);
+  }
+  asignationRol(event: Event, rol: rolAdminModel, user: userAdminModel) {
+    const target = event.target as HTMLInputElement;
+    if (target.checked) {
+      this.service.setRolToUser(rol.id, user.id).subscribe({
+        next: (data) => {
+          this.service.setFetchUsers(true);
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
+    } else {
+      this.service.unsetRolToUser(rol.id, user.id).subscribe({
+        next: (data) => {
+          this.service.setFetchUsers(true);
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
+    }
   }
 }

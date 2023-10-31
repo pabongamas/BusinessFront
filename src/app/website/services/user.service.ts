@@ -59,4 +59,16 @@ export class UserService {
       `${this.API_URL}/api/v1/users/searchUser${params}`
     );
   }
+  setRolToUser(rolId: string, userId: string) {
+    return this.http.post(`${this.API_URL}/api/v1/users/setRol`, {
+      rolId,
+      userId,
+    });
+  }
+  unsetRolToUser(rolId: string, userId: string) {
+    return this.http.post(`${this.API_URL}/api/v1/users/unsetRol`, {
+      rolId,
+      userId,
+    });
+  }
 }

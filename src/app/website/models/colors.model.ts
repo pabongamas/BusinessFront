@@ -11,7 +11,6 @@ export type Colors =
   | 'sky';
 
 export type ObjColors = Record<string, Record<string, boolean>>;
-
 export const COLORS: ObjColors = {
   vivid_sky_blue: {
     'bg-vivid_sky_blue': true,
@@ -65,5 +64,20 @@ export const COLORSNOACTION: ObjColors = {
   vivid_sky_blue: {
     'bg-vivid_sky_blue': true,
     'text-federal_blue': true,
+  },
+};
+export const COLORS_FOR_BUTTONS: ObjColors = {
+  primaryBorder: {
+    'bg-white': true,
+    'border-2 border-honolulu_blue hover:bg-honolulu_blue-900 rounded-full':
+      true,
+  },
+  warningBorder: {
+    'bg-white': true,
+    'border-2 border-federal_blue hover:bg-federal_blue-900 rounded-full': true,
+  },
+  secondaryBorder: {
+    'bg-white': true,
+    'border-2 border-marian_blue hover:bg-marian_blue-900 rounded-full': true,
   },
 };
