@@ -140,7 +140,7 @@
         </div>
       </div>
     </aside>
-    <main class="flex-grow h-screen bg-mainApp">
+    <main class="flex-grow h-screen bg-mainApp" [ngClass]="collapsedSidebar ? 'w-wLayoutCollapsed' : 'w-wLayout'">
       <nav
         class="navbar navbar-static-top min-h-max h-12 bg-white relative flex text-center justify-center items-center"
         role="navigation"
@@ -151,7 +151,7 @@
             (click)="toggleCollapsedBar()"
           >
             <fa-icon
-              
+
               class="text-federal_blue"
               [icon]="faBars"
             ></fa-icon>

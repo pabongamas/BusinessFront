@@ -3,6 +3,10 @@ module.exports = {
   content: ["./src/**/*.{html,ts}"],
   theme: {
     extend: {
+      width: {
+        'wLayoutCollapsed': 'calc(100vw - 3rem)',
+        'wLayout': 'calc(100vw - 12rem)',
+      },
       borderWidth: {
         '0': '0',
         '2': '2px',

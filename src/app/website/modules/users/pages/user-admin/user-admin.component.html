@@ -35,21 +35,19 @@
         <td class="py-2 px-4 text-center">{{ data.id }}</td>
         <td class="py-2 px-4 text-center">{{ data.email }}</td>
         <td class="py-2 px-4 text-center">
-          <div class=" flex  gap-2" *ngIf="data.roles.length>0;else elseRoles">
-            <!-- <app-button [colorNoAction]="true"
-                                                                                                                    classData=" text-xs p-6px rounded transition-colors duration-300 flex  text-left-1 gap-1"
-                                                                                                                    color="vivid_sky_blue" *ngFor="let rol of data.roles"> -->
-            <span *ngFor="let rol of data.roles">
-              <div class="flex gap-1">
+          <div class=" flex flex-col items-start gap-2" *ngIf="data.roles.length>0;else elseRoles">
+            <app-button *ngFor="let rol of data.roles"
+              classData="text-xs px-4 transition-colors duration-300 flex justify-center
+                                                                                                                                                                                                                                                                                                          items-center p-1 gap-1"
+              class="flex justify-center" color="primary">
                 <div [ngSwitch]="rol.id">
                   <fa-icon *ngSwitchCase="'1'" [icon]="faUserShield"></fa-icon>
                   <fa-icon *ngSwitchCase="'2'" [icon]="faUserPlus"></fa-icon>
                   <fa-icon *ngSwitchCase="'3'" [icon]="faUserLarge"></fa-icon>
+                  <fa-icon *ngSwitchDefault [icon]="faUserLarge"></fa-icon>
                 </div>
                 {{rol.name}}
-              </div>
-            <!-- </app-button> -->
-            </span>
+              </app-button>
           </div>
           <ng-template #elseRoles>
             <div class="text-left">

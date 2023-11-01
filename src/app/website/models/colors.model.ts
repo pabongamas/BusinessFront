@@ -80,4 +80,8 @@ export const COLORS_FOR_BUTTONS: ObjColors = {
     'bg-white': true,
     'border-2 border-marian_blue hover:bg-marian_blue-900 rounded-full': true,
   },
+  primary: {
+    'text-honolulu_blue': true,
+    'border-honolulu_blue-900 bg-honolulu_blue-900  rounded': true,
+  },
 };
