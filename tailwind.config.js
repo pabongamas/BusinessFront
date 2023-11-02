@@ -7,6 +7,9 @@ module.exports = {
         'wLayoutCollapsed': 'calc(100vw - 3rem)',
         'wLayout': 'calc(100vw - 12rem)',
       },
+      maxHeight: {
+        'divTableSearch': 'calc(100vh - 15em)',
+      },
       borderWidth: {
         '0': '0',
         '2': '2px',
