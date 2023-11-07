@@ -20,7 +20,7 @@
 </section>
 <div class="m-10 relative overflow-x-auto shadow-md sm:rounded-lg max-h-divTableSearch">
   <table class="w-full text-sm text-left text-gray-500 table-auto rounded-lg border ">
-    <thead class="bg-grayFirst sticky top-0">
+    <thead class="bg-grayFirst sticky top-">
       <tr class="text-xs text-federal_blue-100 uppercase ">
         <th class="px-4 py-2 text-center">id</th>
         <th class="px-4 py-2 text-center">Email</th>
@@ -57,7 +57,7 @@
         </td>
 
         <td class="py-2 px-4 text-center">
-          <app-button
+          <app-button (click)="showAsignationBusiness(data)"
             classData="text-xs px-4 transition-colors duration-300 flex justify-center
                                                                                                                 items-center p-1 gap-1"
             class="flex justify-center" color="secondaryBorder">Configurar</app-button>

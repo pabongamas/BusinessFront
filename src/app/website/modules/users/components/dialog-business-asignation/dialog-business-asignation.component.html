@@ -1,0 +1,52 @@
+<div class="p-6 bg-gray-100 relative rounded shadow">
+  <div>
+    <div>
+      <h1 class="font-semibold text-base">
+        Asignacion de Negocios para el usuario {{ dataUser.email }}
+      </h1>
+    </div>
+  </div>
+  <div class="flex items-center gap-2 w-full">
+    <app-button
+      *ngFor="let rol of dataUser.roles"
+      classData="cursor-auto text-xs px-4 transition-colors duration-300 flex justify-center items-center p-1
+       gap-1"
+      class="flex justify-center"
+      color="primary"
+        (click)="setRolToBusiness($event,rol)"
+    >
+      {{ rol.name }}
+    </app-button>
+  </div>
+  <div>
+    <table
+      class="w-full text-sm text-left text-gray-500 table-auto rounded-lg border overflow-hidden"
+    >
+      <thead class="bg-grayFirst">
+        <tr class="text-xs text-federal_blue-100 uppercase">
+          <th class="px-4 py-2 text-left"></th>
+          <th class="px-4 py-2 text-left">Negocio</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white">
+        <tr
+          class="border-b border-grayFirst"
+          *ngFor="let business of dataBusiness"
+        >
+          <td class="py-2 px-4 text-left">
+            <div class="flex items-center">
+              <!-- <app-input (change)="asignationRol($event,business,dataUser)" [checked]="hasRole(dataUser, business)" typeInput="checkbox" -->
+              <app-input
+                typeInput="checkbox"
+                [checked]="hasBusiness(dataUser, business)"
+                classData="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded"
+                color="vivid_sky_blue"
+              ></app-input>
+            </div>
+          </td>
+          <td class="py-2 px-4 text-left">{{ business.name }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

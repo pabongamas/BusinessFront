@@ -14,6 +14,7 @@ import { ButtonComponent } from './components/button/button.component';
 import { DialogRolAsignationComponent } from './modules/users/components/dialog-rol-asignation/dialog-rol-asignation.component';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
 import { InputComponent } from './components/input/input.component';
+import { DialogBusinessAsignationComponent } from './modules/users/components/dialog-business-asignation/dialog-business-asignation.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { InputComponent } from './components/input/input.component';
     DialogRolAsignationComponent,
     CheckboxComponent,
     InputComponent,
+    DialogBusinessAsignationComponent,
     // SpinnerComponent
   ],
   imports: [CommonModule],
