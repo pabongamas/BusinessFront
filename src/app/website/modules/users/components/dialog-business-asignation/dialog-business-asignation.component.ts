@@ -47,7 +47,6 @@ export class DialogBusinessAsignationComponent {
   }
   setRolToBusiness(event: Event,rol:rolAdminModel){
       const target = event.target as HTMLInputElement;
-      console.log(target);
-      console.log(rol);
+     target.
   }
 }
