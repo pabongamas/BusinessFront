@@ -200,7 +200,6 @@ export class UserAdminComponent implements OnInit {
   /*ASIGNACION BUSINESS */
 
   showAsignationBusiness(dataUser:userAdminModel){
-    console.log(dataUser);
     this.LoadingService.setLoading(true, `Consultando Negocios`);
     this.businessService.search('',[])
     .subscribe({

@@ -6,6 +6,8 @@ import {
   FormBuilder, Validators, FormControl, FormGroup,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faUserPlus, faPenToSquare,faEye,faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 import { UserService } from './../../../../services/user.service';
 import { LoadingService } from './../../../../services/loading.service';
@@ -27,11 +29,21 @@ interface InputData {
   standalone: true,
   templateUrl: './dialog-business-asignation.component.html',
   styleUrls: ['./dialog-business-asignation.component.sass'],
-  imports: [NgIf, NgFor, InputComponent,ButtonComponent],
+  imports: [NgIf, NgFor, InputComponent,ButtonComponent,FontAwesomeModule,ReactiveFormsModule],
 })
 export class DialogBusinessAsignationComponent {
   dataBusiness: businessAdminModel[] = [];
   dataUser: userAdminModel;
+  faUserPlus = faUserPlus;
+  faPenToSquare = faPenToSquare;
+  faEye = faEye;
+  faEyeSlash = faEyeSlash;
+  form = this.formBuilder.nonNullable.group(
+    {
+      business: ['', [Validators.required]],
+      rol: ['', [Validators.required]],
+    }
+  );
   private service = inject(UserService);
   private loadingService = inject(LoadingService);
   constructor(
@@ -41,12 +53,41 @@ export class DialogBusinessAsignationComponent {
   ) {
     this.dataUser = data.dataUser;
     this.dataBusiness = data.dataBusiness;
+    // console.log(this.dataBusiness);
+    // console.log(this.dataUser);
+    console.log(this.hasBusiness(this.dataUser,this.dataBusiness));
   }
-  hasBusiness(user: userAdminModel, business: businessAdminModel): boolean {
-    return user.BusinessxUser.some((userBusiness: any) => userBusiness.id === business.id);
+  hasBusiness(user: userAdminModel, business: businessAdminModel[]): businessAdminModel[]{
+    return business;
   }
-  setRolToBusiness(event: Event,rol:rolAdminModel){
-      const target = event.target as HTMLInputElement;
-     target.
+
+  actionForm() {
+    if (this.form.valid) {
+      this.loadingService.setLoading(true, `Estableciendo negocio con su rol para el  usuario  ${this.dataUser.email}...`);
+      const { business,rol } = this.form.getRawValue();
+      const objData={
+        businessId:business,
+        rolId:rol,
+        userId:this.dataUser.id
+      }
+      this.service.setBusinessRolToUser(objData).subscribe({
+        next: () => {
+          this.close();
+          this.loadingService.setLoading(false, '');
+          this.service.setFetchUsers(true);
+        },
+        error: (error) => {
+          this.loadingService.setLoading(
+            true,
+            `Ha ocurrido un error: ${error.error.message}`
+          );
+        },
+      });
+    }else{
+      this.form.markAllAsTouched();
+    }
+  }
+  close() {
+    this.dialogRef.close();
   }
 }

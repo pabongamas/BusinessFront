@@ -71,4 +71,7 @@ export class UserService {
       userId,
     });
   }
+  setBusinessRolToUser(data:object){
+    return this.http.post(`${this.API_URL}/api/v1/users/setBusiness`, data);
+  }
 }
