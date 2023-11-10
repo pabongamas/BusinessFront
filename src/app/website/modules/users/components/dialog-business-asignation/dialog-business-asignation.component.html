@@ -1,5 +1,42 @@
 <div class="p-6 bg-gray-100 relative rounded shadow">
   <div>
+    <div *ngIf="dataBusinessOfUser.length>0">
+      <div>
+        <h1 class="font-semibold text-base">
+          Negocios por Rol para el usuario {{ dataUser.email }}
+        </h1>
+      </div>
+      <div class="pt-2 pb-4 flex flex-col md:flex-row md:gap-3">
+        <table class="w-full text-sm text-left text-gray-500 table-auto rounded-lg border overflow-hidden">
+          <thead class="bg-grayFirst">
+
+            <tr class="text-xs text-federal_blue-100 uppercase">
+              <th class="px-4 py-2 text-left">Negocio</th>
+              <th class="px-4 py-2 text-left">Rol</th>
+              <th class="px-4 py-2 text-left"></th>
+            </tr>
+          </thead>
+          <tbody class="bg-white">
+
+            <tr class="border-b border-grayFirst" *ngFor="let data of dataBusinessOfUser">
+              <td class="py-2 px-4 text-left">{{data.name}}</td>
+              <td class="py-2 px-4 text-left">
+                {{data.roles?.name}}
+              </td>
+              <td class="py-2 px-4 text-left">
+                <app-button  (click)="deleteBusinessRolUser(dataUser,data.roles?.id,data.id)"
+                classData="text-xs px-4 transition-colors duration-300 flex justify-center  items-center p-1 gap-1" class="flex justify-center"
+                color="secondaryBorder">
+                <fa-icon  class="{{colorsButton['primary']}}"  [icon]="faTrash"></fa-icon>
+              </app-button>
+              </td>
+             
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
     <div>
       <h1 class="font-semibold text-base">
         Asignacion de Negocios para el usuario {{ dataUser.email }}
@@ -12,9 +49,12 @@
         <select formControlName="business" name="business_field"
           class="block py-2.5 pt-5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:border-federal_blue focus:outline-none focus:ring-0 focus:border-federal_blue peer">
           <option value="">Seleccione Negocio</option>
-          <option [value]="business.id" *ngFor="let business of dataBusiness">
-            {{ business.name }}
-          </option>
+          <ng-container *ngFor="let business of dataBusiness">
+            <option [value]="business.id" *ngIf="!businessUser.includes(business.id)">
+              {{ business.name }}
+            </option>
+          </ng-container>
+
         </select>
         <label for="business_field"
           class="pt-2 peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-federal_blue peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Negocio</label>
@@ -29,9 +69,12 @@
         <select formControlName="rol" name="rol_field"
           class="block py-2.5 pt-5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:border-federal_blue focus:outline-none focus:ring-0 focus:border-federal_blue peer">
           <option value="">Seleccione Rol</option>
-          <option [value]="rol.id" *ngFor="let rol of dataUser.roles">
-            {{ rol.name }}
-          </option>
+          <ng-container *ngFor="let rol of dataUser.roles">
+            <option [value]="rol.id" *ngIf="!roleBusinessUser.includes(rol.id)">
+              {{ rol.name }}
+            </option>
+          </ng-container>
+
         </select>
         <label for="rol_field"
           class="pt-4 md:pt-2 peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-federal_blue peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Rol</label>

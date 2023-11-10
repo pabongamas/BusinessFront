@@ -59,4 +59,10 @@ export class BusinessService {
       `${this.API_URL}/api/v1/business/searchBusiness${params}`
     );
   }
+  businessByUser(id:string) {
+    return this.http.post<businessAdminModel[]>(`${this.API_URL}/api/v1/business/businessByUser`, {id});
+  }
+  deleteBusinessRolByUser(userId:string,rolId:number|undefined,businessId:string) {
+    return this.http.post(`${this.API_URL}/api/v1/business/deleteBusinessRolByUser`, {userId,rolId,businessId});
+  }
 }

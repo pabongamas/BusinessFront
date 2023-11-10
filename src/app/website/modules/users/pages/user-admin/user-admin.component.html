@@ -40,14 +40,14 @@
               classData="cursor-auto text-xs px-4 transition-colors duration-300 flex justify-center
                                                                                                                                                                                                                                                                                                           items-center p-1 gap-1"
               class=" flex justify-center" color="primary">
-                <div [ngSwitch]="rol.id">
-                  <fa-icon *ngSwitchCase="'1'" [icon]="faUserShield"></fa-icon>
-                  <fa-icon *ngSwitchCase="'2'" [icon]="faUserPlus"></fa-icon>
-                  <fa-icon *ngSwitchCase="'3'" [icon]="faUserLarge"></fa-icon>
-                  <fa-icon *ngSwitchDefault [icon]="faUserLarge"></fa-icon>
-                </div>
-                {{rol.name}}
-              </app-button>
+              <div [ngSwitch]="rol.id">
+                <fa-icon *ngSwitchCase="'1'" [icon]="faUserShield"></fa-icon>
+                <fa-icon *ngSwitchCase="'2'" [icon]="faUserPlus"></fa-icon>
+                <fa-icon *ngSwitchCase="'3'" [icon]="faUserLarge"></fa-icon>
+                <fa-icon *ngSwitchDefault [icon]="faUserLarge"></fa-icon>
+              </div>
+              {{rol.name}}
+            </app-button>
           </div>
           <ng-template #elseRoles>
             <div class="text-left">
@@ -59,8 +59,8 @@
         <td class="py-2 px-4 text-center">
           <app-button (click)="showAsignationBusiness(data)"
             classData="text-xs px-4 transition-colors duration-300 flex justify-center
-                                                                                                                items-center p-1 gap-1"
-            class="flex justify-center" color="secondaryBorder">Configurar</app-button>
+                                                                                                                items-center p-1 gap-1" class="flex justify-center"
+            color="secondaryBorder">Configurar</app-button>
         </td>
         <td class="py-2 px-4 text-center">
           <app-button (click)="showAsignationRol(data)"
