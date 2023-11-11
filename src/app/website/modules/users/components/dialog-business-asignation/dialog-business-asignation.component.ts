@@ -16,6 +16,7 @@ import { userAdminModel } from '../../models/userAdmin.model';
 
 import { InputComponent } from './../../../../components/input/input.component';
 import { businessAdminModel } from '../../../business/models/businessAdmin.model';
+import { rolesUser } from './../../models/rolesUser.model';
 import { ButtonComponent } from 'src/app/website/components/button/button.component';
 
 import {
@@ -49,7 +50,8 @@ export class DialogBusinessAsignationComponent {
   faTrash=faTrash;
   dataBusinessOfUser: businessAdminModel[] = [];
   roleBusinessUser: string[] = [];
-  businessUser:string[]=[]
+  businessUser:string[]=[];
+  rolesUser:rolesUser[]=[];
   form = this.formBuilder.nonNullable.group(
     {
       business: ['', [Validators.required]],
@@ -66,6 +68,7 @@ export class DialogBusinessAsignationComponent {
     @Inject(DIALOG_DATA) data: InputData
   ) {
     this.dataUser = data.dataUser;
+    this.rolesUser=data.dataUser.roles;
     this.businessByUser(this.dataUser.id);
     this.dataBusiness = data.dataBusiness;
     this.roleBusinessUser = this.hasRole(data.dataUser, this.dataBusinessOfUser);
@@ -107,9 +110,11 @@ export class DialogBusinessAsignationComponent {
       }
       this.service.setBusinessRolToUser(objData).subscribe({
         next: () => {
-          this.close();
           this.loadingService.setLoading(false, '');
           this.service.setFetchUsers(true);
+          this.businessByUser(this.dataUser.id);
+          const indexSelectBusiness=this.dataBusiness.findIndex(obj=>obj.id==business);
+          this.dataBusiness.splice(indexSelectBusiness,1);
         },
         error: (error) => {
           this.loadingService.setLoading(
@@ -130,14 +135,12 @@ export class DialogBusinessAsignationComponent {
     this.businessService.businessByUser(idUser).subscribe({
       next: (data) => {
         const roles=this.dataUser.roles;
-        console.log(roles);
         data.forEach(function(value){
           value.userxBusiness.forEach(function(valueInt){
             value.roles=roles.find(obj=>parseInt(obj.id)===valueInt.UserBusinessRole.role_id);
           });
         });
         this.dataBusinessOfUser = data;
-        console.log(data);
         this.loadingService.setLoading(false, '');
       },
       error: (error) => {
@@ -150,14 +153,11 @@ export class DialogBusinessAsignationComponent {
 
   }
   deleteBusinessRolUser(dataUser:userAdminModel,rolId:number|undefined,businessId:string){
-    console.log(dataUser);
-    console.log(rolId);
-    console.log(businessId);
     this.loadingService.setLoading(true, `Desvinculando Negocio y su rol  para el usuario ${dataUser.email}`);
     this.businessService.deleteBusinessRolByUser(dataUser.id,rolId,businessId).subscribe({
       next: (data) => {
-        console.log(data);
         this.loadingService.setLoading(false, '');
+        this.businessByUser(dataUser.id);
       },
       error: (error) => {
         this.loadingService.setLoading(

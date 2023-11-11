@@ -70,7 +70,7 @@
           class="block py-2.5 pt-5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:border-federal_blue focus:outline-none focus:ring-0 focus:border-federal_blue peer">
           <option value="">Seleccione Rol</option>
           <ng-container *ngFor="let rol of dataUser.roles">
-            <option [value]="rol.id" *ngIf="!roleBusinessUser.includes(rol.id)">
+            <option [value]="rol.id" >
               {{ rol.name }}
             </option>
           </ng-container>
