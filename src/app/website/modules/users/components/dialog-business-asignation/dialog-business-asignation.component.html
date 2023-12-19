@@ -48,7 +48,7 @@
       <div class="relative z-0 w-full group w-full md:w-1/2">
         <select formControlName="business" name="business_field"
           class="block py-2.5 pt-5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:border-federal_blue focus:outline-none focus:ring-0 focus:border-federal_blue peer">
-          <option value="">Seleccione Negocio</option>
+          <option value="none">Seleccione Negocio</option>
           <ng-container *ngFor="let business of dataBusiness">
             <option [value]="business.id" *ngIf="!businessUser.includes(business.id)">
               {{ business.name }}
