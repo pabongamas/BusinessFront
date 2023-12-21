@@ -1,9 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { userAdminModel } from './../../models/userAdmin.model';
 import { DataSourceUserAdmin } from './dataSourceUserAdmin';
-import { UserService } from './../../../../services/user.service';
-import { RolService } from './../../../../services/rol.service';
-import { BusinessService } from 'src/app/website/services/business.service';
+import { UserService } from '../../../../services/admin/user/user.service';
+import { RolService } from '../../../../services/admin/rol/rol.service';
+import { BusinessService } from 'src/app/website/services/admin/business/business.service';
 import { LoadingService } from './../../../../services/loading.service';
 import {
   NgFor,

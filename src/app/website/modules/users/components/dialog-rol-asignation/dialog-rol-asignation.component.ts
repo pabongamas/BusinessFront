@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 
-import { UserService } from './../../../../services/user.service';
+import { UserService } from '../../../../services/admin/user/user.service';
 import { LoadingService } from './../../../../services/loading.service';
 import { userAdminModel } from '../../models/userAdmin.model';
 

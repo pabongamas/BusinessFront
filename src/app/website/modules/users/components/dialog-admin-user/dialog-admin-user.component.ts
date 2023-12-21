@@ -11,7 +11,7 @@ import { CustomValidators } from '../../../../utils/validators';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faUserPlus, faPenToSquare,faEye,faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
-import { UserService } from './../../../../services/user.service';
+import { UserService } from '../../../../services/admin/user/user.service';
 import { LoadingService } from './../../../../services/loading.service';
 
 interface OutputData {

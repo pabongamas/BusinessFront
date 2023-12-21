@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { businessAdminModel } from './../../models/businessAdmin.model';
 import { DataSourceBusinessAdmin } from './dataSourceBusinessAdmin';
-import { BusinessService} from './../../../../services/business.service';
+import { BusinessService} from '../../../../services/admin/business/business.service';
 import { LoadingService } from './../../../../services/loading.service';
 import { NgFor } from '@angular/common';
 import { CdkTableModule } from '@angular/cdk/table';

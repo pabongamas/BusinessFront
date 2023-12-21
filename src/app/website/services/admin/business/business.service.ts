@@ -11,9 +11,9 @@ import {
   businessAdminModel,
   CreateAdminBusinessDTO,
   UpdateBusinessDTO,
-} from '../modules/business/models/businessAdmin.model';
-import { DataSourceBusinessAdmin } from './../modules/business/pages/business-admin/dataSourceBusinessAdmin';
-import { environment } from './../../../environments/environment';
+} from '../../../modules/business/models/businessAdmin.model';
+import { DataSourceBusinessAdmin } from '../../../modules/business/pages/business-admin/dataSourceBusinessAdmin';
+import { environment } from '../../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

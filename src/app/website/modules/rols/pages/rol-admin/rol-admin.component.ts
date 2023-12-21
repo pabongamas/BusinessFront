@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { rolAdminModel } from './../../models/rolAdmin.model';
 import { DataSourceRolAdmin } from './dataSourceRolAdmin';
-import { RolService } from './../../../../services/rol.service';
+import { RolService } from '../../../../services/admin/rol/rol.service';
 import { LoadingService } from './../../../../services/loading.service';
 import { NgFor } from '@angular/common';
 import { CdkTableModule } from '@angular/cdk/table';

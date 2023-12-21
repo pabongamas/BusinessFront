@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
 import { UpdateBusinessDTO, actionBusinessAdmin,businessAdminModel,CreateAdminBusinessDTO } from '../../models/businessAdmin.model';
-import { BusinessService } from 'src/app/website/services/business.service';
+import { BusinessService } from 'src/app/website/services/admin/business/business.service';
 import { LoadingService } from 'src/app/website/services/loading.service';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';

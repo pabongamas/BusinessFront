@@ -35,6 +35,18 @@ export const routes: Routes = [
           import('./../business/business.routes').then((m) => m.routes),
         title: 'Administracion de Negocios',
       },
+      {
+        path: 'categories',
+        loadChildren: () =>
+          import('./../categories/categories.routes').then((m) => m.routes),
+        title: 'Administracion de Categorias',
+      },
+      {
+        path: 'products',
+        loadChildren: () =>
+          import('./../products/products.routes').then((m) => m.routes),
+        title: 'Administracion de Productos',
+      },
     ],
   },
 ];

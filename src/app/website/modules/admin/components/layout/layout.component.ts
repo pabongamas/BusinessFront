@@ -15,7 +15,7 @@ import {
   faUsersLine,
   faRightFromBracket,
   faAngleUp,
-  faAngleDown,faUserTie,faShop
+  faAngleDown,faUserTie,faShop,faList,faLayerGroup
 } from '@fortawesome/free-solid-svg-icons';
 import {
   CdkAccordion,
@@ -50,6 +50,8 @@ export class LayoutComponent implements OnInit {
   faAngleUp = faAngleUp;
   faAngleDown = faAngleDown;
   faRightFromBracket = faRightFromBracket;
+  faList=faList;
+  faLayerGroup=faLayerGroup;
   collapsedSidebar = false;
   menuAdminOpen = false;
   constructor(private router: Router) {

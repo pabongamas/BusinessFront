@@ -3,114 +3,75 @@
     class="grid w-full m-auto transition duration-700 ease-in-out duration-300 transtion transition-grid-template-columns"
     [ngClass]="
       collapsedSidebar ? 'grid-cols-layoutCollapsed' : 'grid-cols-layout'
-    "
-  >
+    ">
     <aside class="bg-federal_blue flex flex-col justify-start h-screen">
       <div class="flex items-center justify-center h-12">
         <div class="logo">
-          <h2
-            class="text-white font-medium text-lg"
-            [ngClass]="collapsedSidebar ? 'hidden' : ''"
-          >
+          <h2 class="text-white font-medium text-lg" [ngClass]="collapsedSidebar ? 'hidden' : ''">
             BusinessAdmin
           </h2>
         </div>
       </div>
-      <div
-        class="sidebar bg-federal_blue flex flex-col justify-between h-screen"
-      >
+      <div class="sidebar bg-federal_blue flex flex-col justify-between h-screen">
         <div>
-          <a
-            [attr.title]="collapsedSidebar ? 'Dashboard' : ''"
-            [routerLink]="['dashboard']"
+          <a [attr.title]="collapsedSidebar ? 'Dashboard' : ''" [routerLink]="['dashboard']"
             class="transition-colors duration-500 flex items-center pl-3 p-3 text-federal_blue-900 flex items-center w-full p-2 text-base transition group text-federal_blue-900 hover:bg-marian_blue hover:text-white"
-            routerLinkActive="bg-blue_green text-white border-white border-l-4"
-          >
+            routerLinkActive="bg-blue_green text-white border-white border-l-4">
             <div class="flex gap-2">
               <fa-icon [icon]="faChartLine"></fa-icon>
-              <h3
-                class="font-medium text-sm"
-                [ngClass]="collapsedSidebar ? 'hidden' : ''"
-              >
+              <h3 class="font-medium text-sm" [ngClass]="collapsedSidebar ? 'hidden' : ''">
                 Dashboard
               </h3>
             </div>
           </a>
           <cdk-accordion>
             <cdk-accordion-item #accordionMenu="cdkAccordionItem">
-              <button
-                id="adminAccordion"
-                [attr.title]="collapsedSidebar ? 'Administracion' : ''"
+              <button id="adminAccordion" [attr.title]="collapsedSidebar ? 'Administracion' : ''"
                 class="transition-colors duration-500 flex items-center pl-3 p-3 text-federal_blue-900 flex items-center w-full p-2 text-base transition group text-federal_blue-900 hover:bg-marian_blue hover:text-white"
-                type="button"
-                (click)="accordionMenu.toggle()"
-              >
+                type="button" (click)="accordionMenu.toggle()">
                 <div class="flex gap-2">
                   <fa-icon [icon]="faUsersGear"></fa-icon>
-                  <h3
-                    class="font-medium text-sm"
-                    [ngClass]="collapsedSidebar ? 'hidden' : ''"
-                  >
+                  <h3 class="font-medium text-sm" [ngClass]="collapsedSidebar ? 'hidden' : ''">
                     Administracion
                   </h3>
-                  <fa-icon
-                    [ngClass]="collapsedSidebar ? 'hidden' : ''"
-                    [icon]="accordionMenu.expanded ? faAngleUp : faAngleDown"
-                  ></fa-icon>
+                  <fa-icon [ngClass]="collapsedSidebar ? 'hidden' : ''"
+                    [icon]="accordionMenu.expanded ? faAngleUp : faAngleDown"></fa-icon>
                 </div>
               </button>
               <div [ngClass]="accordionMenu.expanded ? '' : 'hidden'">
                 <ul class="w-full flex flex-col text-federal_blue-900">
-                  <a
-                    routerLink="users"
-                    [attr.title]="
+                  <a routerLink="users" [attr.title]="
                       collapsedSidebar ? 'Administración de Usuarios' : ''
                     "
                     class="transition-colors duration-500 flex items-center pl-3 p-3 text-federal_blue-900 flex items-center w-full p-2 text-base transition group text-federal_blue-900 hover:bg-marian_blue hover:text-white"
-                    routerLinkActive="bg-blue_green text-white border-white border-l-4"
-                  >
+                    routerLinkActive="bg-blue_green text-white border-white border-l-4">
                     <div class="flex gap-2">
                       <fa-icon [icon]="faUsersGear"></fa-icon>
-                      <h3
-                        class="font-medium text-sm"
-                        [ngClass]="collapsedSidebar ? 'hidden' : ''"
-                      >
+                      <h3 class="font-medium text-sm" [ngClass]="collapsedSidebar ? 'hidden' : ''">
                         Usuarios
                       </h3>
                     </div>
                   </a>
-                  <a
-                    routerLink="rols"
-                    [attr.title]="
+                  <a routerLink="rols" [attr.title]="
                       collapsedSidebar ? 'Administración de Roles' : ''
                     "
                     class="transition-colors duration-500 flex items-center pl-3 p-3 text-federal_blue-900 flex items-center w-full p-2 text-base transition group text-federal_blue-900 hover:bg-marian_blue hover:text-white"
-                    routerLinkActive="bg-blue_green text-white border-white border-l-4"
-                  >
+                    routerLinkActive="bg-blue_green text-white border-white border-l-4">
                     <div class="flex gap-2">
                       <fa-icon [icon]="faUserTie"></fa-icon>
-                      <h3
-                        class="font-medium text-sm"
-                        [ngClass]="collapsedSidebar ? 'hidden' : ''"
-                      >
+                      <h3 class="font-medium text-sm" [ngClass]="collapsedSidebar ? 'hidden' : ''">
                         Roles
                       </h3>
                     </div>
                   </a>
-                  <a
-                    routerLink="business"
-                    [attr.title]="
+                  <a routerLink="business" [attr.title]="
                       collapsedSidebar ? 'Administración de Negocios' : ''
                     "
                     class="transition-colors duration-500 flex items-center pl-3 p-3 text-federal_blue-900 flex items-center w-full p-2 text-base transition group text-federal_blue-900 hover:bg-marian_blue hover:text-white"
-                    routerLinkActive="bg-blue_green text-white border-white border-l-4"
-                  >
+                    routerLinkActive="bg-blue_green text-white border-white border-l-4">
                     <div class="flex gap-2">
                       <fa-icon [icon]="faShop"></fa-icon>
-                      <h3
-                        class="font-medium text-sm"
-                        [ngClass]="collapsedSidebar ? 'hidden' : ''"
-                      >
+                      <h3 class="font-medium text-sm" [ngClass]="collapsedSidebar ? 'hidden' : ''">
                         Negocios
                       </h3>
                     </div>
@@ -119,20 +80,59 @@
               </div>
             </cdk-accordion-item>
           </cdk-accordion>
+          <cdk-accordion>
+            <cdk-accordion-item #accordionCatalogue="cdkAccordionItem">
+              <button id="adminAccordion" [attr.title]="collapsedSidebar ? 'Catalogo' : ''"
+                class="transition-colors duration-500 flex items-center pl-3 p-3 text-federal_blue-900 flex items-center w-full p-2 text-base transition group text-federal_blue-900 hover:bg-marian_blue hover:text-white"
+                type="button" (click)="accordionCatalogue.toggle()">
+                <div class="flex gap-2">
+                  <fa-icon [icon]="faList"></fa-icon>
+                  <h3 class="font-medium text-sm" [ngClass]="collapsedSidebar ? 'hidden' : ''">
+                    Catalogo
+                  </h3>
+                  <fa-icon [ngClass]="collapsedSidebar ? 'hidden' : ''"
+                    [icon]="accordionCatalogue.expanded ? faAngleUp : faAngleDown"></fa-icon>
+                </div>
+              </button>
+              <div [ngClass]="accordionCatalogue.expanded ? '' : 'hidden'">
+                <ul class="w-full flex flex-col text-federal_blue-900">
+                  <a routerLink="categories" [attr.title]="
+                      collapsedSidebar ? 'Administración de Categories' : ''
+                    "
+                    class="transition-colors duration-500 flex items-center pl-3 p-3 text-federal_blue-900 flex items-center w-full p-2 text-base transition group text-federal_blue-900 hover:bg-marian_blue hover:text-white"
+                    routerLinkActive="bg-blue_green text-white border-white border-l-4">
+                    <div class="flex gap-2">
+                      <fa-icon [icon]="faLayerGroup"></fa-icon>
+                      <h3 class="font-medium text-sm" [ngClass]="collapsedSidebar ? 'hidden' : ''">
+                        Categorias
+                      </h3>
+                    </div>
+                  </a>
+                  <a routerLink="products" [attr.title]="
+                  collapsedSidebar ? 'Administración de Productos' : ''
+                " class="transition-colors duration-500 flex items-center pl-3 p-3 text-federal_blue-900 flex items-center w-full p-2 text-base transition group text-federal_blue-900 hover:bg-marian_blue hover:text-white"
+                    routerLinkActive="bg-blue_green text-white border-white border-l-4">
+                    <div class="flex gap-2">
+                      <fa-icon [icon]="faLayerGroup"></fa-icon>
+                      <h3 class="font-medium text-sm" [ngClass]="collapsedSidebar ? 'hidden' : ''">
+                        Productos
+                      </h3>
+                    </div>
+                  </a>
+
+
+                </ul>
+              </div>
+            </cdk-accordion-item>
+          </cdk-accordion>
         </div>
         <div>
-          <a
-            href="#"
-            [attr.title]="collapsedSidebar ? 'Logout' : ''"
+          <a href="#" [attr.title]="collapsedSidebar ? 'Logout' : ''"
             class="transition-colors duration-500 flex items-center pl-3 p-3 text-federal_blue-900 flex items-center w-full p-2 text-base transition group text-federal_blue-900 hover:bg-marian_blue hover:text-white"
-            routerLinkActive="bg-blue_green text-white border-white border-l-4"
-          >
+            routerLinkActive="bg-blue_green text-white border-white border-l-4">
             <div class="flex gap-2">
               <fa-icon [icon]="faRightFromBracket"></fa-icon>
-              <h3
-                class="font-medium text-sm"
-                [ngClass]="collapsedSidebar ? 'hidden' : ''"
-              >
+              <h3 class="font-medium text-sm" [ngClass]="collapsedSidebar ? 'hidden' : ''">
                 Logout
               </h3>
             </div>
@@ -143,28 +143,17 @@
     <main class="flex-grow h-screen bg-mainApp" [ngClass]="collapsedSidebar ? 'w-wLayoutCollapsed' : 'w-wLayout'">
       <nav
         class="navbar navbar-static-top min-h-max h-12 bg-white relative flex text-center justify-center items-center"
-        role="navigation"
-      >
+        role="navigation">
         <div class="absolute flex justify-between items-center w-full">
-          <a  [attr.title]="collapsedSidebar ? 'Expander Menu' : 'Ocultar Menu'"
-            class="pl-4 float-left cursor-pointer"
-            (click)="toggleCollapsedBar()"
-          >
-            <fa-icon
-
-              class="text-federal_blue"
-              [icon]="faBars"
-            ></fa-icon>
+          <a [attr.title]="collapsedSidebar ? 'Expander Menu' : 'Ocultar Menu'" class="pl-4 float-left cursor-pointer"
+            (click)="toggleCollapsedBar()">
+            <fa-icon class="text-federal_blue" [icon]="faBars"></fa-icon>
           </a>
           <div class="pr-4 float-right">
             <ul>
               <li>
                 <a class="cursor-pointer">
-                  <fa-icon
-                    title="Ver mi cuenta"
-                    class="text-federal_blue"
-                    [icon]="faUserGear"
-                  ></fa-icon>
+                  <fa-icon title="Ver mi cuenta" class="text-federal_blue" [icon]="faUserGear"></fa-icon>
                 </a>
               </li>
             </ul>

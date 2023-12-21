@@ -11,9 +11,9 @@ import {
   rolAdminModel,
   CreateAdminRolDTO,
   UpdateRolDTO,
-} from '../modules/rols/models/rolAdmin.model';
-import { DataSourceUserAdmin } from './../modules/users/pages/user-admin/dataSourceUserAdmin';
-import { environment } from './../../../environments/environment';
+} from '../../../modules/rols/models/rolAdmin.model';
+import { DataSourceUserAdmin } from '../../../modules/users/pages/user-admin/dataSourceUserAdmin';
+import { environment } from '../../../../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })

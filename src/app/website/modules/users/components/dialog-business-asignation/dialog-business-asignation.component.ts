@@ -9,8 +9,8 @@ import {
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faUserPlus, faPenToSquare, faEye, faEyeSlash,faTrash } from '@fortawesome/free-solid-svg-icons';
 
-import { UserService } from './../../../../services/user.service';
-import { BusinessService } from 'src/app/website/services/business.service';
+import { UserService } from '../../../../services/admin/user/user.service';
+import { BusinessService } from 'src/app/website/services/admin/business/business.service';
 import { LoadingService } from './../../../../services/loading.service';
 import { userAdminModel } from '../../models/userAdmin.model';
 

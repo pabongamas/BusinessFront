@@ -7,9 +7,9 @@ import {
   HttpStatusCode,
 } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-import { userAdminModel } from './../modules/users/models/userAdmin.model';
-import { DataSourceUserAdmin } from './../modules/users/pages/user-admin/dataSourceUserAdmin';
-import { environment } from './../../../environments/environment';
+import { userAdminModel } from '../../../modules/users/models/userAdmin.model';
+import { DataSourceUserAdmin } from '../../../modules/users/pages/user-admin/dataSourceUserAdmin';
+import { environment } from '../../../../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })

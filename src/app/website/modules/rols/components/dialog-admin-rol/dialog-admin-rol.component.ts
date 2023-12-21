@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
 import { UpdateRolDTO, actionRolAdmin,rolAdminModel ,CreateAdminRolDTO} from '../../models/rolAdmin.model';
-import { RolService } from 'src/app/website/services/rol.service';
+import { RolService } from 'src/app/website/services/admin/rol/rol.service';
 import { LoadingService } from 'src/app/website/services/loading.service';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
