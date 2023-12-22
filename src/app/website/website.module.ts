@@ -17,6 +17,7 @@ import { InputComponent } from './components/input/input.component';
 import { DialogBusinessAsignationComponent } from './modules/users/components/dialog-business-asignation/dialog-business-asignation.component';
 import { CategoriesAdminComponent } from './modules/categories/pages/categories-admin/categories-admin.component';
 import { ProductsAdminComponent } from './modules/products/pages/products-admin/products-admin.component';
+import { DialogAdminCategoriesComponent } from './modules/categories/components/dialog-admin-categories/dialog-admin-categories.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { ProductsAdminComponent } from './modules/products/pages/products-admin/
     DialogBusinessAsignationComponent,
     CategoriesAdminComponent,
     ProductsAdminComponent,
+    DialogAdminCategoriesComponent,
     // SpinnerComponent
   ],
   imports: [CommonModule],

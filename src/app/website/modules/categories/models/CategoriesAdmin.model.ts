@@ -4,3 +4,8 @@ export interface categorieAdminModel {
     image:string;
     create_at:Date;
   }
+
+  export interface actionCategorieAdmin {
+    action: boolean;
+  }
+  

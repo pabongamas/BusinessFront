@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import {DatePipe} from '@angular/common'
 
 import { LoadingService } from './../../../../services/loading.service';
 import { CategorieServiceService } from 'src/app/website/services/admin/categorie/categorie-service.service';
@@ -31,6 +32,9 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, of, switchMap } from 'rxjs';
 import { DataSourceCategorieAdmin } from './dataSourceCategorieAdmin';
 
+import { DialogModule, Dialog } from '@angular/cdk/dialog';
+import { DialogAdminCategoriesComponent } from '../../components/dialog-admin-categories/dialog-admin-categories.component';
+
 @Component({
   selector: 'app-categories-admin',
   templateUrl: './categories-admin.component.html',
@@ -45,7 +49,9 @@ import { DataSourceCategorieAdmin } from './dataSourceCategorieAdmin';
     MatIconModule,
     FontAwesomeModule,
     SpinnerComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DatePipe,
+    DialogModule,
   ]
 })
 export class CategoriesAdminComponent {
@@ -61,6 +67,7 @@ export class CategoriesAdminComponent {
   loading = false;
   textSpinner = '';
   dataCategorie: categorieAdminModel[] = [];
+  constructor(private dialog: Dialog) {}
   private serviceCategorie = inject(CategorieServiceService);
   private LoadingService = inject(LoadingService);
 
@@ -139,16 +146,16 @@ export class CategoriesAdminComponent {
     });
   }
 
-  openDialog(create: boolean, user: categorieAdminModel | null) {
-    // const dialogRef = this.dialog.open(DialogAdminUserComponent, {
-    //   width: '400px', // Ancho del dialog
-    //   height: '300px', // Alto del dialog
-    //   maxWidth: '90vw', // Máximo ancho en relación al viewport
-    //   maxHeight: '90vh', // Máximo alto en relación al viewport
-    //   data: {
-    //     action: create,
-    //     dataUser: user,
-    //   },
-    // });
+  openDialog(create: boolean, categorie: categorieAdminModel | null) {
+    const dialogRef = this.dialog.open(DialogAdminCategoriesComponent, {
+      width: '400px', // Ancho del dialog
+      height: '300px', // Alto del dialog
+      maxWidth: '90vw', // Máximo ancho en relación al viewport
+      maxHeight: '90vh', // Máximo alto en relación al viewport
+      data: {
+        action: create,
+        dataCategorie: categorie,
+      },
+    });
   }
 }

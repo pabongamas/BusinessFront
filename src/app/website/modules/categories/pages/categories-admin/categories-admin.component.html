@@ -33,7 +33,7 @@
             <td class="py-2 px-4 text-center">{{ data.category_id }}</td>
             <td class="py-2 px-4 text-center">{{ data.name }}</td>
             <td class="py-2 px-4 text-center">{{data.image}}</td>
-            <td class="py-2 px-4 text-center">{{data.create_at}}</td>
+            <td class="py-2 px-4 text-center">{{data.create_at| date:'medium'}}</td>
         </tr>
         <!-- <tr class="border-b border-grayFirst table-striped" *ngFor="let data of dataUser">
          
