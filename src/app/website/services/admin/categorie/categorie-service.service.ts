@@ -4,6 +4,10 @@ import { BehaviorSubject } from 'rxjs';
 import { categorieAdminModel } from 'src/app/website/modules/categories/models/CategoriesAdmin.model';
 import { environment } from 'src/environments/environment';
 
+import {
+  CreateAdminCategorieDTO,UpdateCategorieDTO
+} from '../../../modules/categories/models/CategoriesAdmin.model';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -38,6 +42,17 @@ export class CategorieServiceService {
     return this.http.get<categorieAdminModel[]>(
       `${this.API_URL}/api/v1/categories/searchCategorie${params}`
     );
+  }
+
+  create(data: CreateAdminCategorieDTO) {
+    return this.http.post(`${this.API_URL}/api/v1/categories`, data);
+  }
+
+  update(id: number, categorie: UpdateCategorieDTO) {
+    return this.http.patch(`${this.API_URL}/api/v1/categories/${id}`, categorie);
+  }
+  delete(id: number) {
+    return this.http.delete(`${this.API_URL}/api/v1/categories/${id}`);
   }
 
 }

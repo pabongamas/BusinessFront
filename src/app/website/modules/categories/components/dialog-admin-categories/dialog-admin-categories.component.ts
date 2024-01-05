@@ -1,6 +1,6 @@
-import { Component, Inject,inject } from '@angular/core';
+import { Component, Inject, inject } from '@angular/core';
 import { NgIf } from '@angular/common';
-import { actionCategorieAdmin, categorieAdminModel } from '../../models/CategoriesAdmin.model';
+import { CreateAdminCategorieDTO, actionCategorieAdmin, categorieAdminModel, UpdateCategorieDTO } from '../../models/CategoriesAdmin.model';
 import { LoadingService } from 'src/app/website/services/loading.service';
 import {
   FormBuilder, Validators, FormControl, FormGroup,
@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { CustomValidators } from '../../../../utils/validators';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faUserPlus, faPenToSquare,faEye,faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { faUserPlus, faPenToSquare, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 import { CategorieServiceService } from 'src/app/website/services/admin/categorie/categorie-service.service';
 
@@ -24,7 +24,7 @@ interface InputData {
 @Component({
   selector: 'app-dialog-admin-categories',
   templateUrl: './dialog-admin-categories.component.html',
-  standalone:true,
+  standalone: true,
   styleUrls: ['./dialog-admin-categories.component.sass'],
   imports: [NgIf, ReactiveFormsModule, FontAwesomeModule],
 })
@@ -39,7 +39,7 @@ export class DialogAdminCategoriesComponent {
     {
       name: ['', [Validators.required]],
     },
-  
+
   );
   action: actionCategorieAdmin;
   dataCategorie: categorieAdminModel;
@@ -53,49 +53,62 @@ export class DialogAdminCategoriesComponent {
   ) {
     this.action = data.action;
     this.dataCategorie = data.dataCategorie;
+    if (!this.action) {
+      this.isEditing = true;
+      this.form = this.formBuilder.nonNullable.group({
+        name: ['', [Validators.required]],
+      });
+      this.form.patchValue({
+        name: data.dataCategorie.name
+      });
+    } else {
+    }
   }
 
   actionForm(action: actionCategorieAdmin) {
     if (action) {
-      // if (this.form.valid) {
-      //   this.loadingService.setLoading(true, 'Creando usuario ...');
-      //   const { email, password } = this.form.getRawValue();
-      //   this.service.create(email, password).subscribe({
-      //     next: () => {
-      //       this.close();
-      //       this.loadingService.setLoading(false, '');
-      //       this.service.setFetchUsers(true);
-      //     },
-      //     error: (error) => {
-      //       this.loadingService.setLoading(
-      //         true,
-      //         `Ha ocurrido un error: ${error.error.message}`
-      //       );
-      //     },
-      //   });
-      // } else {
-      //   this.form.markAllAsTouched();
-      // }
+      if (this.form.valid) {
+        this.loadingService.setLoading(true, 'Creando categoria ...');
+        const { name } = this.form.getRawValue();
+        const nameData: CreateAdminCategorieDTO = { name };
+        this.service.create(nameData).subscribe({
+          next: () => {
+            this.close();
+            this.loadingService.setLoading(false, '');
+            this.service.setFetchCategorie(true);
+          },
+          error: (error) => {
+            console.log(error);
+            this.loadingService.setLoading(
+              true,
+              `Ha ocurrido un error: ${error.error.message}`
+            );
+          },
+        });
+      } else {
+        this.form.markAllAsTouched();
+      }
     } else {
-      // if (this.form.valid) {
-      //   this.loadingService.setLoading(true, 'Editando usuario ...');
-      //   const { email } = this.form.getRawValue();
-      //   this.service.update(this.dataUser.id, email).subscribe({
-      //     next: () => {
-      //       this.close();
-      //       this.loadingService.setLoading(false, '');
-      //       this.service.setFetchUsers(true);
-      //     },
-      //     error: (error) => {
-      //       this.loadingService.setLoading(
-      //         true,
-      //         `Ha ocurrido un error: ${error.error.message}`
-      //       );
-      //     },
-      //   });
-      // } else {
-      //   this.form.markAllAsTouched();
-      // }
+      if (this.form.valid) {
+        this.loadingService.setLoading(true, 'Editando Categoria ...');
+        const { name } = this.form.getRawValue();
+        const data: UpdateCategorieDTO = { name };
+        this.service.update(this.dataCategorie.category_id, data).subscribe({
+          next: () => {
+            this.close();
+            this.loadingService.setLoading(false, '');
+            this.service.setFetchCategorie(true);
+          },
+          error: (error) => {
+            this.loadingService.setLoading(
+              true,
+              `Ha ocurrido un error: ${error.message}`
+            );
+          },
+        });
+      } else {
+        this.form.markAllAsTouched();
+      }
     }
   }
   close() {

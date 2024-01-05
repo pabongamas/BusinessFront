@@ -34,6 +34,18 @@
             <td class="py-2 px-4 text-center">{{ data.name }}</td>
             <td class="py-2 px-4 text-center">{{data.image}}</td>
             <td class="py-2 px-4 text-center">{{data.create_at| date:'medium'}}</td>
+            <td class="py-2 px-4 text-center">
+              <div class="flex items-center justify-center  gap-2">
+                <app-button (click)="openDialog(false,data)"
+                  classData="min-w-min text-xs px-4 w transition-colors duration-300 flex justify-center
+                                                                                                                                                                                                                                                                                                                                                      items-center p-1 gap-1"
+                  class="flex justify-center " color="primaryBorder">Editar</app-button>
+                <app-button (click)="deleteCategorie(data)"
+                  classData="w-full text-xs px-4 transition-colors duration-300 flex justify-center
+                                                                                                                                                                                                                                                                                                                                                      items-center p-1 gap-1"
+                  class="flex justify-center" color="warningBorder">Eliminar</app-button>
+              </div>
+            </td>
         </tr>
         <!-- <tr class="border-b border-grayFirst table-striped" *ngFor="let data of dataUser">
          

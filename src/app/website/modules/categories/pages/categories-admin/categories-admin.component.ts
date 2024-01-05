@@ -52,6 +52,7 @@ import { DialogAdminCategoriesComponent } from '../../components/dialog-admin-ca
     ReactiveFormsModule,
     DatePipe,
     DialogModule,
+    ButtonComponent
   ]
 })
 export class CategoriesAdminComponent {
@@ -155,6 +156,18 @@ export class CategoriesAdminComponent {
       data: {
         action: create,
         dataCategorie: categorie,
+      },
+    });
+  }
+  deleteCategorie(data: categorieAdminModel) {
+    this.LoadingService.setLoading(true, `Eliminando Categoria`);
+    this.serviceCategorie.delete(data.category_id).subscribe({
+      next: (data) => {
+        this.LoadingService.setLoading(false, ``);
+        this.serviceCategorie.setFetchCategorie(true);
+      },
+      error: (error) => {
+        this.LoadingService.setLoading(false, ``);
       },
     });
   }
