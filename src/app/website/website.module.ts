@@ -18,6 +18,7 @@ import { DialogBusinessAsignationComponent } from './modules/users/components/di
 import { CategoriesAdminComponent } from './modules/categories/pages/categories-admin/categories-admin.component';
 import { ProductsAdminComponent } from './modules/products/pages/products-admin/products-admin.component';
 import { DialogAdminCategoriesComponent } from './modules/categories/components/dialog-admin-categories/dialog-admin-categories.component';
+import { DialogAdminProductsComponent } from './modules/products/components/dialog-admin-products/dialog-admin-products.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { DialogAdminCategoriesComponent } from './modules/categories/components/
     CategoriesAdminComponent,
     ProductsAdminComponent,
     DialogAdminCategoriesComponent,
+    DialogAdminProductsComponent,
     // SpinnerComponent
   ],
   imports: [CommonModule],

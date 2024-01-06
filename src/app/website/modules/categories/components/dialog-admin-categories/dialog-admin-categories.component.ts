@@ -102,7 +102,7 @@ export class DialogAdminCategoriesComponent {
           error: (error) => {
             this.loadingService.setLoading(
               true,
-              `Ha ocurrido un error: ${error.message}`
+              `Ha ocurrido un error: ${error.error.message}`
             );
           },
         });

@@ -1,1 +1,53 @@
-<p>products-admin works!</p>
+<section class="">
+    <div class="p-10 pb-0">
+      <h1 class=" font-semibold text-xl">Administracion de Productos</h1>
+      <div class="pt-2 grid grid-cols-2 ">
+        <div class="border rounded-sm bg-white flex relative overflow-x-auto shadow-md sm:rounded-lg items-center pl-3">
+          <fa-icon title="Editar Usuario" class="text-grayFirst" [icon]="faMagnifyingGlass"></fa-icon>
+          <input [formControl]="inputSearch" type="text" class="w-full h-full outline-none pl-1 text-sm text-gray-500"
+            placeholder="Ingresa tu busqueda">
+        </div>
+        <div class="justify-self-end">
+          <button (click)="openDialog(true,null)"
+            class=" text-xs p-6px rounded bg-federal_blue hover:bg-federal_blue-300 transition-colors duration-300 text-white flex justify-center items-center p-1 gap-1">
+            <fa-icon title="Editar Usuario" class="text-white" [icon]="faUserPlus"></fa-icon>
+            <span class="text-xs">Nuevo</span>
+          </button>
+  
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="m-10 relative overflow-x-auto shadow-md sm:rounded-lg max-h-divTableSearch">
+    <table class="w-full text-sm text-left text-gray-500 table-auto rounded-lg border ">
+      <thead class="bg-grayFirst sticky top-">
+        <tr class="text-xs text-federal_blue-100 uppercase ">
+          <th class="px-4 py-2 text-center">id</th>
+          <th class="px-4 py-2 text-center">Nombre</th>
+          <th class="px-4 py-2 text-center">Descripcion</th>
+          <th class="px-4 py-2 text-center">Creado en</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white">
+        <tr class="border-b border-grayFirst table-striped" *ngFor="let data of dataProducts">
+            <td class="py-2 px-4 text-center">{{ data.id }}</td>
+            <td class="py-2 px-4 text-center">{{ data.name }}</td>
+            <td class="py-2 px-4 text-center">{{data.description}}</td>
+            <td class="py-2 px-4 text-center">{{data.create_at| date:'medium'}}</td>
+            <td class="py-2 px-4 text-center">
+              <div class="flex items-center justify-center  gap-2">
+                <app-button (click)="openDialog(false,data)"
+                  classData="min-w-min text-xs px-4 w transition-colors duration-300 flex justify-center
+                                                                                                                                                                                                                                                                                                                                                      items-center p-1 gap-1"
+                  class="flex justify-center " color="primaryBorder">Editar</app-button>
+                <app-button (click)="deleteProduct(data)"
+                  classData="w-full text-xs px-4 transition-colors duration-300 flex justify-center
+                                                                                                                                                                                                                                                                                                                                                      items-center p-1 gap-1"
+                  class="flex justify-center" color="warningBorder">Eliminar</app-button>
+              </div>
+            </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <app-spinner [loading]="loading" [text]="textSpinner"></app-spinner>

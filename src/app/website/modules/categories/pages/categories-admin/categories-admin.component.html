@@ -47,55 +47,6 @@
               </div>
             </td>
         </tr>
-        <!-- <tr class="border-b border-grayFirst table-striped" *ngFor="let data of dataUser">
-         
-          <td class="py-2 px-4 text-center">
-            <div class=" flex flex-col items-start gap-2" *ngIf="data.roles.length>0;else elseRoles">
-              <app-button *ngFor="let rol of data.roles"
-                classData="cursor-auto text-xs px-4 transition-colors duration-300 flex justify-center
-                                                                                                                                                                                                                                                                                                            items-center p-1 gap-1"
-                class=" flex justify-center" color="primary">
-                <div [ngSwitch]="rol.id">
-                  <fa-icon *ngSwitchCase="'1'" [icon]="faUserShield"></fa-icon>
-                  <fa-icon *ngSwitchCase="'2'" [icon]="faUserPlus"></fa-icon>
-                  <fa-icon *ngSwitchCase="'3'" [icon]="faUserLarge"></fa-icon>
-                  <fa-icon *ngSwitchDefault [icon]="faUserLarge"></fa-icon>
-                </div>
-                {{rol.name}}
-              </app-button>
-            </div>
-            <ng-template #elseRoles>
-              <div class="text-left">
-                Sin Roles asignados
-              </div>
-            </ng-template>
-          </td>
-  
-          <td class="py-2 px-4 text-center">
-            <app-button (click)="showAsignationBusiness(data)"
-              classData="text-xs px-4 transition-colors duration-300 flex justify-center
-                                                                                                                  items-center p-1 gap-1" class="flex justify-center"
-              color="secondaryBorder">Configurar</app-button>
-          </td>
-          <td class="py-2 px-4 text-center">
-            <app-button (click)="showAsignationRol(data)"
-              classData=" text-xs px-4 transition-colors duration-300 flex justify-center
-                                                                                                                                                                                                                                        items-center p-1 gap-1"
-              class="flex justify-center" color="secondaryBorder">Configurar</app-button>
-          </td>
-          <td class="py-2 px-4 text-center">
-            <div class="flex items-center justify-center  gap-2">
-              <app-button (click)="openDialog(false,data)"
-                classData="min-w-min text-xs px-4 w transition-colors duration-300 flex justify-center
-                                                                                                                                                                                                                                                                                                                                                    items-center p-1 gap-1"
-                class="flex justify-center " color="primaryBorder">Editar</app-button>
-              <app-button (click)="deleteUser(data.id)"
-                classData="w-full text-xs px-4 transition-colors duration-300 flex justify-center
-                                                                                                                                                                                                                                                                                                                                                    items-center p-1 gap-1"
-                class="flex justify-center" color="warningBorder">Eliminar</app-button>
-            </div>
-          </td>
-        </tr> -->
       </tbody>
     </table>
   </div>
