@@ -167,7 +167,8 @@ export class CategoriesAdminComponent {
         this.serviceCategorie.setFetchCategorie(true);
       },
       error: (error) => {
-        this.LoadingService.setLoading(false, ``);
+        console.log(error);
+        this.LoadingService.setLoading(true, error.error.message);
       },
     });
   }
