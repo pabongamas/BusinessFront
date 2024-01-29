@@ -6,16 +6,6 @@ import { LayoutComponent } from './components/layout/layout.component';
 
 const routes: Routes = [
   {path:'',component:LayoutComponent,children:[
-    // {path:'',redirectTo:'/home',pathMatch:'full'},
-    // {path:'home',component:HomeComponent},
-    // {
-    //   // path: 'category',
-    //   // loadChildren: () => import('./pages/category/category.module').then(m => m.CategoryModule),
-    //   // data: {
-    //   //   preload: true,
-       // }
-    // },
-
   ]},
 ];
 
