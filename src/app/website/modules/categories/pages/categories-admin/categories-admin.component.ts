@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import {DatePipe} from '@angular/common'
+import { DatePipe } from '@angular/common'
 
 import { LoadingService } from './../../../../services/loading.service';
 import { CategorieServiceService } from 'src/app/website/services/admin/categorie/categorie-service.service';
@@ -35,10 +35,13 @@ import { DataSourceCategorieAdmin } from './dataSourceCategorieAdmin';
 import { DialogModule, Dialog } from '@angular/cdk/dialog';
 import { DialogAdminCategoriesComponent } from '../../components/dialog-admin-categories/dialog-admin-categories.component';
 
+import {buttonsClasses} from '../../../../models/ButtonClasses.model';
+
+import Swal from 'sweetalert2'
 @Component({
   selector: 'app-categories-admin',
   templateUrl: './categories-admin.component.html',
-  standalone:true,
+  standalone: true,
   styleUrls: ['./categories-admin.component.sass'],
   imports: [
     NgFor,
@@ -52,8 +55,8 @@ import { DialogAdminCategoriesComponent } from '../../components/dialog-admin-ca
     ReactiveFormsModule,
     DatePipe,
     DialogModule,
-    ButtonComponent
-  ]
+    ButtonComponent,
+  ],
 })
 export class CategoriesAdminComponent {
   faPenToSquare = faPenToSquare;
@@ -68,11 +71,13 @@ export class CategoriesAdminComponent {
   loading = false;
   textSpinner = '';
   dataCategorie: categorieAdminModel[] = [];
-  constructor(private dialog: Dialog) {}
+  constructor(private dialog: Dialog) { }
   private serviceCategorie = inject(CategorieServiceService);
   private LoadingService = inject(LoadingService);
 
   dataSource = new DataSourceCategorieAdmin();
+
+  buttonsClasses=buttonsClasses.buttons;
 
   ngOnInit(): void {
     this.serviceCategorie.dataCategorie$.subscribe((data) => {
@@ -127,7 +132,7 @@ export class CategoriesAdminComponent {
       });
   }
 
-  fetchCategories(){
+  fetchCategories() {
     this.LoadingService.setLoading(true, `Consultando usuarios`);
     this.serviceCategorie.search('', []).subscribe({
       next: (data) => {
@@ -160,16 +165,59 @@ export class CategoriesAdminComponent {
     });
   }
   deleteCategorie(data: categorieAdminModel) {
-    this.LoadingService.setLoading(true, `Eliminando Categoria`);
-    this.serviceCategorie.delete(data.category_id).subscribe({
-      next: (data) => {
-        this.LoadingService.setLoading(false, ``);
-        this.serviceCategorie.setFetchCategorie(true);
-      },
-      error: (error) => {
-        console.log(error);
-        this.LoadingService.setLoading(true, error.error.message);
-      },
+    Swal.fire({
+      title: "Estas seguro de eliminar esta Categoria?",
+      text: "No podrás revertir esto!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si,Eliminar!",
+      buttonsStyling: false,
+      customClass: {
+        cancelButton:this.buttonsClasses.cancel,
+        confirmButton:this.buttonsClasses.confirm
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.LoadingService.setLoading(true, `Eliminando Categoria`);
+        this.serviceCategorie.delete(data.category_id).subscribe({
+          next: (dataRta) => {
+            this.LoadingService.setLoading(false, ``);
+            this.serviceCategorie.setFetchCategorie(true);
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              buttonsStyling: true,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+              }
+            });
+            Toast.fire({
+              icon: "success",
+              title: `Categoria ${data.name} eliminada correctamente`
+            });
+          },
+          error: (error) => {
+            this.LoadingService.setLoading(false, '');
+            Swal.fire({
+              title: 'Error!',
+              text: error.error.message,
+              icon: 'error',
+              confirmButtonText: 'OK',
+              buttonsStyling: false,
+              customClass: {
+                cancelButton:this.buttonsClasses.cancel,
+                confirmButton:this.buttonsClasses.confirm
+              }
+            })
+          },
+        });
+      }
     });
   }
 }
