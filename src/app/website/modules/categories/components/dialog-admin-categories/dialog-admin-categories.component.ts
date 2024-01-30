@@ -12,6 +12,9 @@ import { faUserPlus, faPenToSquare, faEye, faEyeSlash } from '@fortawesome/free-
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 import { CategorieServiceService } from 'src/app/website/services/admin/categorie/categorie-service.service';
 
+import { SuccessErrorToast } from 'src/app/website/utils/ActionToastAlert';
+import { buttonsClasses } from '../../../../models/ButtonClasses.model';
+
 
 interface OutputData {
   rta: boolean;
@@ -44,6 +47,8 @@ export class DialogAdminCategoriesComponent {
   action: actionCategorieAdmin;
   dataCategorie: categorieAdminModel;
   showPassword = false;
+  buttonsClasses = buttonsClasses.buttons;
+  textClasses = buttonsClasses.texts;
   private service = inject(CategorieServiceService);
   private loadingService = inject(LoadingService);
   constructor(
@@ -76,13 +81,14 @@ export class DialogAdminCategoriesComponent {
             this.close();
             this.loadingService.setLoading(false, '');
             this.service.setFetchCategorie(true);
+            SuccessErrorToast(`Categoria ${nameData.name} Creada correctamente`, "success");
           },
           error: (error) => {
-            console.log(error);
             this.loadingService.setLoading(
-              true,
-              `Ha ocurrido un error: ${error.error.message}`
+              false,
+              ``
             );
+            SuccessErrorToast(error.error.message, 'error');
           },
         });
       } else {
@@ -98,12 +104,14 @@ export class DialogAdminCategoriesComponent {
             this.close();
             this.loadingService.setLoading(false, '');
             this.service.setFetchCategorie(true);
+            SuccessErrorToast(`Categoria ${data.name} Actualizada correctamente`, "success");
           },
           error: (error) => {
             this.loadingService.setLoading(
               true,
-              `Ha ocurrido un error: ${error.error.message}`
+              ``
             );
+            SuccessErrorToast(error.error.message, 'error');
           },
         });
       } else {
@@ -115,3 +123,4 @@ export class DialogAdminCategoriesComponent {
     this.dialogRef.close();
   }
 }
+

@@ -37,7 +37,8 @@ import { DialogAdminCategoriesComponent } from '../../components/dialog-admin-ca
 
 import {buttonsClasses} from '../../../../models/ButtonClasses.model';
 
-import Swal from 'sweetalert2'
+import {Swal,SuccessErrorToast,objByDefaultAlertSwal,fireActionSwal } from 'src/app/website/utils/ActionToastAlert';
+
 @Component({
   selector: 'app-categories-admin',
   templateUrl: './categories-admin.component.html',
@@ -78,6 +79,7 @@ export class CategoriesAdminComponent {
   dataSource = new DataSourceCategorieAdmin();
 
   buttonsClasses=buttonsClasses.buttons;
+  textClasses=buttonsClasses.texts;
 
   ngOnInit(): void {
     this.serviceCategorie.dataCategorie$.subscribe((data) => {
@@ -119,12 +121,6 @@ export class CategoriesAdminComponent {
       .subscribe((data) => {
         if (data) {
           this.LoadingService.setLoading(false, ``);
-          console.log(data);
-          // data.map((item) => {
-          //   item.business = item.BusinessxUser.map((obj) => obj.name).join(',');
-          //   item.rolesData = item.roles.map((obj) => obj.name).join(',');
-          //   return item;
-          // });
           this.dataCategorie = data;
           this.dataSource.init(this.dataCategorie);
           this.serviceCategorie.setdataCategorie(this.dataCategorie);
@@ -136,11 +132,6 @@ export class CategoriesAdminComponent {
     this.LoadingService.setLoading(true, `Consultando usuarios`);
     this.serviceCategorie.search('', []).subscribe({
       next: (data) => {
-        // data.map((item) => {
-        //   item.business = item.BusinessxUser.map((obj) => obj.name).join(',');
-        //   item.rolesData = item.roles.map((obj) => obj.name).join(',');
-        //   return item;
-        // });
         this.dataCategorie = data;
         this.dataSource.init(this.dataCategorie);
         this.serviceCategorie.setdataCategorie(this.dataCategorie);
@@ -165,59 +156,27 @@ export class CategoriesAdminComponent {
     });
   }
   deleteCategorie(data: categorieAdminModel) {
-    Swal.fire({
-      title: "Estas seguro de eliminar esta Categoria?",
-      text: "No podrás revertir esto!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Si,Eliminar!",
-      buttonsStyling: false,
-      customClass: {
-        cancelButton:this.buttonsClasses.cancel,
-        confirmButton:this.buttonsClasses.confirm
-      }
-    }).then((result) => {
+    objByDefaultAlertSwal.title=`Estas seguro de eliminar la Categoria ${data.name}?`;
+    objByDefaultAlertSwal.text=`No podrás revertir esto!`;
+    objByDefaultAlertSwal.icon=`warning`;
+    objByDefaultAlertSwal.confirmButtonText="Si,Eliminar!";
+
+    const fireSwal=fireActionSwal(objByDefaultAlertSwal);
+    fireSwal.then((result)=>{
       if (result.isConfirmed) {
         this.LoadingService.setLoading(true, `Eliminando Categoria`);
         this.serviceCategorie.delete(data.category_id).subscribe({
           next: (dataRta) => {
             this.LoadingService.setLoading(false, ``);
             this.serviceCategorie.setFetchCategorie(true);
-            const Toast = Swal.mixin({
-              toast: true,
-              position: "top-end",
-              showConfirmButton: false,
-              buttonsStyling: true,
-              timer: 3000,
-              timerProgressBar: true,
-              didOpen: (toast) => {
-                toast.onmouseenter = Swal.stopTimer;
-                toast.onmouseleave = Swal.resumeTimer;
-              }
-            });
-            Toast.fire({
-              icon: "success",
-              title: `Categoria ${data.name} eliminada correctamente`
-            });
+            SuccessErrorToast(`Categoria ${data.name} eliminada correctamente`,"success");
           },
           error: (error) => {
             this.LoadingService.setLoading(false, '');
-            Swal.fire({
-              title: 'Error!',
-              text: error.error.message,
-              icon: 'error',
-              confirmButtonText: 'OK',
-              buttonsStyling: false,
-              customClass: {
-                cancelButton:this.buttonsClasses.cancel,
-                confirmButton:this.buttonsClasses.confirm
-              }
-            })
+            SuccessErrorToast(error.error.message,"error");
           },
         });
       }
-    });
+    })
   }
 }
