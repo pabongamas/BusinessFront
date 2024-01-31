@@ -46,7 +46,6 @@ export class DialogAdminCategoriesComponent {
   );
   action: actionCategorieAdmin;
   dataCategorie: categorieAdminModel;
-  showPassword = false;
   buttonsClasses = buttonsClasses.buttons;
   textClasses = buttonsClasses.texts;
   private service = inject(CategorieServiceService);

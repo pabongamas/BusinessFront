@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { productAdminModel } from 'src/app/website/modules/products/models/ProductsAdmin.model';
+import { productAdminModel,CreateAdminProductDTO, UpdateProductDTO } from 'src/app/website/modules/products/models/ProductsAdmin.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -18,7 +18,7 @@ export class ProductServiceService {
   setdataProduct(data: productAdminModel[]) {
     this.dataProduct.next(data);
   }
-  setFetchCategorie(find: boolean) {
+  setFetchProduct(find: boolean) {
     this.fetchProduct.next(find);
   }
 
@@ -39,5 +39,16 @@ export class ProductServiceService {
     return this.http.get<productAdminModel[]>(
       `${this.API_URL}/api/v1/products/searchProduct${params}`
     );
+  }
+
+  create(data: CreateAdminProductDTO) {
+    return this.http.post(`${this.API_URL}/api/v1/products`, data);
+  }
+
+  update(id: number, product: UpdateProductDTO) {
+    return this.http.patch(`${this.API_URL}/api/v1/products/${id}`, product);
+  }
+  delete(id: number) {
+    return this.http.delete(`${this.API_URL}/api/v1/products/${id}`);
   }
 }

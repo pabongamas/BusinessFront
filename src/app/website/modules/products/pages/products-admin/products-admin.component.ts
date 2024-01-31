@@ -28,6 +28,8 @@ import { SpinnerComponent } from 'src/app/website/components/spinner/spinner.com
 import { DataSourceProductAdmin } from './dataSourceProductsAdmin';
 import { ProductServiceService } from 'src/app/website/services/admin/product/product-service.service';
 import { LoadingService } from 'src/app/website/services/loading.service';
+
+import {Swal,SuccessErrorToast,objByDefaultAlertSwal,fireActionSwal } from 'src/app/website/utils/ActionToastAlert';
 @Component({
   selector: 'app-products-admin',
   templateUrl: './products-admin.component.html',
@@ -100,7 +102,7 @@ export class ProductsAdminComponent {
           } else {
             this.LoadingService.setLoading(false, ``);
             // Si el valor está vacío, retornar un observable vacío
-            this.serviceProduct.setFetchCategorie(true);
+            this.serviceProduct.setFetchProduct(true);
             return of(null);
           }
         })
@@ -134,8 +136,8 @@ export class ProductsAdminComponent {
   openDialog(create: boolean, product: productAdminModel | null) {
     const dialogRef = this.dialog.open(DialogAdminProductsComponent, {
       width: '400px', // Ancho del dialog
-      height: '300px', // Alto del dialog
-      maxWidth: '90vw', // Máximo ancho en relación al viewport
+      // height: '300px', // Alto del dialog
+      // maxWidth: '90vw', // Máximo ancho en relación al viewport
       maxHeight: '90vh', // Máximo alto en relación al viewport
       data: {
         action: create,
@@ -144,7 +146,28 @@ export class ProductsAdminComponent {
     });
   }
 
-  deleteProduct(data:productAdminModel){
+  deleteProduct(data: productAdminModel) {
+    objByDefaultAlertSwal.title=`Estas seguro de eliminar el producto ${data.name}?`;
+    objByDefaultAlertSwal.text=`No podrás revertir esto!`;
+    objByDefaultAlertSwal.icon=`warning`;
+    objByDefaultAlertSwal.confirmButtonText="Si,Eliminar!";
 
+    const fireSwal=fireActionSwal(objByDefaultAlertSwal);
+    fireSwal.then((result)=>{
+      if (result.isConfirmed) {
+        this.LoadingService.setLoading(true, `Eliminando Categoria`);
+        this.serviceProduct.delete(data.id).subscribe({
+          next: (dataRta) => {
+            this.LoadingService.setLoading(false, ``);
+            this.serviceProduct.setFetchProduct(true);
+            SuccessErrorToast(`Producto ${data.name} eliminado correctamente`,"success");
+          },
+          error: (error) => {
+            this.LoadingService.setLoading(false, '');
+            SuccessErrorToast(error.error.message,"error");
+          },
+        });
+      }
+    })
   }
 }
