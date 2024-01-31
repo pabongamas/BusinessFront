@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {DatePipe ,NgFor,
   NgIf,
   NgSwitchCase,
@@ -25,6 +25,9 @@ import { debounceTime, of, switchMap } from 'rxjs';
 import { DialogModule, Dialog } from '@angular/cdk/dialog';
 import { DialogAdminProductsComponent } from '../../components/dialog-admin-products/dialog-admin-products.component';
 import { SpinnerComponent } from 'src/app/website/components/spinner/spinner.component';
+import { DataSourceProductAdmin } from './dataSourceProductsAdmin';
+import { ProductServiceService } from 'src/app/website/services/admin/product/product-service.service';
+import { LoadingService } from 'src/app/website/services/loading.service';
 @Component({
   selector: 'app-products-admin',
   templateUrl: './products-admin.component.html',
@@ -59,6 +62,48 @@ export class ProductsAdminComponent {
   textSpinner = '';
   dataProducts: productAdminModel[] = [];
   constructor(private dialog: Dialog) {}
+  private serviceProduct = inject(ProductServiceService);
+  private LoadingService = inject(LoadingService);
+
+  dataSource = new DataSourceProductAdmin();
+
+  ngOnInit(): void {
+    this.serviceProduct.dataProduct$.subscribe((data) => {
+      this.dataProducts = data;
+      this.dataSource.init(this.dataProducts);
+    });
+    this.loading = true;
+    this.LoadingService.loading$.subscribe((loading) => {
+      this.loading = loading;
+    });
+    this.LoadingService.loadingMsj$.subscribe((msg) => {
+      this.textSpinner = msg;
+    });
+    this.serviceProduct.fetchProduct$.subscribe((find) => {
+      if (find) {
+        this.fetchProducts();
+      } else {
+        if (this.dataSource.getData().length === 0) {
+          this.fetchProducts();
+        }
+      }
+    });
+  }
+
+  fetchProducts() {
+    this.LoadingService.setLoading(true, `Consultando Productos`);
+    this.serviceProduct.search('', []).subscribe({
+      next: (data) => {
+        this.dataProducts = data;
+        this.dataSource.init(this.dataProducts);
+        this.serviceProduct.setdataProduct(this.dataProducts);
+        this.LoadingService.setLoading(false, ``);
+      },
+      error: (error) => {
+        this.LoadingService.setLoading(false, ``);
+      },
+    });
+  }
 
 
   openDialog(create: boolean, product: productAdminModel | null) {

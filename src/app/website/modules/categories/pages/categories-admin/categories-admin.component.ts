@@ -129,7 +129,7 @@ export class CategoriesAdminComponent {
   }
 
   fetchCategories() {
-    this.LoadingService.setLoading(true, `Consultando usuarios`);
+    this.LoadingService.setLoading(true, `Consultando Categorias`);
     this.serviceCategorie.search('', []).subscribe({
       next: (data) => {
         this.dataCategorie = data;
