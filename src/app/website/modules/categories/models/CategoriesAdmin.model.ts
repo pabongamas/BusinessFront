@@ -10,5 +10,8 @@ export interface categorieAdminModel {
   }
 
   export interface CreateAdminCategorieDTO extends Omit<categorieAdminModel, 'category_id'|'image'|'create_at'> {}
+
+  export interface CategorieInfoForProduct extends Omit<categorieAdminModel, 'category_id'|'image'|'create_at'> {}
+
   
   export interface UpdateCategorieDTO extends Partial<CreateAdminCategorieDTO>{};

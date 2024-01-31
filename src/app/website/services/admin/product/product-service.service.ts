@@ -34,4 +34,10 @@ export class ProductServiceService {
     }
     return this.http.get<productAdminModel[]>(`${this.API_URL}/api/v1/products`);
   }
+  searchProduct(data: string) {
+    var params = '?search=' + data;
+    return this.http.get<productAdminModel[]>(
+      `${this.API_URL}/api/v1/products/searchProduct${params}`
+    );
+  }
 }

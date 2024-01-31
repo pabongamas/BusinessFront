@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import {DatePipe ,NgFor,
+import {DatePipe ,NgFor,CurrencyPipe,
   NgIf,
   NgSwitchCase,
   NgSwitch,
@@ -45,7 +45,8 @@ import { LoadingService } from 'src/app/website/services/loading.service';
     FontAwesomeModule,
     SpinnerComponent,
     ReactiveFormsModule,
-    DatePipe
+    DatePipe,
+    CurrencyPipe
   ]
 })
 export class ProductsAdminComponent {
@@ -88,6 +89,30 @@ export class ProductsAdminComponent {
         }
       }
     });
+    this.textSpinner = 'Cargando Información de Productos';
+    this.inputSearch.valueChanges
+      .pipe(
+        debounceTime(300),
+        switchMap((value) => {
+          if (value) {
+            this.LoadingService.setLoading(true, `Realizando Busqueda ...`);
+            return this.serviceProduct.searchProduct(value);
+          } else {
+            this.LoadingService.setLoading(false, ``);
+            // Si el valor está vacío, retornar un observable vacío
+            this.serviceProduct.setFetchCategorie(true);
+            return of(null);
+          }
+        })
+      )
+      .subscribe((data) => {
+        if (data) {
+          this.LoadingService.setLoading(false, ``);
+          this.dataProducts = data;
+          this.dataSource.init(this.dataProducts);
+          this.serviceProduct.setdataProduct(this.dataProducts);
+        }
+      });
   }
 
   fetchProducts() {

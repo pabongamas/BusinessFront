@@ -21,5 +21,8 @@ export interface businessAdminModel {
   }
   export interface CreateAdminBusinessDTO extends Omit<businessAdminModel, 'id'|'userxBusiness'|'roles'> {}
   
+  export interface BusinessInfoForProduct extends Omit<businessAdminModel, 'id'|'userxBusiness'|'roles'> {}
+
+  
   export interface UpdateBusinessDTO extends Partial<CreateAdminBusinessDTO> {}
   
