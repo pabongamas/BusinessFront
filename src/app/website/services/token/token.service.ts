@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { getCookie, setCookie, removeCookie } from 'typescript-cookie';
+import  {jwtDecode, JwtPayload } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,19 @@ export class TokenService {
     const token = getCookie('accessTokenBusiness');
     return token;
   }
+  saveTokenExpire(expire: string) {
+    // Obtener la hora actual
+    var fechaActualMod = new Date();
+
+    var expirevalue = parseFloat(expire);
+    // Sumar una hora (3600 segundos)
+    fechaActualMod.setSeconds(fechaActualMod.getSeconds() + expirevalue);
+    setCookie('expiresAccessTokenBusiness', fechaActualMod.getTime());
+  }
   isValidToken(){
-    return false;
+    const token = this.getToken();
+    this.saveTokenExpire(token);
+
+    return true;
   }
 }
