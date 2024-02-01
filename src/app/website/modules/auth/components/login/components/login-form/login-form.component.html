@@ -1,0 +1,53 @@
+<h1 class="text-center font-bold py-2  text-federal_blue">Log in to BusinessAdmin</h1>
+<form [formGroup]="form" novalidate class="space-y-4" (ngSubmit)="doLogin()">
+  <div>
+    <div class="relative">
+      <input #nameInput formControlName="email" placeholder="Enter email" type="email"
+        class="w-full rounded bg-gray-100 border-gray-300 border-2 p-2 border-2 focus:outline-federal_blue-900 " />
+      <button type="button" class="p-2 absolute right-2" (click)="nameInput.focus()">
+        <fa-icon class=" text-federal_blue transition-colors duration-300 hover:text-federal_blue-900"
+          [icon]="faPen"></fa-icon>
+      </button>
+    </div>
+    @if (form.controls.email.touched && form.controls.email.invalid) {
+    @if(form.controls.email.hasError('required')){
+    <p class="font-medium text-red-500 text-xs mt-1 ml-1">
+      El Email es requerido
+    </p>
+    }
+    @if(form.controls.email.hasError('email')){
+    <p class="font-medium text-red-500 text-xs mt-1 ml-1">
+      Este email no es valido
+    </p>
+    }
+    }
+  </div>
+  <div>
+    <div class="relative">
+      <input formControlName="password" placeholder="Enter password" [type]="showPassword ? 'text' : 'password'"
+        class="w-full rounded bg-gray-100 border-gray-300 border-2 p-2 focus:outline-federal_blue-900 " />
+      <button type="button" class="p-2 absolute right-2 " (click)="showPassword = !showPassword">
+        <fa-icon class=" text-federal_blue transition-colors duration-300 hover:text-federal_blue-900"
+          [icon]="showPassword ? faEye : faEyeSlash"></fa-icon>
+      </button>
+    </div>
+    @if (form.controls.password.touched && form.controls.password.invalid) {
+    @if (form.controls.password.hasError('required')) {
+    <p class="font-medium text-red-500 text-xs mt-1 ml-1">
+      La contraseña es requerida
+    </p>
+    }
+    }
+  </div>
+  @if (status=='failed') {
+  <p class="font-medium text-red-500 text-xs mt-1 ml-1">
+    Las credenciales son invalidas
+  </p>
+  }
+  <div>
+    <app-button typeBtn="submit" [loading]="status === 'loading'"
+      classData="w-full text-xs px-4 transition-colors duration-300 p-2  flex justify-center
+                                                                                                                                                                                                                                                                                                                                        items-center p-1 gap-1"
+      class="flex justify-center p-2 " color="warningBorder">Login</app-button>
+  </div>
+</form>

@@ -12,6 +12,7 @@ import {
   faEraser,
   faUserPlus,
   faMagnifyingGlass,
+  faSpinner
 } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -27,7 +28,8 @@ export class ButtonComponent {
   @Input() color: string = 'primary';
   @Input() classData: string = '';
   @Input() colorNoAction = false;
-  // faSpinner = faSpinner;
+  @Input() loading = false;
+  faSpinner = faSpinner;
 
   mapColors = COLORS;
   mapColorsNoAction = COLORSNOACTION;

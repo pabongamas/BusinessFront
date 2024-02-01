@@ -1,3 +1,6 @@
 <button [type]="typeBtn" [class]="classData" [ngClass]="colors">
+  @if (loading) {
+  <fa-icon class="mr-2" [icon]="faSpinner" [pulse]="true"></fa-icon>
+  }
   <ng-content></ng-content>
 </button>
