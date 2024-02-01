@@ -13,4 +13,9 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./website/modules/admin/admin.routes').then((m) => m.routes),
   },
+  {
+    path: '',
+    // canActivate: [ RedirectGuard ],
+    loadChildren: () => import('./website/modules/auth/auth.routes').then((m) => m.routes),
+  },
 ];
