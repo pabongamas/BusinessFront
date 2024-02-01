@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { tap } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
+import { TokenService } from '../token/token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
+    private tokenService:TokenService
   ) { }
   API_URL = environment.domainBack;
   login(email: string, password: string) {
@@ -20,7 +22,7 @@ export class AuthService {
     })
     .pipe(
       tap(response => {
-        // this.tokenService.saveToken(response.access_token);
+        this.tokenService.saveToken(response.token);
         // this.tokenService.saveRefreshToken(response.refresh_token);
       })
     );
