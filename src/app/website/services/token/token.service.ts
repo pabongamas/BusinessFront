@@ -13,6 +13,9 @@ export class TokenService {
   saveToken(token: string) {
     setCookie('accessTokenBusiness', token, { expires: 365, path: '/' });
   }
+  saveRefreshToken(token: string) {
+    setCookie('refreshTokenBusiness', token, { expires: 365, path: '/' });
+  }
   getToken() {
     const token = getCookie('accessTokenBusiness');
     return token;
@@ -28,8 +31,18 @@ export class TokenService {
   }
   isValidToken(){
     const token = this.getToken();
-    this.saveTokenExpire(token);
-
-    return true;
+    if (!token) {
+      return false;
+    }
+    const decodeToken = jwtDecode<JwtPayload>(token);
+    if (decodeToken && decodeToken?.exp) {
+      const tokenDate = new Date(0);
+      tokenDate.setUTCSeconds(decodeToken.exp);
+      const today = new Date();
+      console.log(tokenDate);
+      console.log(today);
+      return tokenDate.getTime() > today.getTime();
+    }
+    return false;
   }
 }

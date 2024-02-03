@@ -22,8 +22,8 @@ export class AuthService {
     })
     .pipe(
       tap(response => {
-        this.tokenService.saveToken(response.token);
-        // this.tokenService.saveRefreshToken(response.refresh_token);
+        this.tokenService.saveToken(response.accessToken);
+        this.tokenService.saveRefreshToken(response.refreshToken);
       })
     );
   }
