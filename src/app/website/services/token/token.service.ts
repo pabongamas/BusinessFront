@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { getCookie, setCookie, removeCookie } from 'typescript-cookie';
-import  {jwtDecode, JwtPayload } from 'jwt-decode';
+import { jwtDecode, JwtPayload } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +16,13 @@ export class TokenService {
   saveRefreshToken(token: string) {
     setCookie('refreshTokenBusiness', token, { expires: 365, path: '/' });
   }
-  getToken() {
+  getToken(): string {
     const token = getCookie('accessTokenBusiness');
+    if (token === undefined) {
+      // Manejar el caso en que getCookie devuelva undefined,
+      // por ejemplo, lanzar un error o devolver una cadena por defecto.
+      throw new Error('El token no está disponible');
+    }
     return token;
   }
   saveTokenExpire(expire: string) {
@@ -29,7 +34,7 @@ export class TokenService {
     fechaActualMod.setSeconds(fechaActualMod.getSeconds() + expirevalue);
     setCookie('expiresAccessTokenBusiness', fechaActualMod.getTime());
   }
-  isValidToken(){
+  isValidToken() {
     const token = this.getToken();
     if (!token) {
       return false;
@@ -39,8 +44,6 @@ export class TokenService {
       const tokenDate = new Date(0);
       tokenDate.setUTCSeconds(decodeToken.exp);
       const today = new Date();
-      console.log(tokenDate);
-      console.log(today);
       return tokenDate.getTime() > today.getTime();
     }
     return false;
