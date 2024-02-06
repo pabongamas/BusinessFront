@@ -53,9 +53,13 @@ export class ProductServiceService {
   }
 
   update(id: number, product: UpdateProductDTO) {
-    return this.http.patch(`${this.API_URL}/api/v1/products/${id}`, product);
+    return this.http.patch(`${this.API_URL}/api/v1/products/${id}`, product,{
+      context: checkToken(),
+    });
   }
   delete(id: number) {
-    return this.http.delete(`${this.API_URL}/api/v1/products/${id}`);
+    return this.http.delete(`${this.API_URL}/api/v1/products/${id}`,{
+      context: checkToken(),
+    });
   }
 }

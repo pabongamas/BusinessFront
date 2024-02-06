@@ -183,7 +183,7 @@ handleErrorToast(error:any) {
           },
           error: (error) => {
             this.LoadingService.setLoading(false, '');
-            SuccessErrorToast(error.error.message, "error");
+            this.handleErrorToast(error);
           },
         });
       }
