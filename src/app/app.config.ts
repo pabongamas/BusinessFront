@@ -9,12 +9,13 @@ import {
 import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { routes } from './app.routes';
+import { TokenInterceptorService } from './website/interceptors/token-interceptor.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    // { provide: HTTP_INTERCEPTORS, useClass:, multi: true },
     provideHttpClient(withInterceptorsFromDi()),
+    { provide: HTTP_INTERCEPTORS, useClass:TokenInterceptorService, multi: true },
     provideAnimations(),
     provideAnimations()
 ],

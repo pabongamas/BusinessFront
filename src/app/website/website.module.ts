@@ -19,8 +19,6 @@ import { CategoriesAdminComponent } from './modules/categories/pages/categories-
 import { ProductsAdminComponent } from './modules/products/pages/products-admin/products-admin.component';
 import { DialogAdminCategoriesComponent } from './modules/categories/components/dialog-admin-categories/dialog-admin-categories.component';
 import { DialogAdminProductsComponent } from './modules/products/components/dialog-admin-products/dialog-admin-products.component';
-import { TokenInterceptorService } from './interceptors/token-interceptor.service';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -43,8 +41,5 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
   ],
   imports: [CommonModule],
   exports: [],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true }
-  ]
 })
 export class WebsiteModule {}

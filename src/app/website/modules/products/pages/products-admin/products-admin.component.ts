@@ -1,9 +1,11 @@
 import { Component, inject } from '@angular/core';
-import {DatePipe ,NgFor,CurrencyPipe,
+import {
+  DatePipe, NgFor, CurrencyPipe,
   NgIf,
   NgSwitchCase,
   NgSwitch,
-  NgSwitchDefault,} from '@angular/common'
+  NgSwitchDefault,
+} from '@angular/common'
 import { ButtonComponent } from 'src/app/website/components/button/button.component';
 
 import { MatIconModule } from '@angular/material/icon';
@@ -20,7 +22,7 @@ import {
 
 import { productAdminModel } from '../../models/ProductsAdmin.model';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, of, switchMap } from 'rxjs';
+import { catchError, debounceTime, of, switchMap } from 'rxjs';
 
 import { DialogModule, Dialog } from '@angular/cdk/dialog';
 import { DialogAdminProductsComponent } from '../../components/dialog-admin-products/dialog-admin-products.component';
@@ -29,13 +31,14 @@ import { DataSourceProductAdmin } from './dataSourceProductsAdmin';
 import { ProductServiceService } from 'src/app/website/services/admin/product/product-service.service';
 import { LoadingService } from 'src/app/website/services/loading.service';
 
-import {Swal,SuccessErrorToast,objByDefaultAlertSwal,fireActionSwal } from 'src/app/website/utils/ActionToastAlert';
+import { Swal, SuccessErrorToast, objByDefaultAlertSwal, fireActionSwal } from 'src/app/website/utils/ActionToastAlert';
+import { HttpStatusCode } from '@angular/common/http';
 @Component({
   selector: 'app-products-admin',
   templateUrl: './products-admin.component.html',
-  standalone:true,
+  standalone: true,
   styleUrls: ['./products-admin.component.sass'],
-  imports:[
+  imports: [
     NgFor,
     NgIf,
     NgSwitchCase,
@@ -64,7 +67,7 @@ export class ProductsAdminComponent {
   loading = false;
   textSpinner = '';
   dataProducts: productAdminModel[] = [];
-  constructor(private dialog: Dialog) {}
+  constructor(private dialog: Dialog) { }
   private serviceProduct = inject(ProductServiceService);
   private LoadingService = inject(LoadingService);
 
@@ -98,7 +101,13 @@ export class ProductsAdminComponent {
         switchMap((value) => {
           if (value) {
             this.LoadingService.setLoading(true, `Realizando Busqueda ...`);
-            return this.serviceProduct.searchProduct(value);
+            return this.serviceProduct.searchProduct(value).pipe(
+              catchError((error) => {
+                this.handleErrorToast(error);
+                // Retornar un observable vacío en caso de error
+                return of(null);
+              })
+            );
           } else {
             this.LoadingService.setLoading(false, ``);
             // Si el valor está vacío, retornar un observable vacío
@@ -107,15 +116,25 @@ export class ProductsAdminComponent {
           }
         })
       )
-      .subscribe((data) => {
-        if (data) {
-          this.LoadingService.setLoading(false, ``);
-          this.dataProducts = data;
-          this.dataSource.init(this.dataProducts);
-          this.serviceProduct.setdataProduct(this.dataProducts);
-        }
+      .subscribe({
+        next: (data) => {
+          if (data) {
+            this.LoadingService.setLoading(false, ``);
+            this.dataProducts = data;
+            this.dataSource.init(this.dataProducts);
+            this.serviceProduct.setdataProduct(this.dataProducts);
+          }
+        },
       });
   }
+
+  // Función para manejar errores de búsqueda
+handleErrorToast(error:any) {
+  if (HttpStatusCode.Unauthorized === error.status) {
+    this.LoadingService.setLoading(false, ``);
+    SuccessErrorToast(error.error, "error");
+  }
+}
 
   fetchProducts() {
     this.LoadingService.setLoading(true, `Consultando Productos`);
@@ -147,24 +166,24 @@ export class ProductsAdminComponent {
   }
 
   deleteProduct(data: productAdminModel) {
-    objByDefaultAlertSwal.title=`Estas seguro de eliminar el producto ${data.name}?`;
-    objByDefaultAlertSwal.text=`No podrás revertir esto!`;
-    objByDefaultAlertSwal.icon=`warning`;
-    objByDefaultAlertSwal.confirmButtonText="Si,Eliminar!";
+    objByDefaultAlertSwal.title = `Estas seguro de eliminar el producto ${data.name}?`;
+    objByDefaultAlertSwal.text = `No podrás revertir esto!`;
+    objByDefaultAlertSwal.icon = `warning`;
+    objByDefaultAlertSwal.confirmButtonText = "Si,Eliminar!";
 
-    const fireSwal=fireActionSwal(objByDefaultAlertSwal);
-    fireSwal.then((result)=>{
+    const fireSwal = fireActionSwal(objByDefaultAlertSwal);
+    fireSwal.then((result) => {
       if (result.isConfirmed) {
         this.LoadingService.setLoading(true, `Eliminando Categoria`);
         this.serviceProduct.delete(data.id).subscribe({
           next: (dataRta) => {
             this.LoadingService.setLoading(false, ``);
             this.serviceProduct.setFetchProduct(true);
-            SuccessErrorToast(`Producto ${data.name} eliminado correctamente`,"success");
+            SuccessErrorToast(`Producto ${data.name} eliminado correctamente`, "success");
           },
           error: (error) => {
             this.LoadingService.setLoading(false, '');
-            SuccessErrorToast(error.error.message,"error");
+            SuccessErrorToast(error.error.message, "error");
           },
         });
       }

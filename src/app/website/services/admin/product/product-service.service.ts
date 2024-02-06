@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { checkToken } from 'src/app/website/interceptors/token-interceptor.service';
 import { productAdminModel,CreateAdminProductDTO, UpdateProductDTO } from 'src/app/website/modules/products/models/ProductsAdmin.model';
 import { environment } from 'src/environments/environment';
 
@@ -32,17 +33,23 @@ export class ProductServiceService {
     if (types) {
       params += '&type=' + types;
     }
-    return this.http.get<productAdminModel[]>(`${this.API_URL}/api/v1/products`);
+    return this.http.get<productAdminModel[]>(`${this.API_URL}/api/v1/products`, {
+      context: checkToken(),
+    });
   }
   searchProduct(data: string) {
     var params = '?search=' + data;
     return this.http.get<productAdminModel[]>(
-      `${this.API_URL}/api/v1/products/searchProduct${params}`
+      `${this.API_URL}/api/v1/products/searchProduct${params}`, {
+        context: checkToken(),
+      }
     );
   }
 
   create(data: CreateAdminProductDTO) {
-    return this.http.post(`${this.API_URL}/api/v1/products`, data);
+    return this.http.post(`${this.API_URL}/api/v1/products`, data, {
+      context: checkToken(),
+    });
   }
 
   update(id: number, product: UpdateProductDTO) {

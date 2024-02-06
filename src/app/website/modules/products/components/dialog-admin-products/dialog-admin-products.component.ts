@@ -13,14 +13,15 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faUserPlus, faPenToSquare, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 import { ProductServiceService } from 'src/app/website/services/admin/product/product-service.service';
-import {BusinessService} from './../../../../services/admin/business/business.service';
-import {CategorieServiceService} from './../../../../services/admin/categorie/categorie-service.service';
+import { BusinessService } from './../../../../services/admin/business/business.service';
+import { CategorieServiceService } from './../../../../services/admin/categorie/categorie-service.service';
 
 
 import { SuccessErrorToast } from 'src/app/website/utils/ActionToastAlert';
 import { buttonsClasses } from '../../../../models/ButtonClasses.model';
 import { businessAdminModel } from '../../../business/models/businessAdmin.model';
 import { categorieAdminModel } from '../../../categories/models/CategoriesAdmin.model';
+import { HttpStatusCode } from '@angular/common/http';
 
 interface OutputData {
   rta: boolean;
@@ -54,14 +55,14 @@ export class DialogAdminProductsComponent {
     },
   );
   dataBusiness: businessAdminModel[] = [];
-  dataCategorie:categorieAdminModel[]=[];
+  dataCategorie: categorieAdminModel[] = [];
   action: actionProductAdmin;
   dataProduct: productAdminModel;
   buttonsClasses = buttonsClasses.buttons;
   textClasses = buttonsClasses.texts;
   private service = inject(ProductServiceService);
   private businessService = inject(BusinessService);
-  private serviceCategorie=inject(CategorieServiceService);
+  private serviceCategorie = inject(CategorieServiceService);
 
   private loadingService = inject(LoadingService);
   constructor(
@@ -124,8 +125,8 @@ export class DialogAdminProductsComponent {
     if (action) {
       if (this.form.valid) {
         this.loadingService.setLoading(true, 'Creando categoria ...');
-        const { name, description, price,business_id,category_id } = this.form.getRawValue();
-        const nameData: CreateAdminProductDTO = { name, description, price ,business_id,category_id};
+        const { name, description, price, business_id, category_id } = this.form.getRawValue();
+        const nameData: CreateAdminProductDTO = { name, description, price, business_id, category_id };
         this.service.create(nameData).subscribe({
           next: () => {
             this.close();
@@ -138,7 +139,11 @@ export class DialogAdminProductsComponent {
               false,
               ``
             );
-            SuccessErrorToast(error.error.message, 'error');
+            if (HttpStatusCode.Unauthorized === error.status) {
+              SuccessErrorToast(error.error, "error");
+            } else {
+              SuccessErrorToast(error.error.message, 'error');
+            }
           },
         });
       } else {
@@ -147,8 +152,8 @@ export class DialogAdminProductsComponent {
     } else {
       if (this.form.valid) {
         this.loadingService.setLoading(true, 'Editando Categoria ...');
-        const { name, description, price,business_id,category_id } = this.form.getRawValue();
-        const data: UpdateProductDTO = { name, description, price,business_id,category_id  };
+        const { name, description, price, business_id, category_id } = this.form.getRawValue();
+        const data: UpdateProductDTO = { name, description, price, business_id, category_id };
         this.service.update(this.dataProduct.id, data).subscribe({
           next: () => {
             this.close();
@@ -158,10 +163,15 @@ export class DialogAdminProductsComponent {
           },
           error: (error) => {
             this.loadingService.setLoading(
-              true,
+              false,
               ``
             );
-            SuccessErrorToast(error.error.message, 'error');
+            if (HttpStatusCode.Unauthorized === error.status) {
+              SuccessErrorToast(error.error, "error");
+            } else {
+              SuccessErrorToast(error.error.message, 'error');
+
+            }
           },
         });
       } else {
