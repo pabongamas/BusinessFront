@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { getCookie, setCookie, removeCookie } from 'typescript-cookie';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
+import {JwtPayloadBusiness} from '../../models/Jwt.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ export class TokenService {
 
 
   constructor() { }
+  userRoles:number[]=[];
 
   saveToken(token: string) {
     setCookie('accessTokenBusiness', token, { expires: 365, path: '/' });
@@ -47,5 +49,17 @@ export class TokenService {
       return tokenDate.getTime() > today.getTime();
     }
     return false;
+  }
+  setUserRoles(roles: number[]): void {
+    this.userRoles = roles;
+  }
+  getUserRoles(){
+    const token = this.getToken();
+    const decodeToken = jwtDecode<JwtPayloadBusiness>(token);
+    this.userRoles=decodeToken.rols??[];
+    return this.userRoles;
+  }
+  hasRole(roleId: number): boolean {
+    return this.userRoles.includes(roleId);
   }
 }

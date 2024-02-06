@@ -24,8 +24,7 @@ import {
 } from '@angular/cdk/accordion';
 import { TokenService } from '../../../../services/token/token.service';
 
-import { jwtDecode, JwtPayload } from 'jwt-decode';
-import {JwtPayloadBusiness} from '../../../../models/Jwt.model'
+
 
 @Component({
   selector: 'app-layout',
@@ -58,15 +57,15 @@ export class LayoutComponent implements OnInit {
   faLayerGroup = faLayerGroup;
   collapsedSidebar = false;
   menuAdminOpen = false;
-  rolsUser=[];
+  userRoles:number[]=[];
+
   constructor(private router: Router,
     private tokenService: TokenService) {
     this.currentPath = this.router.url;
   }
   ngOnInit(): void {
     const token = this.tokenService.getToken();
-    const decodeToken = jwtDecode<JwtPayloadBusiness>(token);
-    this.rolsUser=decodeToken.rols;
+    this.userRoles=this.tokenService.getUserRoles();
     const adminAccordion: HTMLElement = document.getElementById(
       'adminAccordion'
     ) as HTMLElement;
@@ -77,5 +76,17 @@ export class LayoutComponent implements OnInit {
   }
   toggleCollapsedBar() {
     this.collapsedSidebar = !this.collapsedSidebar;
+  }
+  isAdmin(): boolean {
+    // Verificar si el usuario tiene el rol con ID 2 (por ejemplo, el ID del rol de 'Admin')
+    return this.tokenService.hasRole(2);
+  }
+  isSuperUser():boolean{
+     // Verificar si el usuario tiene el rol con ID 2 (por ejemplo, el ID del rol de 'SuperUser')
+     return this.tokenService.hasRole(1);
+  }
+  isCustomer():boolean{
+   // Verificar si el usuario tiene el rol con ID 2 (por ejemplo, el ID del rol de 'Customer')
+   return this.tokenService.hasRole(3);
   }
 }

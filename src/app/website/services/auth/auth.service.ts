@@ -15,6 +15,7 @@ export class AuthService {
     private tokenService:TokenService
   ) { }
   API_URL = environment.domainBack;
+
   login(email: string, password: string) {
     return this.http.post<any>(`${this.API_URL}/api/v1/auth/login`, {
       email,
@@ -27,4 +28,5 @@ export class AuthService {
       })
     );
   }
+
 }
