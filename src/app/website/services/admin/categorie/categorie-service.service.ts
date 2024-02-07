@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import {
   CreateAdminCategorieDTO,UpdateCategorieDTO
 } from '../../../modules/categories/models/CategoriesAdmin.model';
+import { checkToken } from 'src/app/website/interceptors/token-interceptor.service';
 
 @Injectable({
   providedIn: 'root'
@@ -35,24 +36,34 @@ export class CategorieServiceService {
     if (types) {
       params += '&type=' + types;
     }
-    return this.http.get<categorieAdminModel[]>(`${this.API_URL}/api/v1/categories`);
+    return this.http.get<categorieAdminModel[]>(`${this.API_URL}/api/v1/categories`, {
+      context: checkToken(),
+    });
   }
   searchCategorie(data: string) {
     var params = '?search=' + data;
     return this.http.get<categorieAdminModel[]>(
-      `${this.API_URL}/api/v1/categories/searchCategorie${params}`
+      `${this.API_URL}/api/v1/categories/searchCategorie${params}`, {
+        context: checkToken(),
+      }
     );
   }
 
   create(data: CreateAdminCategorieDTO) {
-    return this.http.post(`${this.API_URL}/api/v1/categories`, data);
+    return this.http.post(`${this.API_URL}/api/v1/categories`, data, {
+      context: checkToken(),
+    });
   }
 
   update(id: number, categorie: UpdateCategorieDTO) {
-    return this.http.patch(`${this.API_URL}/api/v1/categories/${id}`, categorie);
+    return this.http.patch(`${this.API_URL}/api/v1/categories/${id}`, categorie, {
+      context: checkToken(),
+    });
   }
   delete(id: number) {
-    return this.http.delete(`${this.API_URL}/api/v1/categories/${id}`);
+    return this.http.delete(`${this.API_URL}/api/v1/categories/${id}`, {
+      context: checkToken(),
+    });
   }
 
 }

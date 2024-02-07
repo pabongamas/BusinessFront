@@ -29,7 +29,7 @@ import { ButtonComponent } from 'src/app/website/components/button/button.compon
 import { categorieAdminModel } from '../../models/CategoriesAdmin.model';
 
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, of, switchMap } from 'rxjs';
+import { catchError, debounceTime, of, switchMap } from 'rxjs';
 import { DataSourceCategorieAdmin } from './dataSourceCategorieAdmin';
 
 import { DialogModule, Dialog } from '@angular/cdk/dialog';
@@ -38,6 +38,7 @@ import { DialogAdminCategoriesComponent } from '../../components/dialog-admin-ca
 import {buttonsClasses} from '../../../../models/ButtonClasses.model';
 
 import {Swal,SuccessErrorToast,objByDefaultAlertSwal,fireActionSwal } from 'src/app/website/utils/ActionToastAlert';
+import { HttpStatusCode } from '@angular/common/http';
 
 @Component({
   selector: 'app-categories-admin',
@@ -109,7 +110,13 @@ export class CategoriesAdminComponent {
         switchMap((value) => {
           if (value) {
             this.LoadingService.setLoading(true, `Realizando Busqueda ...`);
-            return this.serviceCategorie.searchCategorie(value);
+            return this.serviceCategorie.searchCategorie(value).pipe(
+              catchError((error) => {
+                this.handleErrorToast(error);
+                // Retornar un observable vacío en caso de error
+                return of(null);
+              })
+            );
           } else {
             this.LoadingService.setLoading(false, ``);
             // Si el valor está vacío, retornar un observable vacío
@@ -127,7 +134,12 @@ export class CategoriesAdminComponent {
         }
       });
   }
-
+  handleErrorToast(error:any) {
+    if (HttpStatusCode.Unauthorized === error.status) {
+      this.LoadingService.setLoading(false, ``);
+      SuccessErrorToast(error.error, "error");
+    }
+  }
   fetchCategories() {
     this.LoadingService.setLoading(true, `Consultando Categorias`);
     this.serviceCategorie.search('', []).subscribe({
@@ -138,7 +150,7 @@ export class CategoriesAdminComponent {
         this.LoadingService.setLoading(false, ``);
       },
       error: (error) => {
-        this.LoadingService.setLoading(false, ``);
+        this.handleErrorToast(error);
       },
     });
   }
@@ -173,7 +185,7 @@ export class CategoriesAdminComponent {
           },
           error: (error) => {
             this.LoadingService.setLoading(false, '');
-            SuccessErrorToast(error.error.message,"error");
+            this.handleErrorToast(error);
           },
         });
       }
