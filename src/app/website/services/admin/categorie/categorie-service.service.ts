@@ -40,6 +40,26 @@ export class CategorieServiceService {
       context: checkToken(),
     });
   }
+  searchByUser(search: string, typesSearch: string[]) {
+    const types = typesSearch.join(',');
+    var params = '?q=' + search;
+    if (types) {
+      params += '&type=' + types;
+    }
+    return this.http.get<categorieAdminModel[]>(`${this.API_URL}/api/v1/categories/user`, {
+      context: checkToken(),
+    });
+  }
+  searchByBusiness(search: string, typesSearch: string[]) {
+    const types = typesSearch.join(',');
+    var params = '?q=' + search;
+    if (types) {
+      params += '&type=' + types;
+    }
+    return this.http.get<categorieAdminModel[]>(`${this.API_URL}/api/v1/categories/byBusiness`, {
+      context: checkToken(),
+    });
+  }
   searchCategorie(data: string) {
     var params = '?search=' + data;
     return this.http.get<categorieAdminModel[]>(

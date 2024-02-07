@@ -40,12 +40,22 @@
               classData="cursor-auto text-xs px-4 transition-colors duration-300 flex justify-center
                                                                                                                                                                                                                                                                                                           items-center p-1 gap-1"
               class=" flex justify-center" color="primary">
-              <div [ngSwitch]="rol.id">
-                <fa-icon *ngSwitchCase="'1'" [icon]="faUserShield"></fa-icon>
-                <fa-icon *ngSwitchCase="'2'" [icon]="faUserPlus"></fa-icon>
-                <fa-icon *ngSwitchCase="'3'" [icon]="faUserLarge"></fa-icon>
-                <fa-icon *ngSwitchDefault [icon]="faUserLarge"></fa-icon>
-              </div>
+              @switch (rol.id) {
+                @case ('1') {
+                  <fa-icon [icon]="faUserShield"></fa-icon>
+                }
+                @case ('2') {
+                  <fa-icon [icon]="faUserPlus"></fa-icon>
+                }
+                @case ('3') {
+                <fa-icon  [icon]="faUserLarge"></fa-icon>
+                }
+                @default {
+                <fa-icon  [icon]="faUserLarge"></fa-icon>
+
+                }
+              }
+
               {{rol.name}}
             </app-button>
           </div>

@@ -70,7 +70,7 @@ export class DialogAdminProductsComponent {
     private dialogRef: DialogRef<OutputData>,
     @Inject(DIALOG_DATA) data: InputData
   ) {
-    this.businessService.search('', []).subscribe({
+    this.businessService.searchByUser('', []).subscribe({
       next: (data) => {
         this.dataBusiness = data;
         this.loadingService.setLoading(false, ``);
@@ -79,7 +79,7 @@ export class DialogAdminProductsComponent {
         this.loadingService.setLoading(false, ``);
       },
     });
-    this.serviceCategorie.search('', []).subscribe({
+    this.serviceCategorie.searchByBusiness('', []).subscribe({
       next: (data) => {
         this.dataCategorie = data;
         this.loadingService.setLoading(false, ``);
@@ -90,7 +90,6 @@ export class DialogAdminProductsComponent {
     });
     this.action = data.action;
     this.dataProduct = data.dataProduct;
-    console.log(this.action);
     if (!this.action) {
       this.isEditing = true;
       this.form = this.formBuilder.nonNullable.group({

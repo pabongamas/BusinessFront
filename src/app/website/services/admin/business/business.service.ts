@@ -14,6 +14,7 @@ import {
 } from '../../../modules/business/models/businessAdmin.model';
 import { DataSourceBusinessAdmin } from '../../../modules/business/pages/business-admin/dataSourceBusinessAdmin';
 import { environment } from '../../../../../environments/environment';
+import { checkToken } from 'src/app/website/interceptors/token-interceptor.service';
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +43,19 @@ export class BusinessService {
     if (types) {
       params += '&type=' + types;
     }
-    return this.http.get<businessAdminModel[]>(`${this.API_URL}/api/v1/business`);
+    return this.http.get<businessAdminModel[]>(`${this.API_URL}/api/v1/business`, {
+      context: checkToken(),
+    });
+  }
+  searchByUser(search: string, typesSearch: string[]) {
+    const types = typesSearch.join(',');
+    var params = '?q=' + search;
+    if (types) {
+      params += '&type=' + types;
+    }
+    return this.http.get<businessAdminModel[]>(`${this.API_URL}/api/v1/business/byUser`, {
+      context: checkToken(),
+    });
   }
   create(data: CreateAdminBusinessDTO) {
     return this.http.post(`${this.API_URL}/api/v1/business`, data);

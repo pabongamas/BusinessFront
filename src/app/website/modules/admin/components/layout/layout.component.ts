@@ -70,7 +70,9 @@ export class LayoutComponent implements OnInit {
       'adminAccordion'
     ) as HTMLElement;
     if (this.routesAdmin.includes(this.currentPath)) {
-      adminAccordion.click();
+      if(adminAccordion!==null){
+        adminAccordion.click();
+      }
       this.menuAdminOpen = true;
     }
   }
