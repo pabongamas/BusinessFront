@@ -9,10 +9,10 @@
       </div>
       <div class="justify-self-end">
         <button (click)="openDialog(true,null)"
-        class=" text-xs p-6px rounded bg-federal_blue hover:bg-federal_blue-300 transition-colors duration-300 text-white flex justify-center items-center p-1 gap-1">
-        <fa-icon title="Editar Rol" class="text-white" [icon]="faUserPlus"></fa-icon>
-        <span class="text-xs">Nuevo</span>
-      </button>
+          class=" text-xs p-6px rounded bg-federal_blue hover:bg-federal_blue-300 transition-colors duration-300 text-white flex justify-center items-center p-1 gap-1">
+          <fa-icon title="Editar Rol" class="text-white" [icon]="faUserPlus"></fa-icon>
+          <span class="text-xs">Nuevo</span>
+        </button>
       </div>
     </div>
   </div>
@@ -32,16 +32,17 @@
         <td class="py-4 px-6 text-center">{{ data.name }}</td>
         <td class="py-4 px-6 text-center">
           <div class="flex items-center justify-center  gap-2">
-            <button (click)="openDialog(false,data)"
-              class="text-xs p-6px rounded bg-blue_green hover:bg-blue_green-600 transition-colors duration-300 text-white flex justify-center items-center p-1 gap-1">
-              <fa-icon title="Editar Usuario" class="text-white" [icon]="faPenToSquare"></fa-icon>
-              <span class="text-xs">Editar</span>
-            </button>
-            <button (click)="deleteRol(data.id)"
+            <app-button (click)="openDialog(false,data)"
+              classData="min-w-min text-xs px-4 w transition-colors duration-300 flex justify-center items-center p-1 gap-1"
+              class="flex justify-center " color="primaryBorder">Editar</app-button>
+            <!-- <button (click)="deleteRol(data.id)"
               class="text-xs p-6px rounded bg-marian_blue hover:bg-marian_blue-300 transition-colors duration-300 text-white flex justify-center items-center p-1 gap-1">
               <fa-icon title="Eliminar Usuario" class="text-white" [icon]="faEraser"></fa-icon>
               <span class="text-xs">Eliminar</span>
-            </button>
+            </button> -->
+            <app-button (click)="deleteRol(data.id)"
+              classData="w-full text-xs px-4 transition-colors duration-300 flex justify-center items-center p-1 gap-1"
+              class="flex justify-center" color="warningBorder">Eliminar</app-button>
           </div>
         </td>
       </tr>

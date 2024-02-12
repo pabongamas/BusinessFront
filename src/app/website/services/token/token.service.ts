@@ -56,6 +56,7 @@ export class TokenService {
   getUserRoles(){
     const token = this.getToken();
     const decodeToken = jwtDecode<JwtPayloadBusiness>(token);
+    console.log(decodeToken.rols);
     this.userRoles=decodeToken.rols??[];
     return this.userRoles;
   }

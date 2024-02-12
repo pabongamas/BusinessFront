@@ -18,6 +18,7 @@ import { DialogAdminBusinessComponent } from '../../components/dialog-admin-busi
 import { SpinnerComponent } from 'src/app/website/components/spinner/spinner.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, of, switchMap } from 'rxjs';
+import { ButtonComponent } from 'src/app/website/components/button/button.component';
 @Component({
   selector: 'app-business-admin',
   standalone:true,
@@ -31,6 +32,7 @@ import { debounceTime, of, switchMap } from 'rxjs';
     DialogModule,
     SpinnerComponent,
     ReactiveFormsModule,
+    ButtonComponent
   ],
 })
 export class BusinessAdminComponent {

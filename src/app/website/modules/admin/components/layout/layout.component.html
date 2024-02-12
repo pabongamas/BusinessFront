@@ -122,6 +122,17 @@
                         </h3>
                       </div>
                     </a>
+                    <a routerLink="clients" [attr.title]="
+                    collapsedSidebar ? 'Administración Clientes ' : ''
+                  " class="transition-colors duration-500 flex items-center pl-3 p-3 text-federal_blue-900 flex items-center w-full p-2 text-base transition group text-federal_blue-900 hover:bg-marian_blue hover:text-white"
+                      routerLinkActive="bg-blue_green text-white border-white border-l-4">
+                      <div class="flex gap-2">
+                        <fa-icon [icon]="faLayerGroup"></fa-icon>
+                        <h3 class="font-medium text-sm" [ngClass]="collapsedSidebar ? 'hidden' : ''">
+                          Clientes
+                        </h3>
+                      </div>
+                    </a>
   
   
                   </ul>
