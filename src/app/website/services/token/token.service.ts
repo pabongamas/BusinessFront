@@ -11,6 +11,7 @@ export class TokenService {
 
   constructor() { }
   userRoles:number[]=[];
+  userId:string="";
 
   saveToken(token: string) {
     setCookie('accessTokenBusiness', token, { expires: 365, path: '/' });
@@ -56,11 +57,16 @@ export class TokenService {
   getUserRoles(){
     const token = this.getToken();
     const decodeToken = jwtDecode<JwtPayloadBusiness>(token);
-    console.log(decodeToken.rols);
     this.userRoles=decodeToken.rols??[];
     return this.userRoles;
   }
   hasRole(roleId: number): boolean {
     return this.userRoles.includes(roleId);
+  }
+  getUserId(){
+    const token = this.getToken();
+    const decodeToken = jwtDecode<JwtPayloadBusiness>(token);
+    this.userId=decodeToken.sub??"";
+    return this.userId;
   }
 }
