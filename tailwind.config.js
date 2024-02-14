@@ -34,6 +34,9 @@ module.exports = {
         "gray_main": {
           "DEFAULT": "#F7F7F8"
         },
+        "grayInactive":{
+          "DEFAULT":"#B3B3B3"
+        },
         "federal_blue": {
           "DEFAULT": "#03045e",
           "100": "#010113",

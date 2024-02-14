@@ -26,14 +26,33 @@
                 <th class="px-4 py-2 text-center">id</th>
                 <th class="px-4 py-2 text-center">Nombre Completo</th>
                 <th class="px-4 py-2 text-center">Email</th>
+                <th class="px-4 py-2 text-center">Estado</th>
                 <th class="px-4 py-2 text-center">Administraci&oacute;n</th>
             </tr>
         </thead>
         <tbody class="bg-white">
-            <tr class="border-b border-grayFirst table-striped" *ngFor="let data of dataUser">
+            <tr class="border-b border-grayFirst table-striped" *ngFor="let data of dataClients">
                 <td class="py-2 px-4 text-center">{{ data.id }}</td>
-                <td class="py-2 px-4 text-center">{{ data.email }}</td>
-                <td class="py-2 px-4 text-center">nombre</td>
+                <td class="py-2 px-4 text-center">{{ data.names }} {{data.lastnames}}</td>
+                <td class="py-2 px-4 text-center">{{data.user.email}}</td>
+                <td class="py-2 px-4 text-center">
+                    @if (data.active) {
+                        <div>
+                            <app-button
+                            classData="min-w-min text-xs px-4 w transition-colors duration-300 flex justify-center items-center p-1 gap-1 "
+                            class="flex justify-center " color="activeState">  <span>Activo</span>
+                        </app-button>
+                        </div>
+                    }
+                    @else{
+                        <div>
+                            <app-button
+                            classData="min-w-min text-xs px-4 w transition-colors duration-300 flex justify-center items-center p-1 gap-1"
+                            class="flex justify-center  " color="inactiveState">  <span>Inactivo</span>
+                        </app-button>
+                        </div>
+                    }
+                </td>
                 <td class="py-2 px-4 text-center">
                     <div class="flex items-center justify-center  gap-2">
                         <app-button (click)="openDialog(false,data)"

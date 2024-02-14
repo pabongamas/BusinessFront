@@ -84,4 +84,11 @@ export const COLORS_FOR_BUTTONS: ObjColors = {
     'text-honolulu_blue': true,
     'border-honolulu_blue-900 bg-honolulu_blue-900  rounded': true,
   },
+  activeState: {
+    'border-2 border-grayInactive bg-federal_blue-900 font-normal	  rounded-full':true,
+  },
+  inactiveState: {
+    'bg-white': true,
+    'border-2 border-federal_blue-900 bg-grayInactive  font-normal	  rounded-full':true,
+  },
 };

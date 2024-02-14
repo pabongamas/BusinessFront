@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { userAdminModel } from '../../../users/models/userAdmin.model';
 import { DataSourceUserAdmin } from '../../../users/pages/user-admin/dataSourceUserAdmin';
-import { UserService } from '../../../../services/admin/user/user.service';
+import { ClientsService } from 'src/app/website/services/admin/clients/clients.service';
 import { RolService } from '../../../../services/admin/rol/rol.service';
 import { BusinessService } from 'src/app/website/services/admin/business/business.service';
 import { LoadingService } from './../../../../services/loading.service';
@@ -33,6 +33,10 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, of, switchMap } from 'rxjs';
 import { rolAdminModel } from '../../../rols/models/rolAdmin.model';
 import { businessAdminModel } from '../../../business/models/businessAdmin.model';
+import { DataSourceClientAdmin } from './dataSourceClientAdmin';
+import { clientAdminModel } from '../../models/clientAdmin.model';
+import { HttpStatusCode } from '@angular/common/http';
+import { SuccessErrorToast } from 'src/app/website/utils/ActionToastAlert';
 
 @Component({
   selector: 'app-clients',
@@ -62,18 +66,58 @@ export class ClientsComponent {
   faUserShield = faUserShield;
   faUserLarge = faUserLarge;
   faMagnifyingGlass = faMagnifyingGlass;
-  dataUser: userAdminModel[] = [];
+  dataClients: clientAdminModel[] = [];
   loading = false;
   textSpinner = '';
 
-  private service = inject(UserService);
+  private service = inject(ClientsService);
   private rolService=inject(RolService);
   private businessService=inject(BusinessService);
   private LoadingService = inject(LoadingService);
   constructor(private dialog: Dialog) {}
-  inputSearch = new FormControl('', { nonNullable: true });
+  dataSource = new DataSourceClientAdmin();
 
-  openDialog(create: boolean, user: userAdminModel | null) {
+  inputSearch = new FormControl('', { nonNullable: true });
+  ngOnInit(): void {
+    this.service.dataClient$.subscribe((data) => {
+      this.dataClients = data;
+      this.dataSource.init(this.dataClients);
+    });
+    this.loading = true;
+    this.LoadingService.loading$.subscribe((loading) => {
+      this.loading = loading;
+    });
+    this.LoadingService.loadingMsj$.subscribe((msg) => {
+      this.textSpinner = msg;
+    });
+    this.service.fetchClient$.subscribe((find) => {
+      if (find) {
+        this.fetchClients();
+      } else {
+        if (this.dataSource.getData().length === 0) {
+          this.fetchClients();
+        }
+      }
+    });
+  }
+
+  fetchClients() {
+    this.LoadingService.setLoading(true, `Consultando Clients`);
+    this.service.search('', []).subscribe({
+      next: (data) => {
+        this.dataClients = data;
+        this.dataSource.init(this.dataClients);
+        this.service.setdataClient(this.dataClients);
+        this.LoadingService.setLoading(false, ``);
+      },
+      error: (error) => {
+        this.LoadingService.setLoading(false, ``);
+        SuccessErrorToast(error.error, "error");
+      },
+    });
+  }
+
+  openDialog(create: boolean, user: clientAdminModel | null) {
     const dialogRef = this.dialog.open(DialogAdminUserComponent, {
       width: '400px', // Ancho del dialog
       height: '300px', // Alto del dialog
@@ -87,15 +131,21 @@ export class ClientsComponent {
   }
   deleteUser(id: string) {
     this.LoadingService.setLoading(true, `Eliminando usuario`);
-    this.service.delete(id).subscribe({
-      next: (data) => {
-        this.LoadingService.setLoading(false, ``);
-        this.service.setFetchUsers(true);
-      },
-      error: (error) => {
-        this.LoadingService.setLoading(false, ``);
-      },
-    });
+    // this.service.delete(id).subscribe({
+    //   next: (data) => {
+    //     this.LoadingService.setLoading(false, ``);
+    //     this.service.setFetchUsers(true);
+    //   },
+    //   error: (error) => {
+    //     this.LoadingService.setLoading(false, ``);
+    //   },
+    // });
+  }
+  handleErrorToast(error:any) {
+    if (HttpStatusCode.Unauthorized === error.status) {
+      this.LoadingService.setLoading(false, ``);
+      SuccessErrorToast(error.error, "error");
+    }
   }
 
 }

@@ -61,7 +61,8 @@ export class TokenService {
     return this.userRoles;
   }
   hasRole(roleId: number): boolean {
-    return this.userRoles.includes(roleId);
+    var roles=this.getUserRoles();
+    return roles.includes(roleId);
   }
   getUserId(){
     const token = this.getToken();
