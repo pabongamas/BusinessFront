@@ -36,4 +36,12 @@ export class ClientsService {
       context: checkToken(),
     });
   }
+  searchClient(data: string) {
+    var params = '?search=' + data;
+    return this.http.get<clientAdminModel[]>(
+      `${this.API_URL}/api/v1/clients/business/searchClient${params}`, {
+        context: checkToken(),
+      }
+    );
+  }
 }

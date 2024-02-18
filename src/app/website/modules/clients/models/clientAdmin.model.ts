@@ -22,4 +22,8 @@ export interface clientAdminModel {
     business:businessInfo;
   }
 
+
+  export interface actionClientAdmin {
+    action: boolean;
+  }
   

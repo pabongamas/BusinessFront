@@ -25,12 +25,12 @@ import {
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { DialogModule, Dialog } from '@angular/cdk/dialog';
-import { DialogAdminUserComponent } from '../../../users/components/dialog-admin-user/dialog-admin-user.component';
+import { DialogAdminClientsComponent } from '../../components/dialog-admin-clients/dialog-admin-clients.component';
 import { SpinnerComponent } from 'src/app/website/components/spinner/spinner.component';
 import { ButtonComponent } from 'src/app/website/components/button/button.component';
 
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, of, switchMap } from 'rxjs';
+import { catchError, debounceTime, of, switchMap } from 'rxjs';
 import { rolAdminModel } from '../../../rols/models/rolAdmin.model';
 import { businessAdminModel } from '../../../business/models/businessAdmin.model';
 import { DataSourceClientAdmin } from './dataSourceClientAdmin';
@@ -99,6 +99,39 @@ export class ClientsComponent {
         }
       }
     });
+
+    this.textSpinner = 'Cargando Información de Productos';
+    this.inputSearch.valueChanges
+      .pipe(
+        debounceTime(300),
+        switchMap((value) => {
+          if (value) {
+            this.LoadingService.setLoading(true, `Realizando Busqueda ...`);
+            return this.service.searchClient(value).pipe(
+              catchError((error) => {
+                this.handleErrorToast(error);
+                // Retornar un observable vacío en caso de error
+                return of(null);
+              })
+            );
+          } else {
+            this.LoadingService.setLoading(false, ``);
+            // Si el valor está vacío, retornar un observable vacío
+            this.service.setFetchClient(true);
+            return of(null);
+          }
+        })
+      )
+      .subscribe({
+        next: (data) => {
+          if (data) {
+            this.LoadingService.setLoading(false, ``);
+            this.dataClients = data;
+            this.dataSource.init(this.dataClients);
+            this.service.setdataClient(this.dataClients);
+          }
+        },
+      });
   }
 
   fetchClients() {
@@ -117,15 +150,15 @@ export class ClientsComponent {
     });
   }
 
-  openDialog(create: boolean, user: clientAdminModel | null) {
-    const dialogRef = this.dialog.open(DialogAdminUserComponent, {
+  openDialog(create: boolean, client: clientAdminModel | null) {
+    const dialogRef = this.dialog.open(DialogAdminClientsComponent, {
       width: '400px', // Ancho del dialog
       height: '300px', // Alto del dialog
-      maxWidth: '90vw', // Máximo ancho en relación al viewport
+      maxWidth: '60vw', // Máximo ancho en relación al viewport
       maxHeight: '90vh', // Máximo alto en relación al viewport
       data: {
         action: create,
-        dataUser: user,
+        dataClient: client,
       },
     });
   }

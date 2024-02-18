@@ -1,0 +1,92 @@
+<div class="p-6 bg-gray-100 relative rounded shadow">
+    <div>
+        <div *ngIf="action; else editClient">
+            <h1 class="font-semibold text-base">Crear Nuevo Cliente</h1>
+        </div>
+        <ng-template #editClient>
+            <h1 class="font-semibold text-base">Editar Cliente {{ dataClient.names }} {{dataClient.lastnames}}</h1>
+        </ng-template>
+        <form [formGroup]="form" novalidate class="space-y-4" (ngSubmit)="actionForm(action)">
+            <div class="pt-2 sm:flex sm:gap-4">
+                <div class="relative z-0 w-full mb-3  group">
+                    <input #nameInput type="text" formControlName="names" name="names_field" id="names_field"
+                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:border-federal_blue focus:outline-none focus:ring-0 focus:border-federal_blue peer"
+                        placeholder=" " required />
+                    <label for="names_field"
+                        class="pt-2 peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-federal_blue peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nombres</label>
+                    <div *ngIf="form.controls.names.touched && form.controls.names.invalid">
+                        <p *ngIf="form.controls.names.hasError('required')"
+                            class="font-medium text-red-500 text-xs mt-1 mb-4 ml-1">
+                            El Nombre es obligatorio
+                        </p>
+                    </div>
+                </div>
+                <div class="relative z-0 w-full mb-3 group">
+                    <input #nameInput type="text" formControlName="lastnames" name="lastnames_field"
+                        id="lastnames_field"
+                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:border-federal_blue focus:outline-none focus:ring-0 focus:border-federal_blue peer"
+                        placeholder=" " required />
+                    <label for="lastnames_field"
+                        class="pt-2 peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-federal_blue peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Apellidos</label>
+                    <div *ngIf="form.controls.lastnames.touched && form.controls.lastnames.invalid">
+                        <p *ngIf="form.controls.lastnames.hasError('required')"
+                            class="font-medium text-red-500 text-xs mt-1 mb-4 ml-1">
+                            El apellido es obligatorio
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-2 sm:flex sm:gap-4">
+                <div class="relative z-0 w-full mb-3 group">
+                    <input #nameInput type="text" formControlName="nickname" name="nickname_field" id="nickname_field"
+                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:border-federal_blue focus:outline-none focus:ring-0 focus:border-federal_blue peer"
+                        placeholder=" " required />
+                    <label for="nickname_field"
+                        class="pt-2 peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
+                         peer-focus:left-0 peer-focus:text-federal_blue peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Apodo</label>
+                </div>
+                <div class="relative z-0 w-full mb-3 group">
+                    <input #nameInput type="number" formControlName="phone" name="phone_field" id="phone_field"
+                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:border-federal_blue focus:outline-none focus:ring-0 focus:border-federal_blue peer"
+                        placeholder=" " required />
+                    <label for="phones_field"
+                        class="pt-2 peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
+                         peer-focus:left-0 peer-focus:text-federal_blue peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Telefono</label>
+                </div>
+            </div>
+            <div class="pt-2">
+                <div class="relative z-0 w-full mb-3 group">
+                    <select  formControlName="gender" name="gender_field" class="block py-2.5 pt-5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:border-federal_blue
+                focus:outline-none focus:ring-0 focus:border-federal_blue peer">
+                        <option value="">Seleccione El genero</option>
+                        <option value="M">Masculino</option>
+                        <option value="F">Femenino</option>
+                    </select>
+                    <label for="gender_field" class="pt-4 md:pt-2 peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6
+                     scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-federal_blue peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 
+                     peer-focus:scale-75 peer-focus:-translate-y-6">Genero</label>
+                     <div *ngIf="form.controls.gender.touched">
+                        <p *ngIf="form.controls.gender.hasError('required')"
+                            class="font-medium text-red-500 text-xs mt-1 mb-4 ml-1">
+                            El genero es obligatorio
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="action; else editUserButton">
+                <button
+                    class="py-2 px-2 text-xs rounded bg-federal_blue hover:bg-federal_blue-300 transition-colors duration-300 text-white">
+                    <fa-icon title="Editar Usuario" class="text-white" [icon]="faUserPlus"></fa-icon>
+                    Crear
+                </button>
+            </div>
+            <ng-template #editUserButton>
+                <button
+                    class="py-2 px-2 text-xs rounded bg-federal_blue hover:bg-federal_blue-300 transition-colors duration-300 text-white">
+                    <fa-icon title="Editar Usuario" class="text-white" [icon]="faPenToSquare"></fa-icon>
+                    Editar
+                </button>
+            </ng-template>
+        </form>
+    </div>
+</div>
