@@ -152,10 +152,10 @@ export class ClientsComponent {
 
   openDialog(create: boolean, client: clientAdminModel | null) {
     const dialogRef = this.dialog.open(DialogAdminClientsComponent, {
-      width: '400px', // Ancho del dialog
-      height: '300px', // Alto del dialog
-      maxWidth: '60vw', // Máximo ancho en relación al viewport
-      maxHeight: '90vh', // Máximo alto en relación al viewport
+      // width: '400px', // Ancho del dialog
+      // height: '300px', // Alto del dialog
+      // maxWidth: '60vw', // Máximo ancho en relación al viewport
+      // maxHeight: '90vh', // Máximo alto en relación al viewport
       data: {
         action: create,
         dataClient: client,

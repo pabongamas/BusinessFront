@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { checkToken } from 'src/app/website/interceptors/token-interceptor.service';
-import { clientAdminModel } from 'src/app/website/modules/clients/models/clientAdmin.model';
+import { clientAdminFormModel, clientAdminModel } from 'src/app/website/modules/clients/models/clientAdmin.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -43,5 +43,11 @@ export class ClientsService {
         context: checkToken(),
       }
     );
+  }
+
+  createClient(data:clientAdminFormModel) {
+    return this.http.post(`${this.API_URL}/api/v1/clients/save`,data, {
+      context: checkToken(),
+    });
   }
 }

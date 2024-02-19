@@ -22,7 +22,7 @@
                     </div>
                 </div>
                 <div class="relative z-0 w-full mb-3 group">
-                    <input #nameInput type="text" formControlName="lastnames" name="lastnames_field"
+                    <input #lastnamesInput type="text" formControlName="lastnames" name="lastnames_field"
                         id="lastnames_field"
                         class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:border-federal_blue focus:outline-none focus:ring-0 focus:border-federal_blue peer"
                         placeholder=" " required />
@@ -36,26 +36,60 @@
                     </div>
                 </div>
             </div>
+            <div class="pt-2">
+                <div class="relative z-0 w-full mb-3 group">
+                    <input
+                      #nameInput
+                      type="email"
+                      formControlName="email"
+                      name="email_field"
+                      id="email_field"
+                      class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:border-federal_blue focus:outline-none focus:ring-0 focus:border-federal_blue peer"
+                      placeholder=" "
+                      required
+                    />
+                    <label
+                      for="email_field"
+                      class="pt-2 peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-federal_blue peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                      >Email</label
+                    >
+                  </div>
+                  <div *ngIf="form.controls.email.touched && form.controls.email.invalid">
+                    <p
+                      *ngIf="form.controls.email.hasError('required')"
+                      class="font-medium text-red-500 text-xs mt-1 mb-4 ml-1"
+                    >
+                      El Email es obligatorio
+                    </p>
+                    <p
+                      *ngIf="form.controls.email.hasError('email')"
+                      class="font-medium text-red-500 text-xs mt-1 mb-4 ml-1"
+                    >
+                      El email no tiene el formato correcto
+                    </p>
+                  </div>
+            </div>
             <div class="pt-2 sm:flex sm:gap-4">
                 <div class="relative z-0 w-full mb-3 group">
-                    <input #nameInput type="text" formControlName="nickname" name="nickname_field" id="nickname_field"
+                    <input #nicknameInput type="text" formControlName="nickname" name="nickname_field" id="nickname_field"
                         class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:border-federal_blue focus:outline-none focus:ring-0 focus:border-federal_blue peer"
-                        placeholder=" " required />
+                        placeholder=" " />
                     <label for="nickname_field"
                         class="pt-2 peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
                          peer-focus:left-0 peer-focus:text-federal_blue peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Apodo</label>
                 </div>
                 <div class="relative z-0 w-full mb-3 group">
-                    <input #nameInput type="number" formControlName="phone" name="phone_field" id="phone_field"
+                    <input #phoneInput type="number" formControlName="phone" name="phone_field" id="phone_field"
                         class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:border-federal_blue focus:outline-none focus:ring-0 focus:border-federal_blue peer"
-                        placeholder=" " required />
+                        placeholder=" " />
                     <label for="phones_field"
                         class="pt-2 peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
                          peer-focus:left-0 peer-focus:text-federal_blue peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Telefono</label>
                 </div>
             </div>
-            <div class="pt-2">
-                <div class="relative z-0 w-full mb-3 group">
+            <div class="pt-2 sm:flex sm:gap-4">
+                <div class="md:w-1/2 sm:w-ful">
+                <div class="relative z-0 l  mb-3 group">
                     <select  formControlName="gender" name="gender_field" class="block py-2.5 pt-5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 focus:border-federal_blue
                 focus:outline-none focus:ring-0 focus:border-federal_blue peer">
                         <option value="">Seleccione El genero</option>
@@ -72,6 +106,52 @@
                         </p>
                     </div>
                 </div>
+            </div>
+            <div class="md:w-1/2 sm:w-ful">
+                    <div class="relative flex z-0  mb-3 group">
+                        <input matInput [matDatepicker]="picker" #birthdateInput type="text" formControlName="birthdate" name="birthdate_field" id="birthdate_field"
+                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:border-federal_blue focus:outline-none focus:ring-0 focus:border-federal_blue peer"
+                        placeholder=" " required />
+                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker color="primary"></mat-datepicker>
+                        <label for="gender_field" class="pt-4 md:pt-2 peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6
+                        scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-federal_blue peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 
+                        peer-focus:scale-75 peer-focus:-translate-y-6">Fecha de Nacimiento</label>
+                       
+                    </div>
+                    <div *ngIf="form.controls.birthdate.touched">
+                        <p *ngIf="form.controls.birthdate.hasError('required')"
+                            class="font-medium text-red-500 text-xs mt-1 mb-4 ml-1">
+                            La fecha de nacimiento es obligatorio
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-2">
+                <div class="relative z-0 w-full mb-3  group">
+                    <input #nameInput type="text" formControlName="address" name="address_field" id="address_field"
+                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:border-federal_blue focus:outline-none focus:ring-0 focus:border-federal_blue peer"
+                        placeholder=" " />
+                    <label for="address_field"
+                        class="pt-2 peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-federal_blue peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Direcci&oacute;n</label>
+                </div>
+                <div *ngIf="form.controls.address.touched">
+                    <p *ngIf="form.controls.address.hasError('required')"
+                        class="font-medium text-red-500 text-xs mt-1 mb-4 ml-1">
+                        La Direcci&oacute;n es obligatoria
+                    </p>
+                </div>
+              
+            </div>
+            <div class="pt-2">
+                <label class="flex flex-col-reverse mb-5 cursor-pointer">
+                    <input type="checkbox" formControlName="active"  class="sr-only peer">
+                    <div class="relative w-11 h-6  peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:federal_blue rounded-full
+                     peer bg-white border-federal_blue-900 outline outline-2 outline-federal_blue-900 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-federal_blue-900 after:content-['']
+                      after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-federal_blue-900 after:border after:rounded-full after:h-5
+                       after:w-5 after:transition-all dark:border-federal_blue-900 peer-checked:bg-federal_blue-900"></div>
+                    <span class="pt-2 peer-focus:font-medium  text-sm text-gray-500 dark:text-gray-400 duration-300  peer-focus:text-federal_blue ">Estado</span>
+                </label>
             </div>
             <div *ngIf="action; else editUserButton">
                 <button

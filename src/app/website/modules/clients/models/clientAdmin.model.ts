@@ -12,14 +12,30 @@ export interface clientAdminModel {
     names:string;
     lastnames:string;
     nickname:string;
+    email:string;
     phone:string;
     gender:boolean;
     birthdate:string;
     address:string;
-    createdAt:string;
+    createdAt?:string;
     active:boolean;
     user:userInfo;
-    business:businessInfo;
+    business?:businessInfo;
+  }
+  export interface clientAdminFormModel {
+    id?: string;
+    names:string;
+    lastnames:string;
+    nickname:string;
+    email:string;
+    phone:string;
+    gender:boolean;
+    birthdate:string;
+    address:string;
+    createdAt?:string;
+    active:boolean;
+    user?:userInfo;
+    business?:businessInfo;
   }
 
 
