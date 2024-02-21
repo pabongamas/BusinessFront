@@ -36,7 +36,7 @@ import { businessAdminModel } from '../../../business/models/businessAdmin.model
 import { DataSourceClientAdmin } from './dataSourceClientAdmin';
 import { clientAdminModel } from '../../models/clientAdmin.model';
 import { HttpStatusCode } from '@angular/common/http';
-import { SuccessErrorToast } from 'src/app/website/utils/ActionToastAlert';
+import { Swal, SuccessErrorToast, objByDefaultAlertSwal, fireActionSwal } from 'src/app/website/utils/ActionToastAlert';
 
 @Component({
   selector: 'app-clients',
@@ -162,17 +162,29 @@ export class ClientsComponent {
       },
     });
   }
-  deleteUser(id: string) {
-    this.LoadingService.setLoading(true, `Eliminando usuario`);
-    // this.service.delete(id).subscribe({
-    //   next: (data) => {
-    //     this.LoadingService.setLoading(false, ``);
-    //     this.service.setFetchUsers(true);
-    //   },
-    //   error: (error) => {
-    //     this.LoadingService.setLoading(false, ``);
-    //   },
-    // });
+  deleteClient(data: clientAdminModel) {
+    objByDefaultAlertSwal.title = `Estas seguro de eliminar el cliente ${data.names} ${data.lastnames}?`;
+    objByDefaultAlertSwal.text = `No podrás revertir esto!`;
+    objByDefaultAlertSwal.icon = `warning`;
+    objByDefaultAlertSwal.confirmButtonText = "Si,Eliminar!";
+
+    const fireSwal = fireActionSwal(objByDefaultAlertSwal);
+    fireSwal.then((result) => {
+      if (result.isConfirmed) {
+        this.LoadingService.setLoading(true, `Eliminando Cliente`);
+        this.service.deleteClient(data.id).subscribe({
+          next: (dataRta) => {
+            this.LoadingService.setLoading(false, ``);
+            this.service.setFetchClient(true);
+            SuccessErrorToast(`Cliente ${data.names} ${data.lastnames} eliminado correctamente`, "success");
+          },
+          error: (error) => {
+            this.LoadingService.setLoading(false, '');
+            this.handleErrorToast(error);
+          },
+        });
+      }
+    })
   }
   handleErrorToast(error:any) {
     if (HttpStatusCode.Unauthorized === error.status) {

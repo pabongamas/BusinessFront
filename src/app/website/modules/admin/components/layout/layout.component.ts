@@ -15,7 +15,7 @@ import {
   faUsersLine,
   faRightFromBracket,
   faAngleUp,
-  faAngleDown, faUserTie, faShop, faList, faLayerGroup
+  faAngleDown, faUserTie, faShop, faList, faLayerGroup,faUsers,faListCheck,faBoxesStacked,faDollarSign,faHandHoldingDollar
 } from '@fortawesome/free-solid-svg-icons';
 import {
   CdkAccordion,
@@ -54,6 +54,11 @@ export class LayoutComponent implements OnInit {
   faChartLine = faChartLine;
   faUsersGear = faUsersGear;
   faUsersLine = faUsersLine;
+  faUsers=faUsers;
+  faListCheck=faListCheck;
+  faBoxesStacked=faBoxesStacked;
+  faDollarSign=faDollarSign;
+  faHandHoldingDollar=faHandHoldingDollar;
   faAngleUp = faAngleUp;
   faAngleDown = faAngleDown;
   faRightFromBracket = faRightFromBracket;

@@ -55,4 +55,9 @@ export class ClientsService {
       context: checkToken()
     });
   }
+  deleteClient(id: string) {
+    return this.http.delete(`${this.API_URL}/api/v1/clients/delete/${id}`,{
+      context: checkToken(),
+    });
+  }
 }

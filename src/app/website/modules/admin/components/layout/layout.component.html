@@ -105,7 +105,7 @@
                     class="transition-colors duration-500 flex items-center pl-3 p-3 text-federal_blue-900 flex items-center w-full p-2 text-base transition group text-federal_blue-900 hover:bg-marian_blue hover:text-white"
                     routerLinkActive="bg-blue_green text-white border-white border-l-4">
                     <div class="flex gap-2">
-                      <fa-icon [icon]="faLayerGroup"></fa-icon>
+                      <fa-icon [icon]="faListCheck"></fa-icon>
                       <h3 class="font-medium text-sm" [ngClass]="collapsedSidebar ? 'hidden' : ''">
                         Categorias
                       </h3>
@@ -116,7 +116,7 @@
                   " class="transition-colors duration-500 flex items-center pl-3 p-3 text-federal_blue-900 flex items-center w-full p-2 text-base transition group text-federal_blue-900 hover:bg-marian_blue hover:text-white"
                     routerLinkActive="bg-blue_green text-white border-white border-l-4">
                     <div class="flex gap-2">
-                      <fa-icon [icon]="faLayerGroup"></fa-icon>
+                      <fa-icon [icon]="faBoxesStacked"></fa-icon>
                       <h3 class="font-medium text-sm" [ngClass]="collapsedSidebar ? 'hidden' : ''">
                         Productos
                       </h3>
@@ -127,7 +127,7 @@
                   " class="transition-colors duration-500 flex items-center pl-3 p-3 text-federal_blue-900 flex items-center w-full p-2 text-base transition group text-federal_blue-900 hover:bg-marian_blue hover:text-white"
                     routerLinkActive="bg-blue_green text-white border-white border-l-4">
                     <div class="flex gap-2">
-                      <fa-icon [icon]="faLayerGroup"></fa-icon>
+                      <fa-icon [icon]="faUsers"></fa-icon>
                       <h3 class="font-medium text-sm" [ngClass]="collapsedSidebar ? 'hidden' : ''">
                         Clientes
                       </h3>
@@ -138,6 +138,38 @@
                 </ul>
               </div>
             </cdk-accordion-item>
+            <cdk-accordion>
+            <cdk-accordion-item #accordionSells="cdkAccordionItem">
+              <button id="adminAccordion" [attr.title]="collapsedSidebar ? 'Ventas' : ''"
+              class="transition-colors duration-500 flex items-center pl-3 p-3 text-federal_blue-900 flex items-center w-full p-2 text-base transition group text-federal_blue-900 hover:bg-marian_blue hover:text-white"
+              type="button" (click)="accordionSells.toggle()">
+              <div class="flex gap-2">
+                <fa-icon [icon]="faDollarSign"></fa-icon>
+                <h3 class="font-medium text-sm" [ngClass]="collapsedSidebar ? 'hidden' : ''">
+                  Ventas
+                </h3>
+                <fa-icon [ngClass]="collapsedSidebar ? 'hidden' : ''"
+                  [icon]="accordionSells.expanded ? faAngleUp : faAngleDown"></fa-icon>
+              </div>
+            </button>
+            <div [ngClass]="accordionSells.expanded ? '' : 'hidden'">
+              <ul class="w-full flex flex-col text-federal_blue-900">
+                <a routerLink="sales" [attr.title]="
+                      collapsedSidebar ? 'Generar Venta' : ''
+                    "
+                  class="transition-colors duration-500 flex items-center pl-3 p-3 text-federal_blue-900 flex items-center w-full p-2 text-base transition group text-federal_blue-900 hover:bg-marian_blue hover:text-white"
+                  routerLinkActive="bg-blue_green text-white border-white border-l-4">
+                  <div class="flex gap-2">
+                    <fa-icon [icon]="faHandHoldingDollar"></fa-icon>
+                    <h3 class="font-medium text-sm" [ngClass]="collapsedSidebar ? 'hidden' : ''">
+                      Generar Venta
+                    </h3>
+                  </div>
+                </a>
+              </ul>
+            </div>
+            </cdk-accordion-item>
+          </cdk-accordion>
           </cdk-accordion>
           }
 
