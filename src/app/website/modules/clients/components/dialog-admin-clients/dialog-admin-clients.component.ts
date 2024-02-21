@@ -97,7 +97,7 @@ export class DialogAdminClientsComponent {
         this.loadingService.setLoading(true, 'Creando Cliente ...');
         const { gender, ...rest } = this.form.getRawValue();
         const updatedGender = gender === 'M' ? true : false;
-        const form = { ...rest, gender: updatedGender };
+        const form = { ...rest, gender: updatedGender};
         this.service.createClient(form).subscribe({
           next: () => {
             this.close();
@@ -117,21 +117,23 @@ export class DialogAdminClientsComponent {
       }
     } else {
       if (this.form.valid) {
-        this.loadingService.setLoading(true, 'Editando usuario ...');
-        // const { email } = this.form.getRawValue();
-        // this.service.update(this.dataUser.id, email).subscribe({
-        //   next: () => {
-        //     this.close();
-        //     this.loadingService.setLoading(false, '');
-        //     this.service.setFetchUsers(true);
-        //   },
-        //   error: (error) => {
-        //     this.loadingService.setLoading(
-        //       true,
-        //       `Ha ocurrido un error: ${error.error.message}`
-        //     );
-        //   },
-        // });
+        this.loadingService.setLoading(true, 'Editando Cliente ...');
+        const { gender, ...rest } = this.form.getRawValue();
+        const updatedGender = gender === 'M' ? true : false;
+        const form = { ...rest, gender: updatedGender,user:this.dataClient.user,business:this.dataClient.business};
+        this.service.updateClient(this.dataClient.id, form).subscribe({
+          next: () => {
+            this.close();
+            this.loadingService.setLoading(false, '');
+            this.service.setFetchClient(true);
+          },
+          error: (error) => {
+            this.loadingService.setLoading(
+              true,
+              `Ha ocurrido un error: ${error.error.message}`
+            );
+          },
+        });
       } else {
         this.form.markAllAsTouched();
       }

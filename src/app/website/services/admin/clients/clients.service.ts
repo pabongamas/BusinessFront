@@ -23,7 +23,7 @@ export class ClientsService {
     this.fetchClient.next(find);
   }
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   API_URL = environment.domainBack;
 
   search(search: string, typesSearch: string[]) {
@@ -40,14 +40,19 @@ export class ClientsService {
     var params = '?search=' + data;
     return this.http.get<clientAdminModel[]>(
       `${this.API_URL}/api/v1/clients/business/searchClient${params}`, {
-        context: checkToken(),
-      }
+      context: checkToken(),
+    }
     );
   }
 
-  createClient(data:clientAdminFormModel) {
-    return this.http.post(`${this.API_URL}/api/v1/clients/save`,data, {
+  createClient(data: clientAdminFormModel) {
+    return this.http.post(`${this.API_URL}/api/v1/clients/save`, data, {
       context: checkToken(),
+    });
+  }
+  updateClient(id: string, data: clientAdminFormModel) {
+    return this.http.patch(`${this.API_URL}/api/v1/clients/update/${id}`, data, {
+      context: checkToken()
     });
   }
 }
