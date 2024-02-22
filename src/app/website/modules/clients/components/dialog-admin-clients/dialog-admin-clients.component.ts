@@ -16,6 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { SuccessErrorToast } from 'src/app/website/utils/ActionToastAlert';
+import { HttpStatusCode } from '@angular/common/http';
 
 interface OutputData {
   rta: boolean;
@@ -110,6 +111,9 @@ export class DialogAdminClientsComponent {
               true,
               `Ha ocurrido un error: ${error.error.message}`
             );
+
+            this.loadingService.setLoading(false, '');
+            this.handleErrorToast(error);
           },
         });
       } else {
@@ -132,6 +136,9 @@ export class DialogAdminClientsComponent {
               true,
               `Ha ocurrido un error: ${error.error.message}`
             );
+
+            this.loadingService.setLoading(false, '');
+            this.handleErrorToast(error);
           },
         });
       } else {
@@ -142,4 +149,14 @@ export class DialogAdminClientsComponent {
   close() {
     this.dialogRef.close();
   }
+
+  handleErrorToast(error:any) {
+    this.loadingService.setLoading(false, ``);
+    if (HttpStatusCode.Unauthorized === error.status) {
+      SuccessErrorToast(error.error, "error");
+    }else{
+      SuccessErrorToast(error.error.message, "error");
+    }
+  }
+  
 }
