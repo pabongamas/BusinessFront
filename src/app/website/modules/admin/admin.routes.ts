@@ -62,6 +62,13 @@ export const routes: Routes = [
           import('./../clients/clients.routes').then((m) => m.routes),
         title: 'Administracion de Clientes',
       },
+      {
+        path: 'sales',
+        canActivate: [roleGuardGuardAdmin],
+        loadChildren: () =>
+          import('./../sales/sales.route').then((m) => m.routes),
+        title: 'Generar Venta',
+      },
     ],
   },
 ];
